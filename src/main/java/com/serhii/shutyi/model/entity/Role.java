@@ -1,8 +1,8 @@
 package com.serhii.shutyi.model.entity;
 
 public class Role {
-    int id;
-    String role;
+    private int id;
+    private String role;
 
     public Role(int id, String role) {
         this.id = id;

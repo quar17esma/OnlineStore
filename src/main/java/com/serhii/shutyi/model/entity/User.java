@@ -1,12 +1,12 @@
 package com.serhii.shutyi.model.entity;
 
 public class User {
-    int id;
-    String email;
-    String password;
-    boolean enabled;
-    Client client;
-    Role role;
+    private int id;
+    private String email;
+    private String password;
+    private boolean enabled;
+    private Client client;
+    private Role role;
 
     public User(int id, String email, String password, boolean enabled, Client client, Role role) {
         this.id = id;

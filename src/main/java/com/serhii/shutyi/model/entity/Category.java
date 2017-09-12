@@ -3,10 +3,10 @@ package com.serhii.shutyi.model.entity;
 import java.util.List;
 
 public class Category {
-    int id;
-    String title;
-    String description;
-    List<Good> goods;
+    private int id;
+    private String title;
+    private String description;
+    private List<Good> goods;
 
     public Category(int id, String title, String description, List<Good> goods) {
         this.id = id;

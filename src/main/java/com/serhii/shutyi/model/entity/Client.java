@@ -1,10 +1,10 @@
 package com.serhii.shutyi.model.entity;
 
 public class Client {
-    int id;
-    String firstName;
-    int discount;
-    User user;
+    private int id;
+    private String firstName;
+    private int discount;
+    private User user;
 
 
     public Client(int id, String firstName, int discount, User user) {
