@@ -1,7 +1,7 @@
 package com.serhii.shutyi.dao.impl;
 
 
-import com.serhii.shutyi.Config;
+import com.serhii.shutyi.dao.Config;
 import com.serhii.shutyi.dao.ClientDAO;
 import com.serhii.shutyi.dao.DaoFactory;
 

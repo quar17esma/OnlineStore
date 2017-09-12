@@ -1,7 +1,5 @@
 package com.serhii.shutyi.dao;
 
-import com.serhii.shutyi.Config;
-
 public abstract class DaoFactory {
     public abstract ClientDAO createClientDAO();
     public static DaoFactory getInstance(){

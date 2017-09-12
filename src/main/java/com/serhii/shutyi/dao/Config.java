@@ -1,4 +1,4 @@
-package com.serhii.shutyi;
+package com.serhii.shutyi.dao;
 
 
 import java.io.IOException;
