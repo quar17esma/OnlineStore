@@ -15,12 +15,11 @@ public class JDBCDaoFactory extends DaoFactory {
         Config config = Config.getInstance();
         Connection connection;
         try {
-            connection = DriverManager
-                    .getConnection( config.getUrl() , config.getUser(),
-                            config.getPass() );
+            connection = DriverManager.getConnection(config.getUrl(), config.getUser(), config.getPass());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return connection;
     }
     @Override
