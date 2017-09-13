@@ -2,6 +2,7 @@ package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.dao.ClientDAO;
+import com.serhii.shutyi.model.entity.Role;
 import com.serhii.shutyi.model.entity.User;
 
 import java.sql.*;
@@ -20,22 +21,33 @@ public class JDBCClientDAO implements ClientDAO {
     @Override
     public List<Client> findAll() {
         List<Client> clients = new ArrayList<>();
+
         try (PreparedStatement query = connection.prepareStatement(
                 "SELECT * FROM client " +
                         "JOIN user ON client.id = user.id " +
                         "JOIN users_roles ON user.id = users_roles.user_id " +
                         "JOIN role ON role.id = users_roles.role_id")) {
             ResultSet rs = query.executeQuery();
+
             while (rs.next()) {
                 Client client = new Client(rs.getInt("client.id"),
                         rs.getString("client.name"),
                         rs.getInt("client.discount"),
-                        new User(rs.getInt("user.id"),
-                                rs.getString("user.email"),
-                                rs.getString("user.password"),
-                                rs.getBoolean("user.enabled"),
-                                null,
-                                null));
+                        null);
+
+                User user = new User(rs.getInt("user.id"),
+                        rs.getString("user.email"),
+                        rs.getString("user.password"),
+                        rs.getBoolean("user.enabled"),
+                        null,
+                        null);
+                Role role = new Role(rs.getInt("role.id"),
+                        rs.getString("role.role"));
+
+                user.setClient(client);
+                user.setRole(role);
+                client.setUser(user);
+
                 clients.add(client);
             }
         } catch (Exception ex) {
@@ -48,6 +60,7 @@ public class JDBCClientDAO implements ClientDAO {
     public Optional<Client> findById(int id) {
 
         Optional<Client> result = Optional.empty();
+
         try (PreparedStatement query = connection.prepareStatement(
                 "SELECT * FROM client " +
                         "JOIN user ON client.id = user.id " +
@@ -56,16 +69,26 @@ public class JDBCClientDAO implements ClientDAO {
                         "WHERE client.id = ?")) {
             query.setInt(1, id);
             ResultSet rs = query.executeQuery();
+
             while (rs.next()) {
                 Client client = new Client(rs.getInt("client.id"),
                         rs.getString("client.name"),
                         rs.getInt("client.discount"),
-                        new User(rs.getInt("user.id"),
+                        null);
+
+                User user = new User(rs.getInt("user.id"),
                                 rs.getString("user.email"),
                                 rs.getString("user.password"),
                                 rs.getBoolean("user.enabled"),
                                 null,
-                                null));
+                                null);
+                Role role = new Role(rs.getInt("role.id"),
+                        rs.getString("role.role"));
+
+                user.setClient(client);
+                user.setRole(role);
+                client.setUser(user);
+
                 result = Optional.of(client);
             }
         } catch (Exception ex) {
