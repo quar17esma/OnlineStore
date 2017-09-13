@@ -1,9 +1,13 @@
 package com.serhii.shutyi.model.entity;
 
 public class Client {
+
     private int id;
+
     private String firstName;
+
     private int discount;
+
     private User user;
 
 
@@ -19,20 +23,20 @@ public class Client {
         return id;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public int getDiscount() {
+        return discount;
     }
 
     public void setDiscount(int discount) {
@@ -46,7 +50,6 @@ public class Client {
     public void setUser(User user) {
         this.user = user;
     }
-
 
     @Override
     public String toString() {
