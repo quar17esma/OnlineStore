@@ -99,36 +99,68 @@ public class JDBCClientDAO implements ClientDAO {
 
     @Override
     public boolean update(Client item) {
-        return false;
+        boolean result = false;
+        try (PreparedStatement query =
+                     connection.prepareStatement(
+                             "UPDATE client " +
+                                     "SET name = ?, discount = ? " +
+                                     "WHERE id = ?")) {
+            query.setString(1, item.getFirstName());
+            query.setInt(2, item.getDiscount());
+            query.setInt(3, item.getId());
+
+            query.executeUpdate();
+
+            result = true;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return result;
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        boolean result = false;
+        try (PreparedStatement query =
+                     connection.prepareStatement(
+                             "DELETE FROM client " +
+                                     "WHERE id = ?")) {
+            query.setInt(1, id);
+            query.executeUpdate();
+
+            result = true;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return result;
     }
 
     @Override
     public int insert(Client client) {
         int result = -1;
-        try (PreparedStatement query = connection
-                .prepareStatement("INSERT INTO client (" +
-                        "client.name, client.discount)"
-                        + "VALUES( ? , ? ,?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+
+        try (PreparedStatement query =
+                     connection.prepareStatement(
+                        "INSERT INTO client (" +
+                                "client.name, client.discount) " +
+                                "VALUES(?, ?)",
+                             Statement.RETURN_GENERATED_KEYS)) {
 
             query.setString(1, client.getFirstName());
-            query.setString(2, client.getFirstName());
-            query.setString(3, client.getFirstName());
-            query.setString(4, client.getFirstName());
+            query.setInt(2, client.getDiscount());
+
             query.executeUpdate();
             ResultSet rsId = query.getGeneratedKeys();
             if (rsId.next()) {
                 result = rsId.getInt(1);
                 client.setId(result);
             }
-
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+
         return result;
     }
 
