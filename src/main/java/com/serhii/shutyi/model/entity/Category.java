@@ -8,6 +8,12 @@ public class Category {
     private String description;
     private List<Good> goods;
 
+    public Category(int id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+    }
+
     public Category(int id, String title, String description, List<Good> goods) {
         this.id = id;
         this.title = title;
