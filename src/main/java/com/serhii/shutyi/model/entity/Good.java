@@ -9,6 +9,13 @@ public class Good {
     private int price;
     private List<Category> categories;
 
+    public Good(int id, String name, String description, int price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
     public Good(int id, String name, String description, int price, List<Category> categories) {
         this.id = id;
         this.name = name;
@@ -59,7 +66,7 @@ public class Good {
 
     @Override
     public String toString() {
-        return "Good{" +
+        return "GoodDAO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
