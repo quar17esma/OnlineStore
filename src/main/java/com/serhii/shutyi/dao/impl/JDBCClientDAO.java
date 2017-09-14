@@ -1,11 +1,14 @@
 package com.serhii.shutyi.dao.impl;
 
-import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.dao.ClientDAO;
+import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.model.entity.Role;
 import com.serhii.shutyi.model.entity.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

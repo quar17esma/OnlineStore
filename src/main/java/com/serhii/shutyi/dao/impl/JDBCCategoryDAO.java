@@ -2,7 +2,6 @@ package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.dao.CategoryDAO;
 import com.serhii.shutyi.model.entity.Category;
-import com.serhii.shutyi.model.entity.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
