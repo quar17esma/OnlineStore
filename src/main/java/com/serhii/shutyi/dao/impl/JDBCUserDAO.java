@@ -24,13 +24,11 @@ public class JDBCUserDAO implements UserDAO {
 
         try (PreparedStatement query = connection.prepareStatement(
                 "SELECT * FROM user " +
-                        "JOIN user ON client.id = user.id " +
-                        "JOIN users_roles ON user.id = users_roles.user_id " +
-                        "JOIN role ON role.id = users_roles.role_id")) {
+                        "JOIN user ON client.id = user.id ")) {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                User user = createUserWithClientAndRole(rs);
+                User user = createUserWithClient(rs);
 
                 users.add(user);
             }
@@ -49,14 +47,12 @@ public class JDBCUserDAO implements UserDAO {
                      connection.prepareStatement(
                              "SELECT * FROM user " +
                                      "JOIN client ON client.id = user.id " +
-                                     "JOIN users_roles ON user.id = users_roles.user_id " +
-                                     "JOIN role ON role.id = users_roles.role_id " +
                                      "WHERE user.id = ?")) {
             query.setInt(1, id);
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                User user = createUserWithClientAndRole(rs);
+                User user = createUserWithClient(rs);
 
                 result = Optional.of(user);
             }
@@ -67,7 +63,7 @@ public class JDBCUserDAO implements UserDAO {
         return result;
     }
 
-    private User createUserWithClientAndRole(ResultSet rs) throws SQLException {
+    private User createUserWithClient(ResultSet rs) throws SQLException {
 
         User user = new User(rs.getInt("user.id"),
                 rs.getString("user.email"),
@@ -81,7 +77,7 @@ public class JDBCUserDAO implements UserDAO {
                 rs.getInt("client.discount"),
                 null);
 
-        Role role = Role.valueOf(rs.getString("role.role"));
+        Role role = Role.valueOf(rs.getString("user.role"));
 
         user.setClient(client);
         user.setRole(role);

@@ -24,13 +24,11 @@ public class JDBCClientDAO implements ClientDAO {
 
         try (PreparedStatement query = connection.prepareStatement(
                 "SELECT * FROM client " +
-                        "JOIN user ON client.id = user.id " +
-                        "JOIN users_roles ON user.id = users_roles.user_id " +
-                        "JOIN role ON role.id = users_roles.role_id")) {
+                        "JOIN user ON client.id = user.id ")) {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Client client = createClientWithUserAndRole(rs);
+                Client client = createClientWithUser(rs);
                 clients.add(client);
             }
         } catch (Exception ex) {
@@ -47,14 +45,12 @@ public class JDBCClientDAO implements ClientDAO {
         try (PreparedStatement query = connection.prepareStatement(
                 "SELECT * FROM client " +
                         "JOIN user ON client.id = user.id " +
-                        "JOIN users_roles ON user.id = users_roles.user_id " +
-                        "JOIN role ON role.id = users_roles.role_id" +
                         "WHERE client.id = ?")) {
             query.setInt(1, id);
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Client client = createClientWithUserAndRole(rs);
+                Client client = createClientWithUser(rs);
                 result = Optional.of(client);
             }
         } catch (Exception ex) {
@@ -63,7 +59,7 @@ public class JDBCClientDAO implements ClientDAO {
         return result;
     }
 
-    private Client createClientWithUserAndRole(ResultSet rs) throws SQLException {
+    private Client createClientWithUser(ResultSet rs) throws SQLException {
 
         Client client = new Client(rs.getInt("client.id"),
                 rs.getString("client.name"),
@@ -77,7 +73,7 @@ public class JDBCClientDAO implements ClientDAO {
                 null,
                 null);
 
-        Role role = Role.valueOf(rs.getString("role.role"));
+        Role role = Role.valueOf(rs.getString("user.role"));
 
         user.setClient(client);
         user.setRole(role);
