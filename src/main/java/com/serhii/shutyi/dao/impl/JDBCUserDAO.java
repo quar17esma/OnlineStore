@@ -75,6 +75,7 @@ public class JDBCUserDAO implements UserDAO {
         Client client = new Client(rs.getInt("client.id"),
                 rs.getString("client.name"),
                 rs.getInt("client.discount"),
+                rs.getBoolean("client.is_in_black_list"),
                 null);
 
         Role role = Role.valueOf(rs.getString("user.role"));

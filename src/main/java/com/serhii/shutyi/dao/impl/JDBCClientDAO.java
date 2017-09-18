@@ -64,6 +64,7 @@ public class JDBCClientDAO implements ClientDAO {
         Client client = new Client(rs.getInt("client.id"),
                 rs.getString("client.name"),
                 rs.getInt("client.discount"),
+                rs.getBoolean("client.is_in_black_list"),
                 null);
 
         User user = new User(rs.getInt("user.id"),
@@ -83,16 +84,17 @@ public class JDBCClientDAO implements ClientDAO {
     }
 
     @Override
-    public boolean update(Client item) {
+    public boolean update(Client client) {
         boolean result = false;
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "UPDATE client " +
-                                     "SET name = ?, discount = ? " +
+                                     "SET name = ?, discount = ?, is_in_black_list = ? " +
                                      "WHERE id = ?")) {
-            query.setString(1, item.getName());
-            query.setInt(2, item.getDiscount());
-            query.setInt(3, item.getId());
+            query.setString(1, client.getName());
+            query.setInt(2, client.getDiscount());
+            query.setBoolean(3, client.isInBlackList());
+            query.setInt(4, client.getId());
 
             query.executeUpdate();
 
@@ -128,13 +130,14 @@ public class JDBCClientDAO implements ClientDAO {
 
         try (PreparedStatement query =
                      connection.prepareStatement(
-                        "INSERT INTO client (" +
-                                "client.name, client.discount) " +
-                                "VALUES(?, ?)",
+                        "INSERT INTO client ( " +
+                                "name, discount, is_in_black_list) " +
+                                "VALUES(?, ?, ?)",
                              Statement.RETURN_GENERATED_KEYS)) {
 
             query.setString(1, client.getName());
             query.setInt(2, client.getDiscount());
+            query.setBoolean(3, client.isInBlackList());
 
             query.executeUpdate();
             ResultSet rsId = query.getGeneratedKeys();

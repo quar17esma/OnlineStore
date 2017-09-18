@@ -10,18 +10,19 @@ public class Client {
 
     private int discount;
 
+    private boolean isInBlackList;
+
     private User user;
 
     private List<Order> orders;
 
-
-    public Client(int id, String name, int discount, User user) {
+    public Client(int id, String name, int discount, boolean isInBlackList, User user) {
         this.id = id;
         this.name = name;
         this.discount = discount;
+        this.isInBlackList = isInBlackList;
         this.user = user;
     }
-
 
     public int getId() {
         return id;
@@ -47,6 +48,14 @@ public class Client {
         this.discount = discount;
     }
 
+    public boolean isInBlackList() {
+        return isInBlackList;
+    }
+
+    public void setInBlackList(boolean inBlackList) {
+        isInBlackList = inBlackList;
+    }
+
     public User getUser() {
         return user;
     }
@@ -63,13 +72,13 @@ public class Client {
         this.orders = orders;
     }
 
-
     @Override
     public String toString() {
         return "Client{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", discount=" + discount +
+                ", isInBlackList=" + isInBlackList +
                 ", user=" + user +
                 ", orders=" + orders +
                 '}';
