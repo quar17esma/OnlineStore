@@ -1,5 +1,7 @@
 package com.serhii.shutyi.model.entity;
 
+import com.serhii.shutyi.model.enums.Role;
+
 public class User {
     private int id;
     private String email;

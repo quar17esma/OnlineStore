@@ -2,8 +2,8 @@ package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.model.entity.Client;
-import com.serhii.shutyi.model.entity.Role;
 import com.serhii.shutyi.model.entity.User;
+import com.serhii.shutyi.model.enums.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,8 +45,7 @@ public class JDBCUserDAO implements UserDAO {
                         null,
                         null);
 
-                Role role = new Role(rs.getInt("role.id"),
-                        rs.getString("role.role"));
+                Role role = Role.valueOf(rs.getString("role.role"));
 
                 user.setClient(client);
                 user.setRole(role);
@@ -88,8 +87,7 @@ public class JDBCUserDAO implements UserDAO {
                         null,
                         null);
 
-                Role role = new Role(rs.getInt("role.id"),
-                        rs.getString("role.role"));
+                Role role = Role.valueOf(rs.getString("role.role"));
 
                 user.setClient(client);
                 user.setRole(role);
