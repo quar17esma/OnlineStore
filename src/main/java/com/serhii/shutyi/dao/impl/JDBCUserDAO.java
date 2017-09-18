@@ -94,12 +94,13 @@ public class JDBCUserDAO implements UserDAO {
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "UPDATE user " +
-                                     "SET user.email = ?, user.password = ?, user.enabled  = ?" +
+                                     "SET email = ?, password = ?, enabled  = ?, role = ?" +
                                      "WHERE id = ?")) {
             query.setString(1, user.getEmail());
             query.setString(2, user.getPassword());
             query.setBoolean(3, user.isEnabled());
-            query.setInt(4, user.getId());
+            query.setString(4,user.getRole().name());
+            query.setInt(5, user.getId());
 
             query.executeUpdate();
 
@@ -136,13 +137,14 @@ public class JDBCUserDAO implements UserDAO {
 
         try (PreparedStatement query =
                      connection.prepareStatement(
-                             "INSERT INTO user (user.email, user.password, user.enabled) " +
-                                     "VALUES(?, ?, ?)",
+                             "INSERT INTO user (email, password, enabled, role) " +
+                                     "VALUES(?, ?, ?, ?)",
                              Statement.RETURN_GENERATED_KEYS)) {
 
             query.setString(1, user.getEmail());
             query.setString(2, user.getPassword());
             query.setBoolean(3, user.isEnabled());
+            query.setString(4, user.getRole().name());
 
             query.executeUpdate();
             ResultSet rsId = query.getGeneratedKeys();
