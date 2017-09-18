@@ -108,7 +108,7 @@ public class JDBCClientDAO implements ClientDAO {
                              "UPDATE client " +
                                      "SET name = ?, discount = ? " +
                                      "WHERE id = ?")) {
-            query.setString(1, item.getFirstName());
+            query.setString(1, item.getName());
             query.setInt(2, item.getDiscount());
             query.setInt(3, item.getId());
 
@@ -151,7 +151,7 @@ public class JDBCClientDAO implements ClientDAO {
                                 "VALUES(?, ?)",
                              Statement.RETURN_GENERATED_KEYS)) {
 
-            query.setString(1, client.getFirstName());
+            query.setString(1, client.getName());
             query.setInt(2, client.getDiscount());
 
             query.executeUpdate();

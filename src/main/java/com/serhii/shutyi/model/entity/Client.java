@@ -1,19 +1,23 @@
 package com.serhii.shutyi.model.entity;
 
+import java.util.List;
+
 public class Client {
 
     private int id;
 
-    private String firstName;
+    private String name;
 
     private int discount;
 
     private User user;
 
+    private List<Order> orders;
 
-    public Client(int id, String firstName, int discount, User user) {
+
+    public Client(int id, String name, int discount, User user) {
         this.id = id;
-        this.firstName = firstName;
+        this.name = name;
         this.discount = discount;
         this.user = user;
     }
@@ -27,12 +31,12 @@ public class Client {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getDiscount() {
@@ -51,13 +55,23 @@ public class Client {
         this.user = user;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+
     @Override
     public String toString() {
         return "Client{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
+                ", name='" + name + '\'' +
                 ", discount=" + discount +
                 ", user=" + user +
+                ", orders=" + orders +
                 '}';
     }
 }
