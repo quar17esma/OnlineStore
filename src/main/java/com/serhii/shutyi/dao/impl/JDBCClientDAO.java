@@ -5,10 +5,7 @@ import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.model.entity.User;
 import com.serhii.shutyi.model.enums.Role;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,24 +30,7 @@ public class JDBCClientDAO implements ClientDAO {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Client client = new Client(rs.getInt("client.id"),
-                        rs.getString("client.name"),
-                        rs.getInt("client.discount"),
-                        null);
-
-                User user = new User(rs.getInt("user.id"),
-                        rs.getString("user.email"),
-                        rs.getString("user.password"),
-                        rs.getBoolean("user.enabled"),
-                        null,
-                        null);
-
-                Role role = Role.valueOf(rs.getString("role.role"));
-
-                user.setClient(client);
-                user.setRole(role);
-                client.setUser(user);
-
+                Client client = createClientWithUserAndRole(rs);
                 clients.add(client);
             }
         } catch (Exception ex) {
@@ -74,30 +54,36 @@ public class JDBCClientDAO implements ClientDAO {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Client client = new Client(rs.getInt("client.id"),
-                        rs.getString("client.name"),
-                        rs.getInt("client.discount"),
-                        null);
-
-                User user = new User(rs.getInt("user.id"),
-                                rs.getString("user.email"),
-                                rs.getString("user.password"),
-                                rs.getBoolean("user.enabled"),
-                                null,
-                                null);
-
-                Role role = Role.valueOf(rs.getString("role.role"));
-
-                user.setClient(client);
-                user.setRole(role);
-                client.setUser(user);
-
+                Client client = createClientWithUserAndRole(rs);
                 result = Optional.of(client);
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
         return result;
+    }
+
+    private Client createClientWithUserAndRole(ResultSet rs) throws SQLException {
+
+        Client client = new Client(rs.getInt("client.id"),
+                rs.getString("client.name"),
+                rs.getInt("client.discount"),
+                null);
+
+        User user = new User(rs.getInt("user.id"),
+                rs.getString("user.email"),
+                rs.getString("user.password"),
+                rs.getBoolean("user.enabled"),
+                null,
+                null);
+
+        Role role = Role.valueOf(rs.getString("role.role"));
+
+        user.setClient(client);
+        user.setRole(role);
+        client.setUser(user);
+
+        return client;
     }
 
     @Override

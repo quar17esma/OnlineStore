@@ -5,10 +5,7 @@ import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.model.entity.User;
 import com.serhii.shutyi.model.enums.Role;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,23 +30,7 @@ public class JDBCUserDAO implements UserDAO {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Client client = new Client(rs.getInt("client.id"),
-                        rs.getString("client.name"),
-                        rs.getInt("client.discount"),
-                        null);
-
-                User user = new User(rs.getInt("user.id"),
-                        rs.getString("user.email"),
-                        rs.getString("user.password"),
-                        rs.getBoolean("user.enabled"),
-                        null,
-                        null);
-
-                Role role = Role.valueOf(rs.getString("role.role"));
-
-                user.setClient(client);
-                user.setRole(role);
-                client.setUser(user);
+                User user = createUserWithClientAndRole(rs);
 
                 users.add(user);
             }
@@ -75,23 +56,7 @@ public class JDBCUserDAO implements UserDAO {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Client client = new Client(rs.getInt("client.id"),
-                        rs.getString("client.name"),
-                        rs.getInt("client.discount"),
-                        null);
-
-                User user = new User(rs.getInt("user.id"),
-                        rs.getString("user.email"),
-                        rs.getString("user.password"),
-                        rs.getBoolean("user.enabled"),
-                        null,
-                        null);
-
-                Role role = Role.valueOf(rs.getString("role.role"));
-
-                user.setClient(client);
-                user.setRole(role);
-                client.setUser(user);
+                User user = createUserWithClientAndRole(rs);
 
                 result = Optional.of(user);
             }
@@ -100,6 +65,29 @@ public class JDBCUserDAO implements UserDAO {
         }
 
         return result;
+    }
+
+    private User createUserWithClientAndRole(ResultSet rs) throws SQLException {
+
+        User user = new User(rs.getInt("user.id"),
+                rs.getString("user.email"),
+                rs.getString("user.password"),
+                rs.getBoolean("user.enabled"),
+                null,
+                null);
+
+        Client client = new Client(rs.getInt("client.id"),
+                rs.getString("client.name"),
+                rs.getInt("client.discount"),
+                null);
+
+        Role role = Role.valueOf(rs.getString("role.role"));
+
+        user.setClient(client);
+        user.setRole(role);
+        client.setUser(user);
+
+        return user;
     }
 
     @Override
