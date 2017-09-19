@@ -130,14 +130,13 @@ public class JDBCClientDAO implements ClientDAO {
 
         try (PreparedStatement query =
                      connection.prepareStatement(
-                        "INSERT INTO client ( " +
-                                "name, discount, is_in_black_list) " +
-                                "VALUES(?, ?, ?)",
+                        "INSERT INTO client (id, name, discount, is_in_black_list) " +
+                                "VALUES(?, ?, ?, ?)",
                              Statement.RETURN_GENERATED_KEYS)) {
-
-            query.setString(1, client.getName());
-            query.setInt(2, client.getDiscount());
-            query.setBoolean(3, client.isInBlackList());
+            query.setInt(1, client.getId());
+            query.setString(2, client.getName());
+            query.setInt(3, client.getDiscount());
+            query.setBoolean(4, client.isInBlackList());
 
             query.executeUpdate();
             ResultSet rsId = query.getGeneratedKeys();

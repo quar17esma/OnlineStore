@@ -16,6 +16,9 @@ public class Client {
 
     private List<Order> orders;
 
+    public Client() {
+    }
+
     public Client(int id, String name, int discount, boolean isInBlackList, User user) {
         this.id = id;
         this.name = name;

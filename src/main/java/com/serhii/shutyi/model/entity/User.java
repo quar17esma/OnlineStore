@@ -10,6 +10,9 @@ public class User {
     private Client client;
     private Role role;
 
+    public User() {
+    }
+
     public User(int id, String email, String password, boolean enabled, Client client, Role role) {
         this.id = id;
         this.email = email;
