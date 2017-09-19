@@ -2,6 +2,8 @@ package com.serhii.shutyi.dao;
 
 public abstract class DaoFactory {
     public abstract ClientDAO createClientDAO();
+    public abstract GoodDAO createGoodDAO();
+
     public static DaoFactory getInstance(){
         String className = Config.getInstance().getFactoryClassName();
         DaoFactory factory = null;
