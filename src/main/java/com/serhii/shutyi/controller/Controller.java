@@ -15,7 +15,6 @@ import java.util.Objects;
 @WebServlet(name = "controller", urlPatterns = "/controller", loadOnStartup = 1)
 public class Controller extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
@@ -30,9 +29,9 @@ public class Controller extends HttpServlet {
         String page = null;
 
         ActionFactory client = new ActionFactory();
-        Action command = client.defineAction(request);
+        Action action = client.defineAction(request);
 
-        page = command.execute(request);
+        page = action.execute(request);
 
         Objects.requireNonNull(page);
 
