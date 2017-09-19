@@ -63,6 +63,30 @@ public class JDBCUserDAO implements UserDAO {
         return result;
     }
 
+    @Override
+    public Optional<User> findByEmail(String email) {
+        Optional<User> result = Optional.empty();
+
+        try (PreparedStatement query =
+                     connection.prepareStatement(
+                             "SELECT * FROM user " +
+                                     "JOIN client ON client.id = user.id " +
+                                     "WHERE user.email = ? ")) {
+            query.setString(1, email);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                User user = createUserWithClient(rs);
+
+                result = Optional.of(user);
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return result;
+    }
+
     private User createUserWithClient(ResultSet rs) throws SQLException {
 
         User user = new User(rs.getInt("user.id"),
@@ -78,7 +102,7 @@ public class JDBCUserDAO implements UserDAO {
                 rs.getBoolean("client.is_in_black_list"),
                 null);
 
-        Role role = Role.valueOf(rs.getString("user.role"));
+        Role role = Role.valueOf(rs.getString("user.role").toUpperCase());
 
         user.setClient(client);
         user.setRole(role);

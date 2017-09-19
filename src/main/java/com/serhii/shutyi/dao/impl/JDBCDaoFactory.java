@@ -1,10 +1,7 @@
 package com.serhii.shutyi.dao.impl;
 
 
-import com.serhii.shutyi.dao.ClientDAO;
-import com.serhii.shutyi.dao.Config;
-import com.serhii.shutyi.dao.DaoFactory;
-import com.serhii.shutyi.dao.GoodDAO;
+import com.serhii.shutyi.dao.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,6 +25,11 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public ClientDAO createClientDAO() {
         return new JDBCClientDAO(getConnection());
+    }
+
+    @Override
+    public UserDAO createUserDAO() {
+        return new JDBCUserDAO(getConnection());
     }
 
     @Override

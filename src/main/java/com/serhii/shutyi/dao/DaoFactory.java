@@ -2,6 +2,7 @@ package com.serhii.shutyi.dao;
 
 public abstract class DaoFactory {
     public abstract ClientDAO createClientDAO();
+    public abstract UserDAO createUserDAO();
     public abstract GoodDAO createGoodDAO();
 
     public static DaoFactory getInstance(){

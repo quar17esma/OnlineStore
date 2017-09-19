@@ -5,13 +5,10 @@ import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
-import com.serhii.shutyi.dao.impl.JDBCGoodDAO;
-import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.model.entity.Good;
-import com.serhii.shutyi.model.service.LoginLogic;
+import com.serhii.shutyi.model.service.LoginChecker;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Connection;
 import java.util.List;
 
 public class Login implements Action {
@@ -23,7 +20,7 @@ public class Login implements Action {
             String login = request.getParameter("login");
             String pass = request.getParameter("password");
 
-            if (LoginLogic.checkLogin(login, pass)) {
+            if (LoginChecker.checkLogin(login, pass)) {
                 request.setAttribute("user", login);
 
                 List<Good> goods = null;
