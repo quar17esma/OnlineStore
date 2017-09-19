@@ -4,13 +4,21 @@ package com.serhii.shutyi.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class Config {
 
     private String url;
     private String user;
     private String pass;
+    private String autoReconnect;
+    private String characterEncoding;
+    private String useUnicode;
+    private String useJDBCCompliantTimezoneShift;
+    private String useLegacyDatetimeCode;
+    private String serverTimezone;
     private String factoryClassName;
+    private Properties properties;
 
     public Config() {
         load();
@@ -25,13 +33,23 @@ public class Config {
     }
 
     private void load() {
-        try( InputStream in = this.getClass().getResourceAsStream("/db.properties")){
-            Properties properties = new Properties();
-            properties.load(in);
-            user = properties.getProperty("db.user");
-            pass = properties.getProperty("db.pass");
-            url = properties.getProperty("db.url");
-            factoryClassName = properties.getProperty("db.factory.class");
+        try( InputStream in = this.getClass().getResourceAsStream("/database.properties")){
+            Properties databaseProperties = new Properties();
+            databaseProperties.load(in);
+
+            properties = new Properties();
+            properties.put("user", databaseProperties.getProperty("db.user"));
+            properties.put("password", databaseProperties.getProperty("db.pass"));
+            properties.put("autoReconnect", databaseProperties.getProperty("db.autoReconnect"));
+            properties.put("characterEncoding", databaseProperties.getProperty("db.characterEncoding"));
+            properties.put("useUnicode", databaseProperties.getProperty("db.useUnicode"));
+            properties.put("useJDBCCompliantTimezoneShift", databaseProperties.getProperty("db.useJDBCCompliantTimezoneShift"));
+            properties.put("useLegacyDatetimeCode", databaseProperties.getProperty("db.useLegacyDatetimeCode"));
+            properties.put("serverTimezone", databaseProperties.getProperty("db.serverTimezone"));
+
+            url = databaseProperties.getProperty("db.url");
+
+            factoryClassName = databaseProperties.getProperty("db.factory.class");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,11 +63,11 @@ public class Config {
         return user;
     }
 
-    public String getPass() {
-        return pass;
-    }
-
     public String getFactoryClassName() {
         return factoryClassName;
+    }
+
+    public Properties getProperties() {
+        return properties;
     }
 }
