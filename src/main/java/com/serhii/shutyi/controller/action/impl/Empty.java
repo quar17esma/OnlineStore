@@ -10,7 +10,7 @@ public class Empty implements Action {
     public String execute(HttpServletRequest request) {
         String page = null;
 
-        page = ConfigurationManager.getProperty("path.page.index");
+        page = ConfigurationManager.getProperty("path.page.login");
 
         return page;
     }
