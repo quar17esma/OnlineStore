@@ -16,6 +16,11 @@ public enum ActionEnum {
         {
             this.command = new Logout();
         }
+    },
+    REGISTRATION {
+        {
+            this.command = new Registration();
+        }
     };
 
     Action command;
