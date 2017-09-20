@@ -19,14 +19,6 @@ public class Client {
     public Client() {
     }
 
-    public Client(int id, String name, int discount, boolean isInBlackList, User user) {
-        this.id = id;
-        this.name = name;
-        this.discount = discount;
-        this.isInBlackList = isInBlackList;
-        this.user = user;
-    }
-
     public int getId() {
         return id;
     }

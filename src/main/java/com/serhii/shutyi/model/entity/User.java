@@ -12,14 +12,6 @@ public class User {
     public User() {
     }
 
-    public User(int id, String email, String password, boolean enabled, Role role) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.enabled = enabled;
-        this.role = role;
-    }
-
     public int getId() {
         return id;
     }

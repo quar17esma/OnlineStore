@@ -14,18 +14,6 @@ public class Order {
         this.goods = new ArrayList<>();
     }
 
-    public Order(int id, LocalDateTime orderedAt) {
-        this.id = id;
-        this.orderedAt = orderedAt;
-    }
-
-    public Order(int id, LocalDateTime orderedAt, Client client, List<Good> goods) {
-        this.id = id;
-        this.orderedAt = orderedAt;
-        this.client = client;
-        this.goods = goods;
-    }
-
     public int getId() {
         return id;
     }

@@ -10,14 +10,6 @@ public class Good {
     private int quantity;
     private List<Category> categories;
 
-    public Good(int id, String name, String description, int price, int quantity) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.quantity = quantity;
-    }
-
     public Good() {
 
     }
