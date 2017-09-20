@@ -1,6 +1,7 @@
 package com.serhii.shutyi.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
@@ -8,6 +9,10 @@ public class Order {
     private LocalDateTime orderedAt;
     private Client client;
     private List<Good> goods;
+
+    public Order() {
+        this.goods = new ArrayList<>();
+    }
 
     public Order(int id, LocalDateTime orderedAt) {
         this.id = id;
