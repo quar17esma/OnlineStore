@@ -4,6 +4,7 @@ public abstract class DaoFactory {
     public abstract ClientDAO createClientDAO();
     public abstract UserDAO createUserDAO();
     public abstract GoodDAO createGoodDAO();
+    public abstract OrderDAO createOrderDAO();
 
     public static DaoFactory getInstance(){
         String className = Config.getInstance().getFactoryClassName();

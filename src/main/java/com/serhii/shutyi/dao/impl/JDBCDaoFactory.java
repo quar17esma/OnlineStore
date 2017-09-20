@@ -36,4 +36,9 @@ public class JDBCDaoFactory extends DaoFactory {
     public GoodDAO createGoodDAO() {
         return new JDBCGoodDAO(getConnection());
     }
+
+    @Override
+    public OrderDAO createOrderDAO() {
+        return new JDBCOrderDAO(getConnection());
+    }
 }
