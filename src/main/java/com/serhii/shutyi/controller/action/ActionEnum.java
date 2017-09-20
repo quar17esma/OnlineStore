@@ -30,6 +30,11 @@ public enum ActionEnum {
         {
             this.command = new AddToOrder();
         }
+    },
+    MY_ORDER {
+        {
+            this.command = new MyOrder();
+        }
     };
 
     Action command;
