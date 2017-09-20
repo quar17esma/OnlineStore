@@ -88,15 +88,14 @@ public class JDBCUserDAO implements UserDAO {
 
     private User createUser(ResultSet rs) throws SQLException {
 
-        User user = new User(rs.getInt("user.id"),
-                rs.getString("user.email"),
-                rs.getString("user.password"),
-                rs.getBoolean("user.enabled"),
-                null);
-
-        Role role = Role.valueOf(rs.getString("user.role").toUpperCase());
-        user.setRole(role);
-
+        User user = new User.Builder()
+                .setId(rs.getInt("user.id"))
+                .setEmail(rs.getString("user.email"))
+                .setPassword(rs.getString("user.password"))
+                .setEnabled(rs.getBoolean("user.enabled"))
+                .setRole(Role.valueOf(rs.getString("user.role").toUpperCase()))
+                .build();
+        
         return user;
     }
 

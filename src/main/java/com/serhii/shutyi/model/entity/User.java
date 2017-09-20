@@ -70,4 +70,41 @@ public class User {
                 ", role=" + role +
                 '}';
     }
+
+    public static class Builder {
+        private  User user;
+
+        public Builder() {
+            this.user = new User();
+        }
+
+        public User build() {
+            return user;
+        }
+
+        public Builder setId(final int id) {
+            user.setId(id);
+            return this;
+        }
+
+        public Builder setEmail(final String email) {
+            user.setEmail(email);
+            return this;
+        }
+
+        public Builder setPassword(final String password) {
+            user.setPassword(password);
+            return this;
+        }
+
+        public Builder setEnabled(final boolean enabled) {
+            user.setEnabled(enabled);
+            return this;
+        }
+
+        public Builder setRole(final Role role) {
+            user.setRole(role);
+            return this;
+        }
+    }
 }
