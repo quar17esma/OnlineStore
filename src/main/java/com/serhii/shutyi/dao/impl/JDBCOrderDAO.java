@@ -1,6 +1,7 @@
 package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.dao.OrderDAO;
+import com.serhii.shutyi.model.entity.Good;
 import com.serhii.shutyi.model.entity.Order;
 
 import java.sql.*;
@@ -107,12 +108,13 @@ public class JDBCOrderDAO implements OrderDAO {
 
         try (PreparedStatement query =
                      connection.prepareStatement(
-                             "INSERT INTO orders (ordered_at) " +
-                                     "VALUES(?)",
+                             "INSERT INTO orders (ordered_at, client_id) " +
+                                     "VALUES(?, ?)",
                              Statement.RETURN_GENERATED_KEYS)) {
 
             String orderedAt = String.valueOf(Timestamp.valueOf(order.getOrderedAt()));
             query.setString(1, orderedAt);
+            query.setInt(2, order.getClient().getId());
 
             query.executeUpdate();
             ResultSet rsId = query.getGeneratedKeys();
@@ -122,6 +124,22 @@ public class JDBCOrderDAO implements OrderDAO {
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
+        }
+
+
+        for (Good good : order.getGoods()) {
+            try (PreparedStatement query =
+                         connection.prepareStatement(
+                                 "INSERT INTO ordered_goods (good_id, order_id) " +
+                                         "VALUES(?, ?)")) {
+
+                query.setInt(1, good.getId());
+                query.setInt(2, order.getId());
+
+                query.executeUpdate();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
         return result;
