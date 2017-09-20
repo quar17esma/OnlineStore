@@ -7,18 +7,16 @@ public class User {
     private String email;
     private String password;
     private boolean enabled;
-    private Client client;
     private Role role;
 
     public User() {
     }
 
-    public User(int id, String email, String password, boolean enabled, Client client, Role role) {
+    public User(int id, String email, String password, boolean enabled, Role role) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
-        this.client = client;
         this.role = role;
     }
 
@@ -54,14 +52,6 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -77,7 +67,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
-                ", client=" + client +
                 ", role=" + role +
                 '}';
     }
