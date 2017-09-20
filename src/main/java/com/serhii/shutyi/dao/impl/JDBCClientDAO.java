@@ -76,7 +76,6 @@ public class JDBCClientDAO implements ClientDAO {
 
         Role role = Role.valueOf(rs.getString("user.role"));
 
-        user.setClient(client);
         user.setRole(role);
         client.setUser(user);
 
