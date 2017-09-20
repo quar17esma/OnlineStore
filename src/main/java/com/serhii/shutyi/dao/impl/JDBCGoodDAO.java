@@ -31,7 +31,8 @@ public class JDBCGoodDAO implements GoodDAO {
                 Good good = new Good(rs.getInt("goods.id"),
                         rs.getString("goods.name"),
                         rs.getString("goods.description"),
-                        rs.getInt("goods.price"));
+                        rs.getInt("goods.price"),
+                        rs.getInt("goods.quantity"));
                 goods.add(good);
             }
         } catch (Exception ex) {
@@ -53,11 +54,12 @@ public class JDBCGoodDAO implements GoodDAO {
             query.setInt(1, id);
             ResultSet rs = query.executeQuery();
 
-            while (rs.next()) {
+            if (rs.next()) {
                 Good good = new Good(rs.getInt("goods.id"),
                         rs.getString("goods.name"),
                         rs.getString("goods.description"),
-                        rs.getInt("goods.price"));
+                        rs.getInt("goods.price"),
+                        rs.getInt("goods.quantity"));
                 result = Optional.of(good);
             }
         } catch (Exception ex) {
@@ -74,13 +76,13 @@ public class JDBCGoodDAO implements GoodDAO {
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "UPDATE goods " +
-                                     "SET goods.name = ?, goods.description, goods.price = ?" +
+                                     "SET name = ?, description = ?, price = ?, quantity = ?" +
                                      "WHERE id = ?")) {
             query.setString(1, good.getName());
             query.setString(2, good.getDescription());
             query.setInt(3, good.getPrice());
-            query.setInt(4, good.getId());
-
+            query.setInt(4, good.getQuantity());
+            query.setInt(5, good.getId());
             query.executeUpdate();
 
             result = true;
@@ -116,13 +118,15 @@ public class JDBCGoodDAO implements GoodDAO {
 
         try (PreparedStatement query =
                      connection.prepareStatement(
-                             "INSERT INTO goods (goods.name, goods.description, goods.price) " +
-                                     "VALUES(?, ?, ?)",
+                             "INSERT INTO goods (" +
+                                     "name, description, price, quantity) " +
+                                     "VALUES(?, ?, ?, ?)",
                              Statement.RETURN_GENERATED_KEYS)) {
 
             query.setString(1, good.getName());
             query.setString(2, good.getDescription());
             query.setInt(3, good.getPrice());
+            query.setInt(4, good.getQuantity());
 
             query.executeUpdate();
             ResultSet rsId = query.getGeneratedKeys();

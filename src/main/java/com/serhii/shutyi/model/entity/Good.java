@@ -7,13 +7,15 @@ public class Good {
     private String name;
     private String description;
     private int price;
+    private int quantity;
     private List<Category> categories;
 
-    public Good(int id, String name, String description, int price) {
+    public Good(int id, String name, String description, int price, int quantity) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.quantity = quantity;
     }
 
     public Good(int id, String name, String description, int price, List<Category> categories) {
@@ -54,6 +56,14 @@ public class Good {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public List<Category> getCategories() {
