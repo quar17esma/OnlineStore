@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class SendOrder implements Action {
     @Override
     public String execute(HttpServletRequest request) {
-        String page = ConfigurationManager.getProperty("path.page.my.order");
+        String page = ConfigurationManager.getProperty("path.page.main");
 
         Order order = (Order) request.getSession().getAttribute("order");
 
