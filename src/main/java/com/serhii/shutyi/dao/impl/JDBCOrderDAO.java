@@ -107,11 +107,12 @@ public class JDBCOrderDAO implements OrderDAO {
 
         try (PreparedStatement query =
                      connection.prepareStatement(
-                             "INSERT INTO orders (orders.ordered_at) " +
+                             "INSERT INTO orders (ordered_at) " +
                                      "VALUES(?)",
                              Statement.RETURN_GENERATED_KEYS)) {
 
-            query.setString(1, String.valueOf(Timestamp.valueOf(order.getOrderedAt())));
+            String orderedAt = String.valueOf(Timestamp.valueOf(order.getOrderedAt()));
+            query.setString(1, orderedAt);
 
             query.executeUpdate();
             ResultSet rsId = query.getGeneratedKeys();

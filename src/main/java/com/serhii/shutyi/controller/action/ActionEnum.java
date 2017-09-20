@@ -35,6 +35,11 @@ public enum ActionEnum {
         {
             this.command = new MyOrder();
         }
+    },
+    SEND_ORDER {
+        {
+            this.command = new SendOrder();
+        }
     };
 
     Action command;
