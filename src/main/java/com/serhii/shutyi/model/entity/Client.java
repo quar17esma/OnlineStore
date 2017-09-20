@@ -55,8 +55,8 @@ public class Client {
         return isInBlackList;
     }
 
-    public void setInBlackList(boolean inBlackList) {
-        isInBlackList = inBlackList;
+    public void setIsInBlackList(boolean isInBlackList) {
+        this.isInBlackList = isInBlackList;
     }
 
     public User getUser() {
@@ -85,5 +85,47 @@ public class Client {
                 ", user=" + user +
                 ", orders=" + orders +
                 '}';
+    }
+
+    public static class Builder {
+        private  Client client;
+
+        public Builder() {
+            this.client = new Client();
+        }
+
+        public Client build() {
+            return client;
+        }
+
+        public Builder setId(final int id) {
+            client.setId(id);
+            return this;
+        }
+
+        public Builder setName(final String name) {
+            client.setName(name);
+            return this;
+        }
+
+        public Builder setDiscount(final int discount) {
+            client.setDiscount(discount);
+            return this;
+        }
+
+        public Builder setIsInBlackList(final boolean isInBlackList) {
+            client.setIsInBlackList(isInBlackList);
+            return this;
+        }
+
+        public Builder setUser(final User user) {
+            client.setUser(user);
+            return this;
+        }
+
+        public Builder setOrders(final List<Order> orders) {
+            client.setOrders(orders);
+            return this;
+        }
     }
 }

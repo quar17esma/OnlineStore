@@ -61,23 +61,19 @@ public class JDBCClientDAO implements ClientDAO {
 
     private Client createClientWithUser(ResultSet rs) throws SQLException {
 
-        Client client = new Client(rs.getInt("client.id"),
-                rs.getString("client.name"),
-                rs.getInt("client.discount"),
-                rs.getBoolean("client.is_in_black_list"),
-                null);
-
-        User user = new User(rs.getInt("user.id"),
-                rs.getString("user.email"),
-                rs.getString("user.password"),
-                rs.getBoolean("user.enabled"),
-                null,
-                null);
-
-        Role role = Role.valueOf(rs.getString("user.role"));
-
-        user.setRole(role);
-        client.setUser(user);
+        Client client = new Client.Builder()
+                .setId(rs.getInt("client.id"))
+                .setName(rs.getString("client.name"))
+                .setDiscount(rs.getInt("client.discount"))
+                .setIsInBlackList(rs.getBoolean("client.is_in_black_list"))
+                .setUser(new User.Builder()
+                        .setId(rs.getInt("user.id"))
+                        .setEmail(rs.getString("user.email"))
+                        .setPassword(rs.getString("user.password"))
+                        .setEnabled(rs.getBoolean("user.enabled"))
+                        .setRole(Role.valueOf(rs.getString("user.role").toUpperCase()))
+                        .build())
+                .build();
 
         return client;
     }
