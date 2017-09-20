@@ -20,33 +20,55 @@ public class AddToOrder implements Action{
         int goodId = Integer.parseInt(request.getParameter("goodId"));
         int orderedQuantity = Integer.parseInt(request.getParameter("ordered_quantity"));
 
-        Optional<Good> good = Optional.empty();
+        Optional<Good> good = getGoodById(goodId);
+        good.get().setQuantity(orderedQuantity);
 
+        addGoodToOrder(request, good);
+
+        return page;
+    }
+
+    private void addGoodToOrder(HttpServletRequest request, Optional<Good> good) {
+        Order order = (Order) request.getSession().getAttribute("order");
+        if (order == null) {
+            order = makeOrder(request);
+        }
+        order.getGoods().add(good.get());
+    }
+
+    private Order makeOrder(HttpServletRequest request) {
+        Order order = new Order();
+
+        int clientId = (int) request.getSession().getAttribute("clientId");
+        Optional<Client> client = getClientById(clientId);
+        order.setClient(client.get());
+
+        request.getSession().setAttribute("order", order);
+
+        return order;
+    }
+
+    private Optional<Good> getGoodById(int goodId) {
+        Optional<Good> good = Optional.empty();
         DaoFactory daoFactory = DaoFactory.getInstance();
         try(GoodDAO goodDAO = daoFactory.createGoodDAO()) {
             good = goodDAO.findById(goodId);
-            good.get().setQuantity(orderedQuantity);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Order order = (Order) request.getSession().getAttribute("order");
-        if (order == null) {
-            order = new Order();
+        return good;
+    }
 
-            Optional<Client> client = Optional.empty();
-            DaoFactory daoFactory1 = DaoFactory.getInstance();
-            try (ClientDAO clientDAO = daoFactory1.createClientDAO()) {
-                client = clientDAO.findById((Integer) request.getSession().getAttribute("clientId"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            order.setClient(client.get());
-
-            request.getSession().setAttribute("order", order);
+    private Optional<Client> getClientById(int clientId) {
+        Optional<Client> client = Optional.empty();
+        DaoFactory daoFactory1 = DaoFactory.getInstance();
+        try (ClientDAO clientDAO = daoFactory1.createClientDAO()) {
+            client = clientDAO.findById(clientId);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        order.getGoods().add(good.get());
 
-        return page;
+        return client;
     }
 }
