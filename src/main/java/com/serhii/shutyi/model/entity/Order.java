@@ -67,4 +67,36 @@ public class Order {
                 ", goods=" + goods +
                 '}';
     }
+
+    public static class Builder {
+        private  Order order;
+
+        public Builder() {
+            this.order = new Order();
+        }
+
+        public Order build() {
+            return order;
+        }
+
+        public Builder setId(final int id) {
+            order.setId(id);
+            return this;
+        }
+
+        public Builder setOrderedAt(final LocalDateTime orderedAt) {
+            order.setOrderedAt(orderedAt);
+            return this;
+        }
+
+        public Builder setClient(final Client client) {
+            order.setClient(client);
+            return this;
+        }
+
+        public Builder setGoods(final List<Good> goods) {
+            order.setGoods(goods);
+            return this;
+        }
+    }
 }

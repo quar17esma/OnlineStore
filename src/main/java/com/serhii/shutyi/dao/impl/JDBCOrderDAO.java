@@ -1,8 +1,11 @@
 package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.dao.OrderDAO;
+import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.model.entity.Good;
 import com.serhii.shutyi.model.entity.Order;
+import com.serhii.shutyi.model.entity.User;
+import com.serhii.shutyi.model.enums.Role;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,8 +29,7 @@ public class JDBCOrderDAO implements OrderDAO {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Order order = new Order(rs.getInt("orders.id"),
-                        rs.getTimestamp("orders.ordered_at").toLocalDateTime());
+                Order order = createOrder(rs);
                 orders.add(order);
             }
         } catch (Exception ex) {
@@ -50,8 +52,7 @@ public class JDBCOrderDAO implements OrderDAO {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Order order = new Order(rs.getInt("orders.id"),
-                        rs.getTimestamp("orders.ordered_at").toLocalDateTime());
+                Order order = createOrder(rs);
                 result = Optional.of(order);
             }
         } catch (Exception ex) {
@@ -59,6 +60,28 @@ public class JDBCOrderDAO implements OrderDAO {
         }
 
         return result;
+    }
+
+    private Order createOrder(ResultSet rs) throws SQLException {
+        Order order = new Order.Builder()
+                .setId(rs.getInt("orders.id"))
+                .setOrderedAt(rs.getTimestamp("orders.ordered_at").toLocalDateTime())
+                .setClient(new Client.Builder()
+                        .setId(rs.getInt("client.id"))
+                        .setName(rs.getString("client.name"))
+                        .setDiscount(rs.getInt("client.discount"))
+                        .setIsInBlackList(rs.getBoolean("client.is_in_black_list"))
+                        .setUser(new User.Builder()
+                                .setId(rs.getInt("user.id"))
+                                .setEmail(rs.getString("user.email"))
+                                .setPassword(rs.getString("user.password"))
+                                .setEnabled(rs.getBoolean("user.enabled"))
+                                .setRole(Role.valueOf(rs.getString("user.role").toUpperCase()))
+                                .build())
+                        .build())
+                .build();
+
+        return order;
     }
 
     @Override
