@@ -18,12 +18,8 @@ public class Good {
         this.quantity = quantity;
     }
 
-    public Good(int id, String name, String description, int price, List<Category> categories) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.categories = categories;
+    public Good() {
+
     }
 
     public int getId() {
@@ -76,12 +72,55 @@ public class Good {
 
     @Override
     public String toString() {
-        return "GoodDAO{" +
+        return "Good{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
+                ", quantity=" + quantity +
                 ", categories=" + categories +
                 '}';
+    }
+
+    public static class Builder {
+        private Good good;
+
+        public Builder() {
+            this.good = new Good();
+        }
+
+        public Good build() {
+            return good;
+        }
+
+        public Builder setId(final int id) {
+            good.setId(id);
+            return this;
+        }
+
+        public Builder setName(final String name) {
+            good.setName(name);
+            return this;
+        }
+
+        public Builder setDescription(final String description) {
+            good.setDescription(description);
+            return this;
+        }
+
+        public Builder setPrice(final int price) {
+            good.setPrice(price);
+            return this;
+        }
+
+        public Builder setQuantity(final int quantity) {
+            good.setQuantity(quantity);
+            return this;
+        }
+
+        public Builder setCategories(final List<Category> categories) {
+            good.setCategories(categories);
+            return this;
+        }
     }
 }

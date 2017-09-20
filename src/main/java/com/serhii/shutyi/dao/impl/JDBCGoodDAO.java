@@ -3,10 +3,7 @@ package com.serhii.shutyi.dao.impl;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.model.entity.Good;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,11 +25,7 @@ public class JDBCGoodDAO implements GoodDAO {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Good good = new Good(rs.getInt("goods.id"),
-                        rs.getString("goods.name"),
-                        rs.getString("goods.description"),
-                        rs.getInt("goods.price"),
-                        rs.getInt("goods.quantity"));
+                Good good = createGood(rs);
                 goods.add(good);
             }
         } catch (Exception ex) {
@@ -55,11 +48,7 @@ public class JDBCGoodDAO implements GoodDAO {
             ResultSet rs = query.executeQuery();
 
             if (rs.next()) {
-                Good good = new Good(rs.getInt("goods.id"),
-                        rs.getString("goods.name"),
-                        rs.getString("goods.description"),
-                        rs.getInt("goods.price"),
-                        rs.getInt("goods.quantity"));
+                Good good = createGood(rs);
                 result = Optional.of(good);
             }
         } catch (Exception ex) {
@@ -67,6 +56,19 @@ public class JDBCGoodDAO implements GoodDAO {
         }
 
         return result;
+    }
+
+    private Good createGood(ResultSet rs) throws SQLException {
+
+        Good good = new Good.Builder()
+                .setId(rs.getInt("goods.id"))
+                .setName(rs.getString("goods.name"))
+                .setDescription(rs.getString("goods.description"))
+                .setPrice(rs.getInt("goods.price"))
+                .setQuantity(rs.getInt("goods.quantity"))
+                .build();
+
+        return good;
     }
 
     @Override
