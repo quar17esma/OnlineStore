@@ -10,6 +10,7 @@ import com.serhii.shutyi.model.entity.Good;
 import com.serhii.shutyi.model.entity.Order;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 public class AddToOrder implements Action{
@@ -24,6 +25,8 @@ public class AddToOrder implements Action{
         good.get().setQuantity(orderedQuantity);
 
         addGoodToOrder(request, good);
+
+        request.setAttribute("goods", getAllGoods());
 
         return page;
     }
@@ -70,5 +73,18 @@ public class AddToOrder implements Action{
         }
 
         return client;
+    }
+
+    private List<Good> getAllGoods() {
+        List<Good> goods = null;
+
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        try (GoodDAO goodDAO = daoFactory.createGoodDAO()) {
+            goods = goodDAO.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return goods;
     }
 }
