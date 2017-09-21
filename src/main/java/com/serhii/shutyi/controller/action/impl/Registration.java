@@ -4,11 +4,9 @@ import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.dao.ClientDAO;
 import com.serhii.shutyi.dao.DaoFactory;
-import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.model.entity.User;
-import com.serhii.shutyi.model.enums.Role;
 
 import javax.servlet.http.HttpServletRequest;
 
