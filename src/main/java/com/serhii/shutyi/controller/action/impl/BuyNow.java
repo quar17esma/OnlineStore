@@ -16,8 +16,7 @@ public class BuyNow implements Action {
 
         int goodId = Integer.parseInt(request.getParameter("goodId"));
 
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        try(GoodDAO goodDAO = daoFactory.createGoodDAO()) {
+        try(GoodDAO goodDAO = DaoFactory.getInstance().createGoodDAO()) {
             Optional<Good> good = goodDAO.findById(goodId);
             request.setAttribute("good", good.get());
         } catch (Exception e) {

@@ -14,6 +14,8 @@ public class MyOrder implements Action {
         Order order = (Order) request.getSession().getAttribute("order");
         if (order != null) {
             request.setAttribute("goods", order.getGoods());
+        } else {
+            //корзина пуста
         }
 
         return page;

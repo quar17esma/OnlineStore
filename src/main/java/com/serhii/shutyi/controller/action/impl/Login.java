@@ -41,8 +41,8 @@ public class Login implements Action {
 
     private int getClientIdByEmail(String email) {
         Optional<User> user = Optional.empty();
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        try (UserDAO userDAO = daoFactory.createUserDAO()) {
+
+        try (UserDAO userDAO = DaoFactory.getInstance().createUserDAO()) {
             user = userDAO.findByEmail(email);
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,8 +54,7 @@ public class Login implements Action {
     private List<Good> getAllGoods() {
         List<Good> goods = null;
 
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        try (GoodDAO goodDAO = daoFactory.createGoodDAO()) {
+        try (GoodDAO goodDAO = DaoFactory.getInstance().createGoodDAO()) {
             goods = goodDAO.findAll();
         } catch (Exception e) {
             e.printStackTrace();

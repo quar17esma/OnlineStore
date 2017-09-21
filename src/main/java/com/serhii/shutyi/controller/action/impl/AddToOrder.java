@@ -53,8 +53,8 @@ public class AddToOrder implements Action{
 
     private Optional<Good> getGoodById(int goodId) {
         Optional<Good> good = Optional.empty();
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        try(GoodDAO goodDAO = daoFactory.createGoodDAO()) {
+
+        try(GoodDAO goodDAO = DaoFactory.getInstance().createGoodDAO()) {
             good = goodDAO.findById(goodId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,8 +65,8 @@ public class AddToOrder implements Action{
 
     private Optional<Client> getClientById(int clientId) {
         Optional<Client> client = Optional.empty();
-        DaoFactory daoFactory1 = DaoFactory.getInstance();
-        try (ClientDAO clientDAO = daoFactory1.createClientDAO()) {
+
+        try (ClientDAO clientDAO = DaoFactory.getInstance().createClientDAO()) {
             client = clientDAO.findById(clientId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,8 +78,7 @@ public class AddToOrder implements Action{
     private List<Good> getAllGoods() {
         List<Good> goods = null;
 
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        try (GoodDAO goodDAO = daoFactory.createGoodDAO()) {
+        try (GoodDAO goodDAO = DaoFactory.getInstance().createGoodDAO()) {
             goods = goodDAO.findAll();
         } catch (Exception e) {
             e.printStackTrace();

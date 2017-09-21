@@ -17,31 +17,38 @@ public class Registration implements Action {
     public String execute(HttpServletRequest request) {
         String page = null;
 
+        registerClient(request);
+
+        return page = ConfigurationManager.getProperty("path.page.login");
+    }
+
+    private void registerClient(HttpServletRequest request) {
         String name = request.getParameter("name");
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
 
-        Client client = new Client();
-        client.setName(name);
 
-        User user = new User();
-        user.setEmail(login);
-        user.setPassword(pass);
-        user.setRole(Role.USER);
+        Client client = new Client.Builder()
+                .setName(name)
+                .setUser(new User.Builder()
+                        .setEmail(login)
+                        .setPassword(pass)
+                        .build())
+                .build();
 
+        insertClientToDB(client);
+    }
 
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        try(UserDAO userDAO = daoFactory.createUserDAO();
-                ClientDAO clientDAO = daoFactory.createClientDAO()) {
-            int userId = userDAO.insert(user);
+    private void insertClientToDB(Client client) {
+
+        try (UserDAO userDAO = DaoFactory.getInstance().createUserDAO();
+             ClientDAO clientDAO = DaoFactory.getInstance().createClientDAO()) {
+
+            int userId = userDAO.insert(client.getUser());
             client.setId(userId);
             clientDAO.insert(client);
-            //set user client getid
-            //user insert
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return page = ConfigurationManager.getProperty("path.page.login");
     }
 }

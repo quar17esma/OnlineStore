@@ -12,8 +12,7 @@ public class LoginChecker {
     public static boolean checkLogin(String enterLogin, String enterPass) {
         boolean result = false;
 
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        try(UserDAO userDAO = daoFactory.createUserDAO()) {
+        try(UserDAO userDAO = DaoFactory.getInstance().createUserDAO()) {
             Optional<User> user = userDAO.findByEmail(enterLogin);
 
             result = user.get().getPassword().equals(enterPass);
