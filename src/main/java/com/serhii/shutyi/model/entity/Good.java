@@ -8,7 +8,6 @@ public class Good {
     private String description;
     private int price;
     private int quantity;
-    private List<Category> categories;
 
     public Good() {
 
@@ -54,14 +53,6 @@ public class Good {
         this.quantity = quantity;
     }
 
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
     @Override
     public String toString() {
         return "Good{" +
@@ -70,7 +61,6 @@ public class Good {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", categories=" + categories +
                 '}';
     }
 
@@ -107,11 +97,6 @@ public class Good {
 
         public Builder setQuantity(final int quantity) {
             good.setQuantity(quantity);
-            return this;
-        }
-
-        public Builder setCategories(final List<Category> categories) {
-            good.setCategories(categories);
             return this;
         }
     }
