@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>Log in</title>
 </head>
 <body>
     <form name="loginForm" method="POST" action="controller">
@@ -17,12 +17,12 @@
         <input type="password" name="password" value=""/>
         <br/>
         <input type="submit" value="Log in"/>
-        <br/>
-        ${errorLoginPassMessage}
-        <br/>
-        ${wrongAction}
-        <br/>
-        ${nullPage}
+        <%--<br/>--%>
+        <%--${errorLoginPassMessage}--%>
+        <%--<br/>--%>
+        <%--${wrongAction}--%>
+        <%--<br/>--%>
+        <%--${nullPage}--%>
     </form>
     <hr/>
     <form name="registrationForm" method="POST" action="/register">
