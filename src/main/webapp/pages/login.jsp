@@ -16,13 +16,13 @@
         <br/>Password:<br/>
         <input type="password" name="password" value=""/>
         <br/>
+        <input type="submit" value="Log in"/>
+        <br/>
         ${errorLoginPassMessage}
         <br/>
         ${wrongAction}
         <br/>
         ${nullPage}
-        <br/>
-        <input type="submit" value="Log in"/>
     </form>
     <hr/>
     <form name="registrationForm" method="POST" action="/register">
