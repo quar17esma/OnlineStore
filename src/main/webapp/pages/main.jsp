@@ -19,7 +19,7 @@
         <h1><fmt:message key="online.store"/></h1>
     </div>
     <hr/>
-    ${client.name}, hello!
+    <fmt:message key="message.hello"/> ${client.name}!
     <br/>
     <div>
         <form class="button" name="logoutForm" method="POST" action="controller">
