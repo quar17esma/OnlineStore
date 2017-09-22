@@ -24,7 +24,7 @@
         <input type="submit" value="My order">
     </form>
     <%--For ADMIN--%>
-    <c:if test="${pageContext.request.getSession(false).getAttribute('clientId') eq 2}">
+    <c:if test="${sessionScope.client.user.role == 'ADMIN'}">
         <form name="addNewGoodForm" method="POST" action="controller">
             <input type="hidden" name="action" value="edit_good"/>
             <input type="submit" value="Add good">
@@ -54,7 +54,8 @@
         </div><br/>
 
         <%--For ADMIN--%>
-        <c:if test="${pageContext.request.getSession(false).getAttribute('clientId') eq 2}">
+        <%--<jsp:useBean id="client" scope="request" type="com.serhii.shutyi.model.entity.Client"/>--%>
+        <c:if test="${sessionScope.client.user.role == 'ADMIN'}">
             <form name="goToEditGoodForm" method="POST" action="controller">
                 <input type="hidden" name="action" value="edit_good"/>
                 <input type="hidden" name="goodId" value="${good.id}">
