@@ -6,12 +6,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Log in</title>
+    <title><fmt:message key="title.login"/></title>
 </head>
 <body>
+
+<div>
     <form name="loginForm" method="POST" action="controller">
         <input type="hidden" name="action" value="login"/>
-            <label><fmt:message key="label.login"/></label>
+        <label><fmt:message key="label.login"/></label>
         <br/>
         <input type="text" name="login" value=""/>
         <br/>
@@ -35,5 +37,7 @@
         <fmt:message var="buttonRegisration" key="button.registration"/>
         <input type="submit" value="${buttonRegisration}">
     </form>
+</div>
+
 </body>
 </html>

@@ -12,7 +12,7 @@
             float: left;
         }
     </style>
-    <title>Welcome</title>
+    <title><fmt:message key="title.main"/></title>
 </head>
 <body>
     <div class="header">
