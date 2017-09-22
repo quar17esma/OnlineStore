@@ -3,9 +3,11 @@ package com.serhii.shutyi.controller.action.impl;
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
+import com.serhii.shutyi.dao.ClientDAO;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.dao.UserDAO;
+import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.model.entity.Good;
 import com.serhii.shutyi.model.entity.User;
 import com.serhii.shutyi.model.service.LoginChecker;
@@ -24,8 +26,8 @@ public class Login implements Action {
         String pass = request.getParameter("password");
 
         if (LoginChecker.checkLogin(login, pass)) {
-            int clientId = getClientIdByEmail(login);
-            request.getSession().setAttribute("clientId", clientId);
+            Client client = getClientByEmail(login);
+            request.getSession().setAttribute("client", client);
 
             request.setAttribute("user", login);
             request.setAttribute("goods", getAllGoods());
@@ -39,16 +41,19 @@ public class Login implements Action {
         return page;
     }
 
-    private int getClientIdByEmail(String email) {
+    private Client getClientByEmail(String email) {
         Optional<User> user = Optional.empty();
-
-        try (UserDAO userDAO = DaoFactory.getInstance().createUserDAO()) {
+        Optional<Client> client = null;
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        try (UserDAO userDAO = daoFactory.createUserDAO();
+             ClientDAO clientDAO = daoFactory.createClientDAO()) {
             user = userDAO.findByEmail(email);
+            client = clientDAO.findById(user.get().getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return user.get().getId();
+        return client.get();
     }
 
     private List<Good> getAllGoods() {
