@@ -11,12 +11,18 @@
 <body>
     <form name="loginForm" method="POST" action="controller">
         <input type="hidden" name="action" value="login"/>
-        Login:<br/>
+            <label><fmt:message key="label.login"/></label>
+        <br/>
         <input type="text" name="login" value=""/>
-        <br/>Password:<br/>
+        <br/>
+        <label><fmt:message key="label.password"/></label>
+        <br/>
         <input type="password" name="password" value=""/>
         <br/>
-        <input type="submit" value="Log in"/>
+        <fmt:message var="buttonLogin" key="button.login"/>
+        <input type="submit" value="${buttonLogin}"/>
+        <fmt:message var="buttonReset" key="button.reset"/>
+        <input type="reset" value="${buttonReset}">
         <%--<br/>--%>
         <%--${errorLoginPassMessage}--%>
         <%--<br/>--%>
@@ -26,7 +32,8 @@
     </form>
     <hr/>
     <form name="registrationForm" method="POST" action="/register">
-        <input type="submit" value="Register">
+        <fmt:message var="buttonRegisration" key="button.registration"/>
+        <input type="submit" value="${buttonRegisration}">
     </form>
 </body>
 </html>
