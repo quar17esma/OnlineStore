@@ -26,7 +26,7 @@
     <%--For ADMIN--%>
     <c:if test="${pageContext.request.getSession(false).getAttribute('clientId') eq 2}">
         <form name="addNewGoodForm" method="POST" action="controller">
-            <input type="hidden" name="action" value="add_good"/>
+            <input type="hidden" name="action" value="edit_good"/>
             <input type="submit" value="Add good">
         </form>
     </c:if>

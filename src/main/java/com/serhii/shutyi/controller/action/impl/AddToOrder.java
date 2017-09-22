@@ -14,6 +14,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class AddToOrder implements Action{
+
+//    DaoFactory factory;// в сервис
+//
+//    public AddToOrder(DaoFactory factory) {
+//        this.factory = factory;
+//    }
+
     @Override
     public String execute(HttpServletRequest request) {
         String page = ConfigurationManager.getProperty("path.page.main");

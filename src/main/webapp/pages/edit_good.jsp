@@ -1,16 +1,37 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Tim
-  Date: 21.09.2017
-  Time: 14:37
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<fmt:setLocale value="en_US"/>
+<fmt:setBundle basename="Labels"/>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>Edit good</title>
 </head>
 <body>
+
+<form name="addGoodForm" method="POST" action="controller">
+    <input type="hidden" name="action" value="add_good"/>
+    Name:
+    <br/>
+    <input type="text" name="name" value="${good.name}" required="required"/>
+    <br/>
+    Description:
+    <br/>
+    <input type="text" name="description" value="${good.description}" required="required"/>
+    <br/>
+    Price:
+    <br/>
+    <input type="text" name="price" value="${good.price}" required="required"/>
+    <br/>
+    Quantity:
+    <br/>
+    <input type="number" name="ordered_quantity" min="0" max="100" step="1" value="${good.quantity}"
+           required="required">
+    <br/>
+    <br/>
+    <input type="submit" value="Confirm"/>
+</form>
 
 </body>
 </html>
