@@ -4,8 +4,6 @@ import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.model.entity.Good;
 
-import java.util.Optional;
-
 public class EditGoodService {
     DaoFactory factory = DaoFactory.getInstance();
 
