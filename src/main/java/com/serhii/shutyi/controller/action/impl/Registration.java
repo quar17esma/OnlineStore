@@ -7,24 +7,16 @@ import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.model.entity.User;
+import com.serhii.shutyi.model.service.RegistrationService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class Registration implements Action {
     @Override
     public String execute(HttpServletRequest request) {
-        String page = null;
-
-        registerClient(request);
-
-        return page = ConfigurationManager.getProperty("path.page.login");
-    }
-
-    private void registerClient(HttpServletRequest request) {
         String name = request.getParameter("name");
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
-
 
         Client client = new Client.Builder()
                 .setName(name)
@@ -34,19 +26,10 @@ public class Registration implements Action {
                         .build())
                 .build();
 
-        insertClientToDB(client);
+        RegistrationService.getInstance().registerClient(client);
+
+        return ConfigurationManager.getProperty("path.page.login");
     }
 
-    private void insertClientToDB(Client client) {
 
-        try (UserDAO userDAO = DaoFactory.getInstance().createUserDAO();
-             ClientDAO clientDAO = DaoFactory.getInstance().createClientDAO()) {
-
-            int userId = userDAO.insert(client.getUser());
-            client.setId(userId);
-            clientDAO.insert(client);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
