@@ -9,8 +9,10 @@ import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.model.entity.Client;
 import com.serhii.shutyi.model.entity.Good;
+import com.serhii.shutyi.model.entity.Order;
 import com.serhii.shutyi.model.entity.User;
 import com.serhii.shutyi.model.service.LoginChecker;
+import com.serhii.shutyi.model.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -20,51 +22,32 @@ public class Login implements Action {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String page = null;
+        String page;
 
         String login = request.getParameter("login");
-        String pass = request.getParameter("password");
+        String password = request.getParameter("password");
 
-        if (LoginChecker.checkLogin(login, pass)) {
-            Client client = getClientByEmail(login);
+        try {
+            Client client = LoginService.getInstance().login(login, password);
+            List<Good> goods = LoginService.getInstance().getAllGoods();
+            Order order = new Order.Builder()
+                    .setClient(client)
+                    .build();
+
             request.getSession().setAttribute("client", client);
-
-            request.setAttribute("user", login);
-            request.setAttribute("goods", getAllGoods());
+            request.getSession().setAttribute("order", order);
+            request.setAttribute("goods", goods);
 
             page = ConfigurationManager.getProperty("path.page.main");
-        } else {
-            request.setAttribute("errorLoginPassMessage", LabelManager.getProperty("message.login.error"));
+        } catch (Exception e) {
+            request.setAttribute("errorLoginPassMessage",
+                    LabelManager.getProperty("message.login.error"));
+
             page = ConfigurationManager.getProperty("path.page.login");
         }
 
         return page;
     }
 
-    private Client getClientByEmail(String email) {
-        Optional<User> user = Optional.empty();
-        Optional<Client> client = null;
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        try (UserDAO userDAO = daoFactory.createUserDAO();
-             ClientDAO clientDAO = daoFactory.createClientDAO()) {
-            user = userDAO.findByEmail(email);
-            client = clientDAO.findById(user.get().getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        return client.get();
-    }
-
-    private List<Good> getAllGoods() {
-        List<Good> goods = null;
-
-        try (GoodDAO goodDAO = DaoFactory.getInstance().createGoodDAO()) {
-            goods = goodDAO.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return goods;
-    }
 }
