@@ -1,22 +1,12 @@
 package com.serhii.shutyi.dao;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class Config {
 
     private String url;
-    private String user;
-    private String pass;
-    private String autoReconnect;
-    private String characterEncoding;
-    private String useUnicode;
-    private String useJDBCCompliantTimezoneShift;
-    private String useLegacyDatetimeCode;
-    private String serverTimezone;
     private String factoryClassName;
     private Properties properties;
 
@@ -24,16 +14,16 @@ public class Config {
         load();
     }
 
-    private static class Holder{
-         private static Config INSTANCE = new Config();
+    private static class Holder {
+        private static Config INSTANCE = new Config();
     }
 
-    public static Config getInstance(){
+    public static Config getInstance() {
         return Holder.INSTANCE;
     }
 
     private void load() {
-        try( InputStream in = this.getClass().getResourceAsStream("/database.properties")){
+        try (InputStream in = this.getClass().getResourceAsStream("/database.properties")) {
             Properties databaseProperties = new Properties();
             databaseProperties.load(in);
 
@@ -57,10 +47,6 @@ public class Config {
 
     public String getUrl() {
         return url;
-    }
-
-    public String getUser() {
-        return user;
     }
 
     public String getFactoryClassName() {
