@@ -44,6 +44,9 @@
         <hr/>
     </div>
     <div>
+        <c:out value="${successAddGoodMessage}"/>
+    </div>
+    <div>
         <c:forEach items="${goods}" var="good">
             <div class="field">
                 <label><fmt:message key="good.name"/></label>
