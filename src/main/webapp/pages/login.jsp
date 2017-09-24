@@ -11,6 +11,10 @@
 <body>
 
 <div>
+    <c:out value="${successRegistrationMessage}"/>
+    <br/>
+</div>
+<div>
     <form name="loginForm" method="POST" action="controller">
         <input type="hidden" name="action" value="login"/>
         <label><fmt:message key="label.login"/></label>
@@ -27,10 +31,6 @@
         <input type="reset" value="${buttonReset}">
         <%--<br/>--%>
         <%--${errorLoginPassMessage}--%>
-        <%--<br/>--%>
-        <%--${wrongAction}--%>
-        <%--<br/>--%>
-        <%--${nullPage}--%>
     </form>
     <hr/>
     <form name="registrationForm" method="POST" action="/register">

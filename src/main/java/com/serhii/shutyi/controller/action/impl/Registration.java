@@ -2,6 +2,7 @@ package com.serhii.shutyi.controller.action.impl;
 
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
+import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.service.RegistrationService;
@@ -24,6 +25,8 @@ public class Registration implements Action {
                 .build();
 
         RegistrationService.getInstance().registerClient(client);
+
+        request.setAttribute("successRegistrationMessage", LabelManager.getProperty("message.success.registration"));
 
         return ConfigurationManager.getProperty("path.page.login");
     }

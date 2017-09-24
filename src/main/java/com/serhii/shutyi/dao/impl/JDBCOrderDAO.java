@@ -69,7 +69,6 @@ public class JDBCOrderDAO implements OrderDAO {
                 .setClient(new Client.Builder()
                         .setId(rs.getInt("client.id"))
                         .setName(rs.getString("client.name"))
-                        .setDiscount(rs.getInt("client.discount"))
                         .setIsInBlackList(rs.getBoolean("client.is_in_black_list"))
                         .setUser(new User.Builder()
                                 .setId(rs.getInt("user.id"))

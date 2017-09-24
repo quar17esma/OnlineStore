@@ -8,8 +8,6 @@ public class Client {
 
     private String name;
 
-    private int discount;
-
     private boolean isInBlackList;
 
     private User user;
@@ -33,14 +31,6 @@ public class Client {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
     }
 
     public boolean isInBlackList() {
@@ -72,7 +62,6 @@ public class Client {
         return "Client{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", discount=" + discount +
                 ", isInBlackList=" + isInBlackList +
                 ", user=" + user +
                 ", orders=" + orders +
@@ -97,11 +86,6 @@ public class Client {
 
         public Builder setName(final String name) {
             client.setName(name);
-            return this;
-        }
-
-        public Builder setDiscount(final int discount) {
-            client.setDiscount(discount);
             return this;
         }
 
