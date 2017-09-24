@@ -46,6 +46,7 @@
     <div>
         <c:out value="${successAddGoodMessage}"/>
         <c:out value="${successDeleteGoodMessage}"/>
+        <c:out value="${successSendOrderMessage}"/>
     </div>
     <div>
         <c:forEach items="${goods}" var="good">
