@@ -45,9 +45,7 @@
     </div>
     <div>
         <c:out value="${successAddGoodMessage}"/>
-        <br/>
         <c:out value="${successDeleteGoodMessage}"/>
-        <br/>
     </div>
     <div>
         <c:forEach items="${goods}" var="good">
@@ -57,7 +55,8 @@
             </div>
             <div class="field">
                 <label><fmt:message key="good.description"/></label>
-                <p><c:out value="${good.description}"/></p>
+                <br/>
+                <c:out value="${good.description}"/>
             </div>
             <div class="field">
                 <label><fmt:message key="good.price"/></label>
