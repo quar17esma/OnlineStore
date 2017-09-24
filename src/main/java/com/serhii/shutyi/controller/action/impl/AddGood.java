@@ -25,6 +25,6 @@ public class AddGood implements Action {
 
         AddGoodService.getInstance().addGood(good);
 
-        return ConfigurationManager.getProperty("/pages/main.jsp");
+        return ConfigurationManager.getProperty("path.page.main");
     }
 }

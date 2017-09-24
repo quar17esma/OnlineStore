@@ -26,7 +26,7 @@
     <br/>
     Quantity:
     <br/>
-    <input type="number" name="ordered_quantity" min="0" max="100" step="1" value="${good.quantity}"
+    <input type="number" name="quantity" min="0" max="100" step="1" value="${good.quantity}"
            required="required">
     <br/>
     <br/>

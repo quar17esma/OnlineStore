@@ -50,6 +50,11 @@ public enum ActionEnum {
         {
             this.command = new EditGood();
         }
+    },
+    ADD_GOOD {
+        {
+            this.command = new AddGood();
+        }
     };
 
     Action command;
