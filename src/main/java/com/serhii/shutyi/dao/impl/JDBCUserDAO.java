@@ -21,14 +21,10 @@ public class JDBCUserDAO implements UserDAO {
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
 
-        try (PreparedStatement query = connection.prepareStatement(
-                "SELECT * FROM user " +
-                        "JOIN user ON client.id = user.id ")) {
+        try (PreparedStatement query = connection.prepareStatement("SELECT * FROM user ")) {
             ResultSet rs = query.executeQuery();
-
             while (rs.next()) {
                 User user = createUser(rs);
-
                 users.add(user);
             }
         } catch (Exception ex) {
@@ -39,14 +35,12 @@ public class JDBCUserDAO implements UserDAO {
 
     @Override
     public Optional<User> findById(int id) {
-
         Optional<User> result = Optional.empty();
 
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "SELECT * FROM user " +
-                                     "JOIN client ON client.id = user.id " +
-                                     "WHERE user.id = ?")) {
+                                     "WHERE id = ?")) {
             query.setInt(1, id);
             ResultSet rs = query.executeQuery();
 
@@ -69,8 +63,7 @@ public class JDBCUserDAO implements UserDAO {
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "SELECT * FROM user " +
-                                     "JOIN client ON client.id = user.id " +
-                                     "WHERE user.email = ? ")) {
+                                     "WHERE email = ?")) {
             query.setString(1, email);
             ResultSet rs = query.executeQuery();
 
