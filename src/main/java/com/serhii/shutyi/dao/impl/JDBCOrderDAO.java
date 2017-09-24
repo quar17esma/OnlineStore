@@ -91,7 +91,7 @@ public class JDBCOrderDAO implements OrderDAO {
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "UPDATE orders " +
-                                     "SET orders.ordered_at = ?" +
+                                     "SET ordered_at = ? " +
                                      "WHERE id = ?")) {
             query.setString(1, String.valueOf(Timestamp.valueOf(order.getOrderedAt())));
             query.setInt(2, order.getId());
