@@ -2,6 +2,7 @@ package com.serhii.shutyi.controller.action.impl;
 
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
+import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Order;
 import com.serhii.shutyi.service.SendOrderService;
 
@@ -15,6 +16,8 @@ public class SendOrder implements Action {
         if (order != null) {
             SendOrderService.getInstance().sendOrder(order);
         }
+
+        request.setAttribute("successSendOrderMessage", LabelManager.getProperty("message.success.send.order"));
 
         return ConfigurationManager.getProperty("path.page.main");
     }

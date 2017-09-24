@@ -78,7 +78,7 @@ public class JDBCGoodDAO implements GoodDAO {
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "UPDATE goods " +
-                                     "SET name = ?, description = ?, price = ?, quantity = ?" +
+                                     "SET name = ?, description = ?, price = ?, quantity = ? " +
                                      "WHERE id = ?")) {
             query.setString(1, good.getName());
             query.setString(2, good.getDescription());
