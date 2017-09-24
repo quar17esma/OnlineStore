@@ -2,12 +2,9 @@ package com.serhii.shutyi.controller.action.impl;
 
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
-import com.serhii.shutyi.dao.ClientDAO;
-import com.serhii.shutyi.dao.DaoFactory;
-import com.serhii.shutyi.dao.UserDAO;
-import com.serhii.shutyi.model.entity.Client;
-import com.serhii.shutyi.model.entity.User;
-import com.serhii.shutyi.model.service.RegistrationService;
+import com.serhii.shutyi.entity.Client;
+import com.serhii.shutyi.entity.User;
+import com.serhii.shutyi.service.RegistrationService;
 
 import javax.servlet.http.HttpServletRequest;
 

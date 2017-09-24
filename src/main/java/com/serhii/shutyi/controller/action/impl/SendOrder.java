@@ -2,8 +2,8 @@ package com.serhii.shutyi.controller.action.impl;
 
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
-import com.serhii.shutyi.model.entity.Order;
-import com.serhii.shutyi.model.service.SendOrderService;
+import com.serhii.shutyi.entity.Order;
+import com.serhii.shutyi.service.SendOrderService;
 
 import javax.servlet.http.HttpServletRequest;
 

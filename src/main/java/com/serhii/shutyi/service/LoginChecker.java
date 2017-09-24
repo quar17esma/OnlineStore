@@ -1,9 +1,9 @@
-package com.serhii.shutyi.model.service;
+package com.serhii.shutyi.service;
 
 
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.UserDAO;
-import com.serhii.shutyi.model.entity.User;
+import com.serhii.shutyi.entity.User;
 
 import java.util.Optional;
 

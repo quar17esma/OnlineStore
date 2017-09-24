@@ -1,12 +1,12 @@
-package com.serhii.shutyi.model.service;
+package com.serhii.shutyi.service;
 
 import com.serhii.shutyi.dao.ClientDAO;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.dao.UserDAO;
-import com.serhii.shutyi.model.entity.Client;
-import com.serhii.shutyi.model.entity.Good;
-import com.serhii.shutyi.model.entity.User;
+import com.serhii.shutyi.entity.Client;
+import com.serhii.shutyi.entity.Good;
+import com.serhii.shutyi.entity.User;
 
 import java.util.List;
 

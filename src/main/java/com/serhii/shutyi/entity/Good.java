@@ -1,6 +1,4 @@
-package com.serhii.shutyi.model.entity;
-
-import java.util.List;
+package com.serhii.shutyi.entity;
 
 public class Good {
     private int id;

@@ -1,8 +1,8 @@
-package com.serhii.shutyi.model.service;
+package com.serhii.shutyi.service;
 
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.OrderDAO;
-import com.serhii.shutyi.model.entity.Order;
+import com.serhii.shutyi.entity.Order;
 
 import java.time.LocalDateTime;
 

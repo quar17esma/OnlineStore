@@ -1,8 +1,8 @@
-package com.serhii.shutyi.model.service;
+package com.serhii.shutyi.service;
 
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
-import com.serhii.shutyi.model.entity.Good;
+import com.serhii.shutyi.entity.Good;
 
 public class AddGoodService {
 

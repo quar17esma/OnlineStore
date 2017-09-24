@@ -1,6 +1,6 @@
 package com.serhii.shutyi.dao;
 
-import com.serhii.shutyi.model.entity.User;
+import com.serhii.shutyi.entity.User;
 
 import java.util.Optional;
 

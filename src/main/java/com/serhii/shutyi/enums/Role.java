@@ -1,4 +1,4 @@
-package com.serhii.shutyi.model.enums;
+package com.serhii.shutyi.enums;
 
 public enum Role {
     ADMIN,

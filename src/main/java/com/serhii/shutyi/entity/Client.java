@@ -1,4 +1,4 @@
-package com.serhii.shutyi.model.entity;
+package com.serhii.shutyi.entity;
 
 import java.util.List;
 

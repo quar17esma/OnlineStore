@@ -1,8 +1,8 @@
 package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.dao.UserDAO;
-import com.serhii.shutyi.model.entity.User;
-import com.serhii.shutyi.model.enums.Role;
+import com.serhii.shutyi.entity.User;
+import com.serhii.shutyi.enums.Role;
 
 import java.sql.*;
 import java.util.ArrayList;

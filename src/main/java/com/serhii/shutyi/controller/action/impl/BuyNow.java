@@ -2,8 +2,8 @@ package com.serhii.shutyi.controller.action.impl;
 
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
-import com.serhii.shutyi.model.entity.Good;
-import com.serhii.shutyi.model.service.BuyNowService;
+import com.serhii.shutyi.entity.Good;
+import com.serhii.shutyi.service.BuyNowService;
 
 import javax.servlet.http.HttpServletRequest;
 

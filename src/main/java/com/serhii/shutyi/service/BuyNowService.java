@@ -1,18 +1,18 @@
-package com.serhii.shutyi.model.service;
+package com.serhii.shutyi.service;
 
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
-import com.serhii.shutyi.model.entity.Good;
+import com.serhii.shutyi.entity.Good;
 
-public class EditGoodService {
+public class BuyNowService {
     DaoFactory factory = DaoFactory.getInstance();
 
     private static class Holder {
-        private static EditGoodService INSTANCE = new EditGoodService();
+        private static BuyNowService INSTANCE = new BuyNowService();
     }
 
-    public static EditGoodService getInstance() {
-        return EditGoodService.Holder.INSTANCE;
+    public static BuyNowService getInstance() {
+        return BuyNowService.Holder.INSTANCE;
     }
 
     public Good getGoodById(int goodId) {

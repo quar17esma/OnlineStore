@@ -1,6 +1,6 @@
-package com.serhii.shutyi.model.entity;
+package com.serhii.shutyi.entity;
 
-import com.serhii.shutyi.model.enums.Role;
+import com.serhii.shutyi.enums.Role;
 
 public class User {
     private int id;

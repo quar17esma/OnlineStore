@@ -1,7 +1,7 @@
 package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.dao.GoodDAO;
-import com.serhii.shutyi.model.entity.Good;
+import com.serhii.shutyi.entity.Good;
 
 import java.sql.*;
 import java.util.ArrayList;
