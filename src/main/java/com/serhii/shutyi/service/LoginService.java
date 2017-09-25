@@ -7,6 +7,8 @@ import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.User;
+import com.serhii.shutyi.exceptions.LoginException;
+import javafx.fxml.LoadException;
 
 import java.util.List;
 
@@ -21,13 +23,15 @@ public class LoginService {
         return LoginService.Holder.INSTANCE;
     }
 
-    public Client login(String login, String password) {
+    public Client login(String login, String password) throws LoginException {
 
-        if (LoginChecker.checkLogin(login, password)) {
+        LoginChecker checker = new LoginChecker();
+        if (checker.checkLogin(login, password)) {
             return getClientByEmail(login);
         } else {
             //my exception
-            throw new RuntimeException();
+            throw new LoginException("Fail to login", login);
+//            throw new RuntimeException();
         }
     }
 

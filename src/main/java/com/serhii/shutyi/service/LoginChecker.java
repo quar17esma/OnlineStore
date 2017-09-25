@@ -8,16 +8,26 @@ import com.serhii.shutyi.entity.User;
 import java.util.Optional;
 
 public class LoginChecker {
+    DaoFactory factory = DaoFactory.getInstance();
 
-    public static boolean checkLogin(String enterLogin, String enterPass) {
+    private static class Holder {
+        private static LoginChecker INSTANCE = new LoginChecker();
+    }
+
+    public static LoginChecker getInstance() {
+        return LoginChecker.Holder.INSTANCE;
+    }
+
+    public boolean checkLogin(String enterLogin, String enterPass) {
         boolean result = false;
 
-        try(UserDAO userDAO = DaoFactory.getInstance().createUserDAO()) {
+        try(UserDAO userDAO = factory.createUserDAO()) {
             Optional<User> user = userDAO.findByEmail(enterLogin);
-
-            result = user.get().getPassword().equals(enterPass);
+            if (user.isPresent()) {
+                result = user.get().getPassword().equals(enterPass);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         return result;

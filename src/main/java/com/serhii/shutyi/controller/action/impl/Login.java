@@ -6,6 +6,7 @@ import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
+import com.serhii.shutyi.exceptions.LoginException;
 import com.serhii.shutyi.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ public class Login implements Action {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String page;
+        String page = null;
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");
@@ -32,7 +33,7 @@ public class Login implements Action {
             request.setAttribute("goods", goods);
 
             page = ConfigurationManager.getProperty("path.page.main");
-        } catch (Exception e) {
+        } catch (LoginException e) {
             request.setAttribute("errorLoginPassMessage",
                     LabelManager.getProperty("message.login.error"));
 

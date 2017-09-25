@@ -12,7 +12,7 @@
 
 <div>
     <c:out value="${successRegistrationMessage}"/>
-    <br/>
+    <c:out value="${errorLoginPassMessage}"/>
 </div>
 <div>
     <form name="loginForm" method="POST" action="controller">
