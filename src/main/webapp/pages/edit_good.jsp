@@ -18,7 +18,7 @@
     <br/>
     Description:
     <br/>
-    <input type="text" name="description" value="${good.description}" required="required"/>
+    <input type="text" name="description" value="${good.description}" maxlength="1000" required="required"/>
     <br/>
     Price:
     <br/>
