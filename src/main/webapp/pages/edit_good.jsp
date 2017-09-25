@@ -22,7 +22,7 @@
     <br/>
     Price:
     <br/>
-    <input type="text" name="price" value="${good.price}" required="required"/>
+    <input type="text" name="price" value="${good.price}" pattern="[0-9]" required="required"/>
     <br/>
     Quantity:
     <br/>
