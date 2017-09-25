@@ -1,6 +1,5 @@
 package com.serhii.shutyi.dao;
 
-import com.serhii.shutyi.dao.impl.JDBCDaoFactory;
 import org.apache.log4j.Logger;
 
 public abstract class DaoFactory {
@@ -16,7 +15,6 @@ public abstract class DaoFactory {
         DaoFactory factory = null;
         try {
             factory = (DaoFactory) Class.forName(className).newInstance();
-//            factory = new JDBCDaoFactory();
         } catch (Exception e) {
             logger.error("Fail to get DaoFactory", e);
             throw new RuntimeException(e);
