@@ -10,13 +10,7 @@ import com.serhii.shutyi.service.LoginService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class AddToOrder implements Action{
-
-//    DaoFactory factory;// в сервис
-//
-//    public AddToOrder(DaoFactory factory) {
-//        this.factory = factory;
-//    }
+public class AddToOrder implements Action {
 
     @Override
     public String execute(HttpServletRequest request) {
