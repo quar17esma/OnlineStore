@@ -3,6 +3,7 @@ package com.serhii.shutyi.dao.impl;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.enums.Role;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCUserDAO implements UserDAO {
+    final static Logger logger = Logger.getLogger(JDBCUserDAO.class);
 
     private Connection connection;
 
@@ -28,6 +30,7 @@ public class JDBCUserDAO implements UserDAO {
                 users.add(user);
             }
         } catch (Exception ex) {
+            logger.error("Fail to find users", ex);
             throw new RuntimeException(ex);
         }
         return users;
@@ -50,6 +53,7 @@ public class JDBCUserDAO implements UserDAO {
                 result = Optional.of(user);
             }
         } catch (Exception ex) {
+            logger.error("Fail to user by id", ex);
             throw new RuntimeException(ex);
         }
 
@@ -73,6 +77,7 @@ public class JDBCUserDAO implements UserDAO {
                 result = Optional.of(user);
             }
         } catch (Exception ex) {
+            logger.error("Fail to user by email", ex);
             throw new RuntimeException(ex);
         }
 
@@ -111,6 +116,7 @@ public class JDBCUserDAO implements UserDAO {
 
             result = true;
         } catch (Exception ex) {
+            logger.error("Fail to update user", ex);
             throw new RuntimeException(ex);
         }
 
@@ -130,6 +136,7 @@ public class JDBCUserDAO implements UserDAO {
 
             result = true;
         } catch (Exception ex) {
+            logger.error("Fail to delete user", ex);
             throw new RuntimeException(ex);
         }
 
@@ -156,6 +163,7 @@ public class JDBCUserDAO implements UserDAO {
                 user.setId(result);
             }
         } catch (Exception ex) {
+            logger.error("Fail to insert user", ex);
             throw new RuntimeException(ex);
         }
 

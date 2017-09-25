@@ -4,6 +4,7 @@ import com.serhii.shutyi.dao.ClientDAO;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.enums.Role;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCClientDAO implements ClientDAO {
+    final static Logger logger = Logger.getLogger(JDBCClientDAO.class);
 
     private Connection connection;
 
@@ -32,6 +34,7 @@ public class JDBCClientDAO implements ClientDAO {
                 clients.add(client);
             }
         } catch (Exception ex) {
+            logger.error("Fail to find clients", ex);
             throw new RuntimeException(ex);
         }
         return clients;
@@ -54,6 +57,7 @@ public class JDBCClientDAO implements ClientDAO {
                 result = Optional.of(client);
             }
         } catch (Exception ex) {
+            logger.error("Fail to find client by id", ex);
             throw new RuntimeException(ex);
         }
         return result;
@@ -93,6 +97,7 @@ public class JDBCClientDAO implements ClientDAO {
 
             result = true;
         } catch (Exception ex) {
+            logger.error("Fail to update client", ex);
             throw new RuntimeException(ex);
         }
 
@@ -111,6 +116,7 @@ public class JDBCClientDAO implements ClientDAO {
 
             result = true;
         } catch (Exception ex) {
+            logger.error("Fail to delete client", ex);
             throw new RuntimeException(ex);
         }
 
@@ -136,6 +142,7 @@ public class JDBCClientDAO implements ClientDAO {
                 client.setId(result);
             }
         } catch (Exception ex) {
+            logger.error("Fail to insert client", ex);
             throw new RuntimeException(ex);
         }
 

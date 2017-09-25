@@ -1,6 +1,10 @@
 package com.serhii.shutyi.dao;
 
+import org.apache.log4j.Logger;
+
 public abstract class DaoFactory {
+    final static Logger logger = Logger.getLogger(DaoFactory.class);
+
     public abstract ClientDAO createClientDAO();
     public abstract UserDAO createUserDAO();
     public abstract GoodDAO createGoodDAO();
@@ -12,7 +16,8 @@ public abstract class DaoFactory {
         try {
             factory = (DaoFactory) Class.forName(className).newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Fail to get DaoFactory", e);
+            throw new RuntimeException(e);
         }
         return factory;
     }

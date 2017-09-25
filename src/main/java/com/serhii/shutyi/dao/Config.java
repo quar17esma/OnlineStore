@@ -1,10 +1,13 @@
 package com.serhii.shutyi.dao;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
+    final static Logger logger = Logger.getLogger(Config.class);
 
     private String url;
     private String factoryClassName;
@@ -41,7 +44,8 @@ public class Config {
 
             factoryClassName = databaseProperties.getProperty("db.factory.class");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Fail to load DB config", e);
+            throw new RuntimeException(e);
         }
     }
 

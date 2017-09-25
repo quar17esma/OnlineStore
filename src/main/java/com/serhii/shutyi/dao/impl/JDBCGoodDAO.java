@@ -2,6 +2,7 @@ package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.entity.Good;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCGoodDAO implements GoodDAO {
+    final static Logger logger = Logger.getLogger(JDBCGoodDAO.class);
 
     private Connection connection;
 
@@ -29,6 +31,7 @@ public class JDBCGoodDAO implements GoodDAO {
                 goods.add(good);
             }
         } catch (Exception ex) {
+            logger.error("Fail to find goods", ex);
             throw new RuntimeException(ex);
         }
 
@@ -52,6 +55,7 @@ public class JDBCGoodDAO implements GoodDAO {
                 result = Optional.of(good);
             }
         } catch (Exception ex) {
+            logger.error("Fail to find good by id", ex);
             throw new RuntimeException(ex);
         }
 
@@ -89,6 +93,7 @@ public class JDBCGoodDAO implements GoodDAO {
 
             result = true;
         } catch (Exception ex) {
+            logger.error("Fail to update good", ex);
             throw new RuntimeException(ex);
         }
 
@@ -108,6 +113,7 @@ public class JDBCGoodDAO implements GoodDAO {
 
             result = true;
         } catch (Exception ex) {
+            logger.error("Fail to delete good", ex);
             throw new RuntimeException(ex);
         }
 
@@ -137,6 +143,7 @@ public class JDBCGoodDAO implements GoodDAO {
                 good.setId(result);
             }
         } catch (Exception ex) {
+            logger.error("Fail to insert good", ex);
             throw new RuntimeException(ex);
         }
 
