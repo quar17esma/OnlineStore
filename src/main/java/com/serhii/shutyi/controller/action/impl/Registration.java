@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 public class Registration implements Action {
     @Override
     public String execute(HttpServletRequest request) {
-        String name = request.getParameter("name");
-        String login = request.getParameter("login");
-        String pass = request.getParameter("password");
+        String name = request.getParameter("name").trim();
+        String login = request.getParameter("login").trim();
+        String pass = request.getParameter("password").trim();
 
         Client client = new Client.Builder()
                 .setName(name)
