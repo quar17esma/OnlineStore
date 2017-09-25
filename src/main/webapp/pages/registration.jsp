@@ -9,23 +9,25 @@
     <title>Title</title>
 </head>
 <body>
-<form name="registrationForm" method="POST" action="/controller">
-    <input type="hidden" name="action" value="registration"/>
-    Name:<br/>
-    <input type="text" name="name" value=""/><br/>
-    Login:<br/>
-    <input type="text" name="login" value=""/><br/>
-    Password:<br/>
-    <input type="password" name="password" value=""/>
-    <br/>
-    ${errorLoginPassMessage}
-    <br/>
-    ${wrongAction}
-    <br/>
-    ${nullPage}
-    <br/>
-    <input type="submit" value="Register"/>
-</form>
-<hr/>
+
+<div>
+    <c:out value="${errorRegistrationMessage}"/>
+</div>
+<div>
+    <form name="registrationForm" method="POST" action="controller">
+        <input type="hidden" name="action" value="registration"/>
+        Name:<br/>
+        <input type="text" name="name" value=""/><br/>
+        Login:<br/>
+        <input type="text" name="login" value=""/>
+        <c:out value="${errorBusyEmailMessage}"/>
+        <br/>
+        Password:<br/>
+        <input type="password" name="password" value=""/>
+        <br/>
+        <input type="submit" value="Register"/>
+    </form>
+</div>
+
 </body>
 </html>

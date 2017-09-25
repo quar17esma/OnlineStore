@@ -33,7 +33,7 @@
         <%--${errorLoginPassMessage}--%>
     </form>
     <hr/>
-    <form name="registrationForm" method="POST" action="/register">
+    <form name="registrationForm" method="POST" action="register">
         <fmt:message var="buttonRegisration" key="button.registration"/>
         <input type="submit" value="${buttonRegisration}">
     </form>
