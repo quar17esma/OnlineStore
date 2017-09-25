@@ -12,8 +12,8 @@ public class AddGood implements Action {
     @Override
     public String execute(HttpServletRequest request) {
 
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
+        String name = request.getParameter("name").trim();
+        String description = request.getParameter("description").trim();
         int price = Integer.parseInt(request.getParameter("price"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
