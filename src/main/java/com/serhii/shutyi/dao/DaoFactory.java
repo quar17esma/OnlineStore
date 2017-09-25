@@ -2,13 +2,15 @@ package com.serhii.shutyi.dao;
 
 import org.apache.log4j.Logger;
 
+import java.sql.Connection;
+
 public abstract class DaoFactory {
     final static Logger logger = Logger.getLogger(DaoFactory.class);
 
-    public abstract ClientDAO createClientDAO();
-    public abstract UserDAO createUserDAO();
-    public abstract GoodDAO createGoodDAO();
-    public abstract OrderDAO createOrderDAO();
+    public abstract ClientDAO createClientDAO(Connection connection);
+    public abstract UserDAO createUserDAO(Connection connection);
+    public abstract GoodDAO createGoodDAO(Connection connection);
+    public abstract OrderDAO createOrderDAO(Connection connection);
 
     public static DaoFactory getInstance(){
         String className = ConfigDaoFactory.getInstance().getFactoryClassName();

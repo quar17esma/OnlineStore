@@ -1,15 +1,13 @@
 package com.serhii.shutyi.service;
 
-import com.serhii.shutyi.dao.ClientDAO;
-import com.serhii.shutyi.dao.DaoFactory;
-import com.serhii.shutyi.dao.GoodDAO;
-import com.serhii.shutyi.dao.UserDAO;
+import com.serhii.shutyi.dao.*;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.exceptions.LoginException;
 import javafx.fxml.LoadException;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class LoginService {
@@ -29,19 +27,22 @@ public class LoginService {
         if (checker.checkLogin(login, password)) {
             return getClientByEmail(login);
         } else {
-            //my exception
             throw new LoginException("Fail to login", login);
-//            throw new RuntimeException();
         }
     }
 
     private Client getClientByEmail(String email) {
         Client client = null;
 
-        try (UserDAO userDAO = factory.createUserDAO();
-             ClientDAO clientDAO = factory.createClientDAO()) {
+        Connection connection = ConnectionPool.getConnection();
+        try (UserDAO userDAO = factory.createUserDAO(connection);
+             ClientDAO clientDAO = factory.createClientDAO(connection)) {
+            connection.setAutoCommit(false);
+
             User user = userDAO.findByEmail(email).get();
             client = clientDAO.findById(user.getId()).get();
+
+            connection.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,7 +53,7 @@ public class LoginService {
     public List<Good> getAllGoods() {
         List<Good> goods = null;
 
-        try (GoodDAO goodDAO = factory.createGoodDAO()) {
+        try (GoodDAO goodDAO = factory.createGoodDAO(ConnectionPool.getConnection())) {
             goods = goodDAO.findAll();
         } catch (Exception e) {
             e.printStackTrace();

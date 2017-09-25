@@ -1,5 +1,6 @@
 package com.serhii.shutyi.service;
 
+import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.entity.Good;
@@ -17,7 +18,7 @@ public class BuyNowService {
 
     public Good getGoodById(int goodId) {
         Good good = null;
-        try(GoodDAO goodDAO = factory.createGoodDAO()) {
+        try(GoodDAO goodDAO = factory.createGoodDAO(ConnectionPool.getConnection())) {
             good = goodDAO.findById(goodId).get();
         } catch (Exception e) {
             e.printStackTrace();

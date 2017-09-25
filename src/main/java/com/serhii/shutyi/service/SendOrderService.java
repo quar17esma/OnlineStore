@@ -1,11 +1,13 @@
 package com.serhii.shutyi.service;
 
+import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.dao.OrderDAO;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
 
+import java.sql.Connection;
 import java.time.LocalDateTime;
 
 public class SendOrderService {
@@ -20,8 +22,11 @@ public class SendOrderService {
     }
 
     public void sendOrder(Order order) {
-        try (OrderDAO orderDAO = factory.createOrderDAO();
-             GoodDAO goodDAO = factory.createGoodDAO()) {
+        Connection connection = ConnectionPool.getConnection();
+        try (OrderDAO orderDAO = factory.createOrderDAO(connection);
+             GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+
+            connection.setAutoCommit(false);
 
             order.setOrderedAt(LocalDateTime.now());
             orderDAO.insert(order);
@@ -37,6 +42,8 @@ public class SendOrderService {
                     throw new RuntimeException();
                 }
             }
+
+            connection.commit();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

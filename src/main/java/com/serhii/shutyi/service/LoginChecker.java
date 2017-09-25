@@ -1,6 +1,7 @@
 package com.serhii.shutyi.service;
 
 
+import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.User;
@@ -21,7 +22,7 @@ public class LoginChecker {
     public boolean checkLogin(String enterLogin, String enterPass) {
         boolean result = false;
 
-        try(UserDAO userDAO = factory.createUserDAO()) {
+        try(UserDAO userDAO = factory.createUserDAO(ConnectionPool.getConnection())) {
             Optional<User> user = userDAO.findByEmail(enterLogin);
             if (user.isPresent()) {
                 result = user.get().getPassword().equals(enterPass);
