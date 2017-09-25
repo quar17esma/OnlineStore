@@ -26,7 +26,7 @@ public class Config {
     }
 
     private void load() {
-        try (InputStream in = this.getClass().getResourceAsStream("/database.properties")) {
+        try (InputStream in = this.getClass().getResourceAsStream("/db.properties")) {
             Properties databaseProperties = new Properties();
             databaseProperties.load(in);
 
