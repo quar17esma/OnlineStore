@@ -9,29 +9,33 @@
     <title>Edit good</title>
 </head>
 <body>
-
-<form name="addGoodForm" method="POST" action="controller">
-    <input type="hidden" name="action" value="add_good"/>
-    Name:
-    <br/>
-    <input type="text" name="name" value="${good.name}" required="required"/>
-    <br/>
-    Description:
-    <br/>
-    <input type="text" name="description" value="${good.description}" maxlength="1000" required="required"/>
-    <br/>
-    Price:
-    <br/>
-    <input type="text" name="price" value="${good.price}" pattern="[0-9]" required="required"/>
-    <br/>
-    Quantity:
-    <br/>
-    <input type="number" name="quantity" min="0" max="100" step="1" value="${good.quantity}"
-           required="required">
-    <br/>
-    <br/>
-    <input type="submit" value="Confirm"/>
-</form>
+<div>
+    <c:out value="${errorAddGoodMessage}"/>
+</div>
+<div>
+    <form name="addGoodForm" method="POST" action="controller">
+        <input type="hidden" name="action" value="add_good"/>
+        Name:
+        <br/>
+        <input type="text" name="name" value="${good.name}" required="required"/>
+        <br/>
+        Description:
+        <br/>
+        <input type="text" name="description" value="${good.description}" maxlength="1000" required="required"/>
+        <br/>
+        Price:
+        <br/>
+        <input type="number" name="price" min="0" max="100000000" step="1" value="${good.price}" required="required"/>
+        <br/>
+        Quantity:
+        <br/>
+        <input type="number" name="quantity" min="0" max="100" step="1" value="${good.quantity}"
+               required="required">
+        <br/>
+        <br/>
+        <input type="submit" value="Confirm"/>
+    </form>
+</div>
 
 </body>
 </html>

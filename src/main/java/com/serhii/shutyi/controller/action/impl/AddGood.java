@@ -1,6 +1,7 @@
 package com.serhii.shutyi.controller.action.impl;
 
 import com.serhii.shutyi.controller.action.Action;
+import com.serhii.shutyi.controller.checker.InputGoodChecker;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Good;
@@ -11,23 +12,35 @@ import javax.servlet.http.HttpServletRequest;
 public class AddGood implements Action {
     @Override
     public String execute(HttpServletRequest request) {
+        String page = null;
 
         String name = request.getParameter("name").trim();
         String description = request.getParameter("description").trim();
         int price = Integer.parseInt(request.getParameter("price"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        Good good = new Good.Builder()
-                .setName(name)
-                .setDescription(description)
-                .setPrice(price)
-                .setQuantity(quantity)
-                .build();
+        InputGoodChecker checker = new InputGoodChecker();
+        boolean isDataCorrect = checker.isInputDataCorrect(name, description, price, quantity);
 
-        AddGoodService.getInstance().addGood(good);
+        if (isDataCorrect) {
 
-        request.setAttribute("successAddGoodMessage", LabelManager.getProperty("message.success.add.good"));
+            Good good = new Good.Builder()
+                    .setName(name)
+                    .setDescription(description)
+                    .setPrice(price)
+                    .setQuantity(quantity)
+                    .build();
 
-        return ConfigurationManager.getProperty("path.page.main");
+            AddGoodService.getInstance().addGood(good);
+
+            request.setAttribute("successAddGoodMessage", LabelManager.getProperty("message.success.add.good"));
+
+            page = ConfigurationManager.getProperty("path.page.main");
+        } else {
+            request.setAttribute("errorAddGoodMessage", LabelManager.getProperty("message.error.add.good"));
+
+            page = ConfigurationManager.getProperty("path.page.edit.good");
+        }
+        return page;
     }
 }
