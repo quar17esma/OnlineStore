@@ -6,6 +6,7 @@ import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.User;
 
+import java.sql.Connection;
 import java.util.Optional;
 
 public class LoginChecker {
@@ -22,7 +23,7 @@ public class LoginChecker {
     public boolean checkLogin(String enterLogin, String enterPass) {
         boolean result = false;
 
-        try(UserDAO userDAO = factory.createUserDAO(ConnectionPool.getConnection())) {
+        try(UserDAO userDAO = factory.createUserDAO(getConnection())) {
             Optional<User> user = userDAO.findByEmail(enterLogin);
             if (user.isPresent()) {
                 result = user.get().getPassword().equals(enterPass);
@@ -32,6 +33,10 @@ public class LoginChecker {
         }
 
         return result;
+    }
+
+    public Connection getConnection() {
+        return ConnectionPool.getConnection();
     }
 }
 
