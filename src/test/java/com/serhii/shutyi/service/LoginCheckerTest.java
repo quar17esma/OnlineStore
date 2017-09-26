@@ -4,6 +4,7 @@ import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.User;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
-
+@Ignore
 public class LoginCheckerTest {
     @Test
     public void checkLogin() throws Exception {
