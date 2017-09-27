@@ -32,7 +32,7 @@ public class Login implements Action {
             request.getSession().setAttribute("order", order);
             request.setAttribute("goods", goods);
 
-            page = ConfigurationManager.getProperty("path.page.main");
+            page = ConfigurationManager.getProperty("path.page.welcome");
         } catch (LoginException e) {
             request.setAttribute("errorLoginPassMessage",
                     LabelManager.getProperty("message.login.error"));
