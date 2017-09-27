@@ -97,18 +97,6 @@ public class JDBCOrderDAO implements OrderDAO {
                 .setId(rs.getInt("orders.id"))
                 .setOrderedAt(rs.getTimestamp("orders.ordered_at").toLocalDateTime())
                 .setStatus(OrderStatus.valueOf(rs.getString("orders.status")))
-                .setClient(new Client.Builder()
-                        .setId(rs.getInt("client.id"))
-                        .setName(rs.getString("client.name"))
-                        .setIsInBlackList(rs.getBoolean("client.is_in_black_list"))
-                        .setUser(new User.Builder()
-                                .setId(rs.getInt("user.id"))
-                                .setEmail(rs.getString("user.email"))
-                                .setPassword(rs.getString("user.password"))
-                                .setEnabled(rs.getBoolean("user.enabled"))
-                                .setRole(Role.valueOf(rs.getString("user.role").toUpperCase()))
-                                .build())
-                        .build())
                 .build();
 
         return order;
@@ -121,10 +109,11 @@ public class JDBCOrderDAO implements OrderDAO {
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "UPDATE orders " +
-                                     "SET ordered_at = ? " +
+                                     "SET ordered_at = ?, status = ? " +
                                      "WHERE id = ?")) {
-            query.setString(1, String.valueOf(Timestamp.valueOf(order.getOrderedAt())));
-            query.setInt(2, order.getId());
+            query.setTimestamp(1, Timestamp.valueOf(order.getOrderedAt()));
+            query.setString(2, order.getStatus().name());
+            query.setInt(3, order.getId());
 
             query.executeUpdate();
 
@@ -167,8 +156,7 @@ public class JDBCOrderDAO implements OrderDAO {
                                      "VALUES(?, ?)",
                              Statement.RETURN_GENERATED_KEYS)) {
 
-            String orderedAt = String.valueOf(Timestamp.valueOf(order.getOrderedAt()));
-            query.setString(1, orderedAt);
+            query.setTimestamp(1, Timestamp.valueOf(order.getOrderedAt()));
             query.setInt(2, order.getClient().getId());
 
             query.executeUpdate();
