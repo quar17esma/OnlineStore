@@ -9,6 +9,7 @@
     <title>My order</title>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 
 <c:forEach items="${goods}" var="good">
     <div class="field">

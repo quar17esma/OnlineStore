@@ -9,6 +9,9 @@
     <title>Buy now</title>
 </head>
 <body>
+
+    <jsp:include page="header.jsp"/>
+
     <div class="field">
         <label><fmt:message key="good.name"/></label>
         <p><c:out value="${good.name}"/></p>
