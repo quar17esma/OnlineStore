@@ -16,7 +16,7 @@ public class DeleteGood implements Action {
 
         request.setAttribute("successDeleteGoodMessage", LabelManager.getProperty("message.success.delete.good"));
 
-        return ConfigurationManager.getProperty("path.page.main");
+        return ConfigurationManager.getProperty("path.page.goods");
     }
 
 

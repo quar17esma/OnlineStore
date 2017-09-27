@@ -35,7 +35,7 @@ public class AddGood implements Action {
 
             request.setAttribute("successAddGoodMessage", LabelManager.getProperty("message.success.add.good"));
 
-            page = ConfigurationManager.getProperty("path.page.main");
+            page = ConfigurationManager.getProperty("path.page.goods");
         } else {
             request.setAttribute("errorAddGoodMessage", LabelManager.getProperty("message.error.wrong.data"));
 

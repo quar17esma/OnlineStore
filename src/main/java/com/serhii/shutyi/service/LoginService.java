@@ -49,16 +49,4 @@ public class LoginService {
 
         return client;
     }
-
-    public List<Good> getAllGoods() {
-        List<Good> goods = null;
-
-        try (GoodDAO goodDAO = factory.createGoodDAO(ConnectionPool.getConnection())) {
-            goods = goodDAO.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return goods;
-    }
 }

@@ -23,14 +23,12 @@ public class Login implements Action {
 
         try {
             Client client = LoginService.getInstance().login(login, password);
-            List<Good> goods = LoginService.getInstance().getAllGoods();
             Order order = new Order.Builder()
                     .setClient(client)
                     .build();
 
             request.getSession().setAttribute("client", client);
             request.getSession().setAttribute("order", order);
-            request.setAttribute("goods", goods);
 
             page = ConfigurationManager.getProperty("path.page.welcome");
         } catch (LoginException e) {
@@ -42,6 +40,4 @@ public class Login implements Action {
 
         return page;
     }
-
-
 }

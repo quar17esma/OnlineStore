@@ -41,6 +41,11 @@ public enum ActionEnum {
             this.command = new SendOrder();
         }
     },
+    SHOW_GOODS {
+        {
+            this.command = new ShowGoods();
+        }
+    },
     DELETE_GOOD {
         {
             this.command = new DeleteGood();

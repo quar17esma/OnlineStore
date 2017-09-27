@@ -28,6 +28,11 @@
         <fmt:message var="buttonMyOrder" key="button.my.order"/>
         <input type="submit" value="${buttonMyOrder}">
     </form>
+    <form class="button" name="goodsForm" method="POST" action="controller">
+        <input type="hidden" name="action" value="show_goods"/>
+        <fmt:message var="buttonGoodsList" key="button.goods.list"/>
+        <input type="submit" value="${buttonGoodsList}">
+    </form>
     <%--For ADMIN--%>
     <c:if test="${sessionScope.client.user.role == 'ADMIN'}">
         <form class="button" name="addNewGoodForm" method="POST" action="controller">

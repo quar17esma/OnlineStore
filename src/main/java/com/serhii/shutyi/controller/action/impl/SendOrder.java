@@ -19,6 +19,6 @@ public class SendOrder implements Action {
 
         request.setAttribute("successSendOrderMessage", LabelManager.getProperty("message.success.send.order"));
 
-        return ConfigurationManager.getProperty("path.page.main");
+        return ConfigurationManager.getProperty("path.page.goods");
     }
 }
