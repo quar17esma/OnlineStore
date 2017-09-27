@@ -1,5 +1,7 @@
 package com.serhii.shutyi.entity;
 
+import com.serhii.shutyi.enums.OrderStatus;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 public class Order {
     private int id;
     private LocalDateTime orderedAt;
+    private OrderStatus status;
     private Client client;
     private List<Good> goods;
 
@@ -30,6 +33,14 @@ public class Order {
         this.orderedAt = orderedAt;
     }
 
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
     public Client getClient() {
         return client;
     }
@@ -51,6 +62,7 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", orderedAt=" + orderedAt +
+                ", status=" + status +
                 ", client=" + client +
                 ", goods=" + goods +
                 '}';
@@ -74,6 +86,11 @@ public class Order {
 
         public Builder setOrderedAt(final LocalDateTime orderedAt) {
             order.setOrderedAt(orderedAt);
+            return this;
+        }
+
+        public Builder setStatus(final OrderStatus status) {
+            order.setStatus(status);
             return this;
         }
 
