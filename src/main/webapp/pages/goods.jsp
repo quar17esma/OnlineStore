@@ -2,8 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
-<fmt:setLocale value="en_US"/>
-<%--<fmt:setLocale value="ru_RU"/>--%>
+<c:if test="${pageContext.session.getAttribute('locale') == 'ru_RU'}">
+    <fmt:setLocale value="ru_RU"/>
+</c:if>
+<c:if test="${pageContext.session.getAttribute('locale') == 'en_US'}">
+    <fmt:setLocale value="en_US"/>
+</c:if>
 <fmt:setBundle basename="Labels"/>
 <!DOCTYPE html>
 <html>
@@ -13,7 +17,7 @@
             float: left;
         }
     </style>
-    <title><fmt:message key="title.main"/></title>
+    <title><fmt:message key="title.goods"/></title>
 </head>
 <body>
 

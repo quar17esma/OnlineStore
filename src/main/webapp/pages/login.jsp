@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<fmt:setLocale value="en_US"/>
+<c:if test="${pageContext.session.getAttribute('locale') == 'ru_RU'}">
+    <fmt:setLocale value="ru_RU"/>
+</c:if>
+<c:if test="${pageContext.session.getAttribute('locale') == 'en_US'}">
+    <fmt:setLocale value="en_US"/>
+</c:if>
 <fmt:setBundle basename="Labels"/>
 <!DOCTYPE html>
 <html>
@@ -9,6 +14,21 @@
     <title><fmt:message key="title.login"/></title>
 </head>
 <body>
+
+<div>
+    <form name="engForm" method="POST" action="controller">
+        <input type="hidden" name="action" value="change_locale">
+        <input type="hidden" name="locale" value="en_US">
+        <fmt:message var="buttonEng" key="button.english"/>
+        <input type="submit" value="${buttonEng}">
+    </form>
+    <form name="rusForm" method="POST" action="controller">
+        <input type="hidden" name="action" value="change_locale">
+        <input type="hidden" name="locale" value="ru_RU">
+        <fmt:message var="buttonRus" key="button.russian"/>
+        <input type="submit" value="${buttonRus}">
+    </form>
+</div>
 
 <div>
     <c:out value="${successRegistrationMessage}"/>
@@ -29,13 +49,11 @@
         <input type="submit" value="${buttonLogin}"/>
         <fmt:message var="buttonReset" key="button.reset"/>
         <input type="reset" value="${buttonReset}">
-        <%--<br/>--%>
-        <%--${errorLoginPassMessage}--%>
     </form>
     <hr/>
     <form name="registrationForm" method="POST" action="register">
-        <fmt:message var="buttonRegisration" key="button.registration"/>
-        <input type="submit" value="${buttonRegisration}">
+        <fmt:message var="buttonRegistration" key="button.registration"/>
+        <input type="submit" value="${buttonRegistration}">
     </form>
 </div>
 

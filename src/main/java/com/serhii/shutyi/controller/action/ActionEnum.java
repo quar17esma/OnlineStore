@@ -70,6 +70,11 @@ public enum ActionEnum {
         {
             this.command = new AddGood();
         }
+    },
+    CHANGE_LOCALE {
+        {
+            this.command = new ChangeLocale();
+        }
     };
 
     Action command;

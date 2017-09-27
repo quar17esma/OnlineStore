@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<fmt:setLocale value="en_US"/>
+<c:if test="${pageContext.session.getAttribute('locale') == 'ru_RU'}">
+    <fmt:setLocale value="ru_RU"/>
+</c:if>
+<c:if test="${pageContext.session.getAttribute('locale') == 'en_US'}">
+    <fmt:setLocale value="en_US"/>
+</c:if>
 <fmt:setBundle basename="Labels"/>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit good</title>
+    <title><fmt:message key="title.edit.good"/></title>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -16,25 +21,31 @@
 <div>
     <form name="addGoodForm" method="POST" action="controller">
         <input type="hidden" name="action" value="add_good"/>
-        Name:
+
+        <label><fmt:message key="label.name"/></label>
         <br/>
         <input type="text" name="name" value="${good.name}" required="required"/>
         <br/>
-        Description:
+
+        <label><fmt:message key="label.description"/></label>
         <br/>
         <input type="text" name="description" value="${good.description}" maxlength="1000" required="required"/>
         <br/>
-        Price:
+
+        <label><fmt:message key="label.price"/></label>
         <br/>
         <input type="number" name="price" min="0" max="100000000" step="1" value="${good.price}" required="required"/>
         <br/>
-        Quantity:
+
+        <label><fmt:message key="label.quantity"/></label>
         <br/>
         <input type="number" name="quantity" min="0" max="100" step="1" value="${good.quantity}"
                required="required">
         <br/>
+
         <br/>
-        <input type="submit" value="Confirm"/>
+        <fmt:message var="buttonConfirm" key="button.confirm"/>
+        <input type="submit" value="${buttonConfirm}"/>
     </form>
 </div>
 

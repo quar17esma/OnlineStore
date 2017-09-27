@@ -38,6 +38,8 @@ public class Registration implements Action {
                 page = ConfigurationManager.getProperty("path.page.login");
 
             } catch (BusyEmailException e) {
+                request.setAttribute("name", name);
+                request.setAttribute("login", login);
                 request.setAttribute("errorBusyEmailMessage", LabelManager.getProperty("message.error.busy.email"));
                 page = ConfigurationManager.getProperty("path.page.registration");
             }

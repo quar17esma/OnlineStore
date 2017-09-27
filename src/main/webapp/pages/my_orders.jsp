@@ -2,12 +2,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="ctg" uri="customtags" %>
-<fmt:setLocale value="en_US"/>
+<c:if test="${pageContext.session.getAttribute('locale') == 'ru_RU'}">
+    <fmt:setLocale value="ru_RU"/>
+</c:if>
+<c:if test="${pageContext.session.getAttribute('locale') == 'en_US'}">
+    <fmt:setLocale value="en_US"/>
+</c:if>
 <fmt:setBundle basename="Labels"/>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My orders</title>
+    <title><fmt:message key="title.my.orders"/></title>
 </head>
 <body>
 
@@ -22,8 +27,10 @@
 
 <div>
     <c:forEach items="${orders}" var="order">
-        <label>Ordered at: </label>
+
+        <label><fmt:message key="label.ordered.at"/></label>
         <c:out value="${order.orderedAt}"/>
+
         <c:forEach items="${order.goods}" var="good">
             <div class="field">
                 <label><fmt:message key="good.name"/></label>
@@ -38,12 +45,15 @@
                 <c:out value="${good.quantity}"/>
             </div>
         </c:forEach>
+
         <c:if test="${order.status != 'PAID'}">
             <div>
                 <form name="payOrderForm" method="POST" action="controller">
                     <input type="hidden" name="action" value="pay_order"/>
                     <input type="hidden" name="orderId" value="${order.id}"/>
-                    <input type="submit" value="Pay order">
+
+                    <fmt:message var="buttonPayOrder" key="button.pay.order"/>
+                    <input type="submit" value="${buttonPayOrder}">
                 </form>
             </div>
         </c:if>
