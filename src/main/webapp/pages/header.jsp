@@ -8,6 +8,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .button {
+            float: left;
+        }
+    </style>
     <title>Header</title>
 </head>
 <body>
@@ -27,6 +32,11 @@
         <input type="hidden" name="action" value="my_order"/>
         <fmt:message var="buttonMyOrder" key="button.my.order"/>
         <input type="submit" value="${buttonMyOrder}">
+    </form>
+    <form class="button" name="myOrdersForm" method="POST" action="controller">
+        <input type="hidden" name="action" value="my_orders"/>
+        <fmt:message var="buttonMyOrders" key="button.my.orders"/>
+        <input type="submit" value="${buttonMyOrders}">
     </form>
     <form class="button" name="goodsForm" method="POST" action="controller">
         <input type="hidden" name="action" value="show_goods"/>

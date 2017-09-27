@@ -5,6 +5,7 @@ import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
 import com.serhii.shutyi.entity.User;
+import com.serhii.shutyi.enums.OrderStatus;
 import com.serhii.shutyi.enums.Role;
 import org.apache.log4j.Logger;
 
@@ -32,6 +33,31 @@ public class JDBCOrderDAO implements OrderDAO {
 
             while (rs.next()) {
                 Order order = createOrder(rs);
+                orders.add(order);
+            }
+        } catch (Exception ex) {
+            logger.error("Fail to find orders", ex);
+            throw new RuntimeException(ex);
+        }
+
+        return orders;
+    }
+
+    public List<Order> findAllByClientId(int clientId) {
+        List<Order> orders = new ArrayList<>();
+
+        try (PreparedStatement query = connection.prepareStatement(
+                "SELECT * FROM orders " +
+                        "WHERE orders.client_id = ?")) {
+            query.setInt(1, clientId);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                Order order = new Order.Builder()
+                        .setId(rs.getInt("orders.id"))
+                        .setOrderedAt(rs.getTimestamp("orders.ordered_at").toLocalDateTime())
+                        .setStatus(OrderStatus.valueOf(rs.getString("orders.status")))
+                        .build();
                 orders.add(order);
             }
         } catch (Exception ex) {
@@ -70,6 +96,7 @@ public class JDBCOrderDAO implements OrderDAO {
         Order order = new Order.Builder()
                 .setId(rs.getInt("orders.id"))
                 .setOrderedAt(rs.getTimestamp("orders.ordered_at").toLocalDateTime())
+                .setStatus(OrderStatus.valueOf(rs.getString("orders.status")))
                 .setClient(new Client.Builder()
                         .setId(rs.getInt("client.id"))
                         .setName(rs.getString("client.name"))

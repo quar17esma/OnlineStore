@@ -76,6 +76,29 @@ public class JDBCGoodDAO implements GoodDAO {
     }
 
     @Override
+    public List<Good> findByOrderId(int orderId) {
+        List<Good> goods = new ArrayList<>();
+
+        try (PreparedStatement query = connection.prepareStatement(
+                "SELECT * FROM goods " +
+                        "JOIN ordered_goods ON goods.id = ordered_goods.good_id " +
+                        "WHERE order_id = ?")) {
+            query.setInt(1, orderId);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                Good good = createGood(rs);
+                goods.add(good);
+            }
+        } catch (Exception ex) {
+            logger.error("Fail to find goods by order", ex);
+            throw new RuntimeException(ex);
+        }
+
+        return goods;
+    }
+
+    @Override
     public boolean update(Good good) {
         boolean result = false;
 
