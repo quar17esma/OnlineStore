@@ -12,9 +12,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class LoginCheckerTest {
+public class LoginServiceTest {
     @Test
-    public void correctDataUserExists() throws Exception {
+    public void checkLoginCorrectDataUserExists() throws Exception {
         String login = "john@gmail.com";
         String password = "john";
 
@@ -29,7 +29,7 @@ public class LoginCheckerTest {
         Connection connection = mock(Connection.class);
 
 
-        LoginChecker checker = new LoginChecker(factory, connection);
+        LoginService checker = new LoginService(factory, connection);
         boolean result = checker.checkLogin(login, password);
 
 
@@ -37,7 +37,7 @@ public class LoginCheckerTest {
     }
 
     @Test
-    public void returnFalsePasswordNull() throws Exception {
+    public void checkLoginReturnFalsePasswordNull() throws Exception {
         String login = "john@gmail.com";
         String password = null;
 
@@ -45,7 +45,7 @@ public class LoginCheckerTest {
         Connection connection = mock(Connection.class);
 
 
-        LoginChecker checker = new LoginChecker(factory, connection);
+        LoginService checker = new LoginService(factory, connection);
         boolean result = checker.checkLogin(login, password);
 
 
@@ -53,7 +53,7 @@ public class LoginCheckerTest {
     }
 
     @Test
-    public void returnFalseLoginNull() throws Exception {
+    public void checkLoginReturnFalseLoginNull() throws Exception {
         String login = null;
         String password = "john";
 
@@ -61,7 +61,7 @@ public class LoginCheckerTest {
         Connection connection = mock(Connection.class);
 
 
-        LoginChecker checker = new LoginChecker(factory, connection);
+        LoginService checker = new LoginService(factory, connection);
         boolean result = checker.checkLogin(login, password);
 
 

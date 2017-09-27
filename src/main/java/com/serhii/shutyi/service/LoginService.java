@@ -9,6 +9,7 @@ import javafx.fxml.LoadException;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 public class LoginService {
     DaoFactory factory;
@@ -31,29 +32,31 @@ public class LoginService {
 
     public Client login(String login, String password) throws LoginException {
 
-        LoginChecker checker = LoginChecker.getInstance();
-        if (checker.checkLogin(login, password)) {
-            return getClientByEmail(login);
+        if (checkLogin(login, password)) {
+            return ClientsService.getInstance().getClientByEmail(login);
         } else {
             throw new LoginException("Fail to login", login);
         }
     }
 
-    private Client getClientByEmail(String email) {
-        Client client = null;
+    public boolean checkLogin(String login, String password) {
+        boolean result = false;
 
-        try (UserDAO userDAO = factory.createUserDAO(connection);
-             ClientDAO clientDAO = factory.createClientDAO(connection)) {
-            connection.setAutoCommit(false);
+        if (login != null &&
+                password != null &&
+                !login.isEmpty() &&
+                !password.isEmpty()) {
 
-            User user = userDAO.findByEmail(email).get();
-            client = clientDAO.findById(user.getId()).get();
-
-            connection.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
+            try(UserDAO userDAO = factory.createUserDAO(connection)) {
+                Optional<User> user = userDAO.findByEmail(login);
+                if (user.isPresent()) {
+                    result = user.get().getPassword().equals(password);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        return client;
+        return result;
     }
 }

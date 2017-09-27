@@ -7,7 +7,7 @@ import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.exceptions.BusyEmailException;
-import com.serhii.shutyi.service.RegistrationService;
+import com.serhii.shutyi.service.ClientsService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,7 +33,7 @@ public class Registration implements Action {
                     .build();
 
             try {
-                RegistrationService.getInstance().registerClient(client);
+                ClientsService.getInstance().registerClient(client);
                 request.setAttribute("successRegistrationMessage", LabelManager.getProperty("message.success.registration"));
                 page = ConfigurationManager.getProperty("path.page.login");
 

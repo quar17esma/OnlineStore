@@ -3,7 +3,7 @@ package com.serhii.shutyi.controller.action.impl;
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
-import com.serhii.shutyi.service.PayOrderService;
+import com.serhii.shutyi.service.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +12,7 @@ public class PayOrder implements Action {
     public String execute(HttpServletRequest request) {
         int orderId = Integer.parseInt(request.getParameter("orderId"));
 
-        boolean isPaid = PayOrderService.getInstance().payOrder(orderId);
+        boolean isPaid = OrdersService.getInstance().payOrder(orderId);
 
         if (isPaid) {
             request.setAttribute("successPayOrder", LabelManager.getProperty("message.success.pay.order"));

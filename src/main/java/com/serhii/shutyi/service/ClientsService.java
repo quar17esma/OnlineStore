@@ -11,24 +11,24 @@ import com.serhii.shutyi.exceptions.BusyEmailException;
 import java.sql.Connection;
 import java.util.Optional;
 
-public class RegistrationService {
+public class ClientsService {
     DaoFactory factory;
     Connection connection;
 
-    public RegistrationService(DaoFactory factory, Connection connection) {
+    public ClientsService(DaoFactory factory, Connection connection) {
         this.factory = factory;
         this.connection = connection;
     }
 
     private static class Holder {
-        private static RegistrationService INSTANCE =
-                new RegistrationService(DaoFactory.getInstance(), ConnectionPool.getConnection());
+        private static ClientsService INSTANCE =
+                new ClientsService(DaoFactory.getInstance(), ConnectionPool.getConnection());
     }
 
-    public static RegistrationService getInstance() {
-        RegistrationService registrationService = RegistrationService.Holder.INSTANCE;
-        registrationService.connection = ConnectionPool.getConnection();
-        return RegistrationService.Holder.INSTANCE;
+    public static ClientsService getInstance() {
+        ClientsService clientsService = ClientsService.Holder.INSTANCE;
+        clientsService.connection = ConnectionPool.getConnection();
+        return ClientsService.Holder.INSTANCE;
     }
 
     public void registerClient(Client client) throws BusyEmailException {
@@ -54,5 +54,23 @@ public class RegistrationService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Client getClientByEmail(String email) {
+        Client client = null;
+
+        try (UserDAO userDAO = factory.createUserDAO(connection);
+             ClientDAO clientDAO = factory.createClientDAO(connection)) {
+            connection.setAutoCommit(false);
+
+            User user = userDAO.findByEmail(email).get();
+            client = clientDAO.findById(user.getId()).get();
+
+            connection.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return client;
     }
 }

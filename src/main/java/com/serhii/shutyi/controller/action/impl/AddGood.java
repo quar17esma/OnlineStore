@@ -5,7 +5,7 @@ import com.serhii.shutyi.controller.checker.InputGoodChecker;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Good;
-import com.serhii.shutyi.service.AddGoodService;
+import com.serhii.shutyi.service.GoodsService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,7 +31,7 @@ public class AddGood implements Action {
                     .setQuantity(quantity)
                     .build();
 
-            AddGoodService.getInstance().addGood(good);
+            GoodsService.getInstance().addGood(good);
 
             request.setAttribute("successAddGoodMessage", LabelManager.getProperty("message.success.add.good"));
 
