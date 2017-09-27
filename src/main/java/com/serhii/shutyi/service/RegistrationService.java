@@ -12,19 +12,26 @@ import java.sql.Connection;
 import java.util.Optional;
 
 public class RegistrationService {
-    DaoFactory factory = DaoFactory.getInstance();
+    DaoFactory factory;
+    Connection connection;
+
+    public RegistrationService(DaoFactory factory, Connection connection) {
+        this.factory = factory;
+        this.connection = connection;
+    }
 
     private static class Holder {
-        private static RegistrationService INSTANCE = new RegistrationService();
+        private static RegistrationService INSTANCE =
+                new RegistrationService(DaoFactory.getInstance(), ConnectionPool.getConnection());
     }
 
     public static RegistrationService getInstance() {
+        RegistrationService registrationService = RegistrationService.Holder.INSTANCE;
+        registrationService.connection = ConnectionPool.getConnection();
         return RegistrationService.Holder.INSTANCE;
     }
 
     public void registerClient(Client client) throws BusyEmailException {
-
-        Connection connection = ConnectionPool.getConnection();
 
         try (UserDAO userDAO = factory.createUserDAO(connection);
              ClientDAO clientDAO = factory.createClientDAO(connection)) {

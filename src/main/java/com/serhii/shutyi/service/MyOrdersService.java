@@ -25,12 +25,13 @@ public class MyOrdersService {
     }
 
     public static MyOrdersService getInstance() {
-        return MyOrdersService.Holder.INSTANCE;
+        MyOrdersService myOrdersService = MyOrdersService.Holder.INSTANCE;
+        myOrdersService.connection = ConnectionPool.getConnection();
+        return myOrdersService;
     }
 
     public List<Order> getOrdersByClientId(int clientId) {
         List<Order> orders = null;
-
 
         try (OrderDAO orderDAO = factory.createOrderDAO(connection);
              GoodDAO goodDao = factory.createGoodDAO(connection)) {
@@ -46,6 +47,7 @@ public class MyOrdersService {
         } catch (Exception e) {
 
         }
+
         return orders;
     }
 }

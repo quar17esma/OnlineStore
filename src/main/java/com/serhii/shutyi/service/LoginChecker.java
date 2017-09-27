@@ -23,7 +23,9 @@ public class LoginChecker {
     }
 
     public static LoginChecker getInstance() {
-        return LoginChecker.Holder.INSTANCE;
+        LoginChecker loginChecker = LoginChecker.Holder.INSTANCE;
+        loginChecker.connection = ConnectionPool.getConnection();
+        return loginChecker;
     }
 
     public boolean checkLogin(String login, String password) {
@@ -43,7 +45,6 @@ public class LoginChecker {
                 throw new RuntimeException(e);
             }
         }
-
 
         return result;
     }

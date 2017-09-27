@@ -24,7 +24,9 @@ public class PayOrderService {
     }
 
     public static PayOrderService getInstance() {
-        return PayOrderService.Holder.INSTANCE;
+        PayOrderService payOrderService = PayOrderService.Holder.INSTANCE;
+        payOrderService.connection = ConnectionPool.getConnection();
+        return payOrderService;
     }
 
     public boolean payOrder(int orderId) {

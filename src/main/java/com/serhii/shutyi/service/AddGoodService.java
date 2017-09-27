@@ -5,20 +5,30 @@ import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.entity.Good;
 
-public class AddGoodService {
+import java.sql.Connection;
 
-    DaoFactory factory = DaoFactory.getInstance();
+public class AddGoodService {
+    DaoFactory factory;
+    Connection connection;
+
+    public AddGoodService(DaoFactory factory, Connection connection) {
+        this.factory = factory;
+        this.connection = connection;
+    }
 
     private static class Holder {
-        private static AddGoodService INSTANCE = new AddGoodService();
+        private static AddGoodService INSTANCE =
+                new AddGoodService(DaoFactory.getInstance(), ConnectionPool.getConnection());
     }
 
     public static AddGoodService getInstance(){
-        return AddGoodService.Holder.INSTANCE;
+        AddGoodService addGoodService = AddGoodService.Holder.INSTANCE;
+        addGoodService.connection = ConnectionPool.getConnection();
+        return addGoodService;
     }
 
     public void addGood(Good good) {
-        try (GoodDAO goodDAO = factory.createGoodDAO(ConnectionPool.getConnection())) {
+        try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goodDAO.insert(good);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -11,18 +11,27 @@ import java.sql.Connection;
 import java.time.LocalDateTime;
 
 public class SendOrderService {
-    DaoFactory factory = DaoFactory.getInstance();
+    DaoFactory factory;
+    Connection connection;
+
+    public SendOrderService(DaoFactory factory, Connection connection) {
+        this.factory = factory;
+        this.connection = connection;
+    }
 
     private static class Holder {
-        private static SendOrderService INSTANCE = new SendOrderService();
+        private static SendOrderService INSTANCE =
+                new SendOrderService(DaoFactory.getInstance(), ConnectionPool.getConnection());
     }
 
     public static SendOrderService getInstance() {
-        return SendOrderService.Holder.INSTANCE;
+        SendOrderService sendOrderService = SendOrderService.Holder.INSTANCE;
+        sendOrderService.connection = ConnectionPool.getConnection();
+        return sendOrderService;
     }
 
     public void sendOrder(Order order) {
-        Connection connection = ConnectionPool.getConnection();
+
         try (OrderDAO orderDAO = factory.createOrderDAO(connection);
              GoodDAO goodDAO = factory.createGoodDAO(connection)) {
 

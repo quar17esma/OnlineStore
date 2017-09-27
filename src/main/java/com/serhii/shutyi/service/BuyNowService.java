@@ -5,20 +5,31 @@ import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.entity.Good;
 
+import java.sql.Connection;
+
 public class BuyNowService {
-    DaoFactory factory = DaoFactory.getInstance();
+    DaoFactory factory;
+    Connection connection;
+
+    public BuyNowService(DaoFactory factory, Connection connection) {
+        this.factory = factory;
+        this.connection = connection;
+    }
 
     private static class Holder {
-        private static BuyNowService INSTANCE = new BuyNowService();
+        private static BuyNowService INSTANCE =
+                new BuyNowService(DaoFactory.getInstance(), ConnectionPool.getConnection());
     }
 
     public static BuyNowService getInstance() {
-        return BuyNowService.Holder.INSTANCE;
+        BuyNowService buyNowService = BuyNowService.Holder.INSTANCE;
+        buyNowService.connection = ConnectionPool.getConnection();
+        return buyNowService;
     }
 
     public Good getGoodById(int goodId) {
         Good good = null;
-        try(GoodDAO goodDAO = factory.createGoodDAO(ConnectionPool.getConnection())) {
+        try(GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             good = goodDAO.findById(goodId).get();
         } catch (Exception e) {
             e.printStackTrace();

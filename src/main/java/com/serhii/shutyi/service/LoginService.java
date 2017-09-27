@@ -11,14 +11,22 @@ import java.sql.Connection;
 import java.util.List;
 
 public class LoginService {
-    DaoFactory factory = DaoFactory.getInstance();
+    DaoFactory factory;
+    Connection connection;
+
+    public LoginService(DaoFactory factory, Connection connection) {
+        this.factory = factory;
+        this.connection = connection;
+    }
 
     private static class Holder {
-        private static LoginService INSTANCE = new LoginService();
+        private static LoginService INSTANCE = new LoginService(DaoFactory.getInstance(), ConnectionPool.getConnection());
     }
 
     public static LoginService getInstance() {
-        return LoginService.Holder.INSTANCE;
+        LoginService loginService = LoginService.Holder.INSTANCE;
+        loginService.connection = ConnectionPool.getConnection();
+        return loginService;
     }
 
     public Client login(String login, String password) throws LoginException {
@@ -34,7 +42,6 @@ public class LoginService {
     private Client getClientByEmail(String email) {
         Client client = null;
 
-        Connection connection = ConnectionPool.getConnection();
         try (UserDAO userDAO = factory.createUserDAO(connection);
              ClientDAO clientDAO = factory.createClientDAO(connection)) {
             connection.setAutoCommit(false);

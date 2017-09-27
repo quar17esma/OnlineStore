@@ -24,7 +24,9 @@ public class ShowGoodsService {
     }
 
     public static ShowGoodsService getInstance() {
-        return ShowGoodsService.Holder.INSTANCE;
+        ShowGoodsService showGoodsService = ShowGoodsService.Holder.INSTANCE;
+        showGoodsService.connection = ConnectionPool.getConnection();
+        return showGoodsService;
     }
 
     public List<Good> getAllGoods() {
