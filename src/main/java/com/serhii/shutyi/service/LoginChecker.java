@@ -10,33 +10,42 @@ import java.sql.Connection;
 import java.util.Optional;
 
 public class LoginChecker {
-    DaoFactory factory = DaoFactory.getInstance();
+    DaoFactory factory;
+    Connection connection;
+
+    public LoginChecker(DaoFactory factory, Connection connection) {
+        this.factory = factory;
+        this.connection = connection;
+    }
 
     private static class Holder {
-        private static LoginChecker INSTANCE = new LoginChecker();
+        private static LoginChecker INSTANCE = new LoginChecker(DaoFactory.getInstance(), ConnectionPool.getConnection());
     }
 
     public static LoginChecker getInstance() {
         return LoginChecker.Holder.INSTANCE;
     }
 
-    public boolean checkLogin(String enterLogin, String enterPass) {
+    public boolean checkLogin(String login, String password) {
         boolean result = false;
 
-        try(UserDAO userDAO = factory.createUserDAO(getConnection())) {
-            Optional<User> user = userDAO.findByEmail(enterLogin);
-            if (user.isPresent()) {
-                result = user.get().getPassword().equals(enterPass);
+        if (login != null &&
+                password != null &&
+                !login.isEmpty() &&
+                !password.isEmpty()) {
+
+            try(UserDAO userDAO = factory.createUserDAO(connection)) {
+                Optional<User> user = userDAO.findByEmail(login);
+                if (user.isPresent()) {
+                    result = user.get().getPassword().equals(password);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
 
-        return result;
-    }
 
-    public Connection getConnection() {
-        return ConnectionPool.getConnection();
+        return result;
     }
 }
 

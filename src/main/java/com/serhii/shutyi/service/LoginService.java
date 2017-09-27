@@ -23,7 +23,7 @@ public class LoginService {
 
     public Client login(String login, String password) throws LoginException {
 
-        LoginChecker checker = new LoginChecker();
+        LoginChecker checker = LoginChecker.getInstance();
         if (checker.checkLogin(login, password)) {
             return getClientByEmail(login);
         } else {
