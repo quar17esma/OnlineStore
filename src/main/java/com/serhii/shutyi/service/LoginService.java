@@ -12,26 +12,21 @@ import java.util.List;
 import java.util.Optional;
 
 public class LoginService {
-    DaoFactory factory;
-    Connection connection;
+    private DaoFactory factory;
 
-    public LoginService(DaoFactory factory, Connection connection) {
+    public LoginService(DaoFactory factory) {
         this.factory = factory;
-        this.connection = connection;
     }
 
     private static class Holder {
-        private static LoginService INSTANCE = new LoginService(DaoFactory.getInstance(), ConnectionPool.getConnection());
+        private static LoginService INSTANCE = new LoginService(DaoFactory.getInstance());
     }
 
     public static LoginService getInstance() {
-        LoginService loginService = LoginService.Holder.INSTANCE;
-        loginService.connection = ConnectionPool.getConnection();
-        return loginService;
+        return LoginService.Holder.INSTANCE;
     }
 
     public Client login(String login, String password) throws LoginException {
-
         if (checkLogin(login, password)) {
             return ClientsService.getInstance().getClientByEmail(login);
         } else {
@@ -47,6 +42,7 @@ public class LoginService {
                 !login.isEmpty() &&
                 !password.isEmpty()) {
 
+            Connection connection = ConnectionPool.getConnection();
             try(UserDAO userDAO = factory.createUserDAO(connection)) {
                 Optional<User> user = userDAO.findByEmail(login);
                 if (user.isPresent()) {

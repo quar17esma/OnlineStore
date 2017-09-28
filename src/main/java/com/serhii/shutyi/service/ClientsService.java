@@ -13,27 +13,24 @@ import java.util.List;
 import java.util.Optional;
 
 public class ClientsService {
-    DaoFactory factory;
-    Connection connection;
+    private DaoFactory factory;
 
-    public ClientsService(DaoFactory factory, Connection connection) {
+    public ClientsService(DaoFactory factory) {
         this.factory = factory;
-        this.connection = connection;
     }
 
     private static class Holder {
         private static ClientsService INSTANCE =
-                new ClientsService(DaoFactory.getInstance(), ConnectionPool.getConnection());
+                new ClientsService(DaoFactory.getInstance());
     }
 
     public static ClientsService getInstance() {
-        ClientsService clientsService = ClientsService.Holder.INSTANCE;
-        clientsService.connection = ConnectionPool.getConnection();
         return ClientsService.Holder.INSTANCE;
     }
 
     public void registerClient(Client client) throws BusyEmailException {
 
+        Connection connection = ConnectionPool.getConnection();
         try (UserDAO userDAO = factory.createUserDAO(connection);
              ClientDAO clientDAO = factory.createClientDAO(connection)) {
 
@@ -60,6 +57,7 @@ public class ClientsService {
     public Client getClientByEmail(String email) {
         Client client = null;
 
+        Connection connection = ConnectionPool.getConnection();
         try (UserDAO userDAO = factory.createUserDAO(connection);
              ClientDAO clientDAO = factory.createClientDAO(connection)) {
             connection.setAutoCommit(false);
@@ -78,6 +76,7 @@ public class ClientsService {
     public List<Client> getClientsWithUnpaidOrders() {
         List<Client> clients = null;
 
+        Connection connection = ConnectionPool.getConnection();
         try (ClientDAO clientDAO = factory.createClientDAO(connection)) {
             clients = clientDAO.findWithUnpaidOrders();
         } catch (Exception e) {
@@ -89,6 +88,7 @@ public class ClientsService {
 
     public void blockClientById(int clientId) {
 
+        Connection connection = ConnectionPool.getConnection();
         try (ClientDAO clientDAO = factory.createClientDAO(connection)) {
             connection.setAutoCommit(false);
 

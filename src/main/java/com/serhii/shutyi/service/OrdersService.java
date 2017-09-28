@@ -14,28 +14,26 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrdersService {
-    DaoFactory factory;
-    Connection connection;
+    private DaoFactory factory;
 
-    public OrdersService(DaoFactory factory, Connection connection) {
+    public OrdersService(DaoFactory factory) {
         this.factory = factory;
-        this.connection = connection;
     }
 
     private static class Holder {
-        private static OrdersService INSTANCE =
-                new OrdersService(DaoFactory.getInstance(), ConnectionPool.getConnection());
+        private static OrdersService INSTANCE = new OrdersService(DaoFactory.getInstance());
     }
 
     public static OrdersService getInstance() {
         OrdersService ordersService = OrdersService.Holder.INSTANCE;
-        ordersService.connection = ConnectionPool.getConnection();
+
         return ordersService;
     }
 
     public List<Order> getOrdersByClientId(int clientId) {
         List<Order> orders = null;
 
+        Connection connection = ConnectionPool.getConnection();
         try (OrderDAO orderDAO = factory.createOrderDAO(connection);
              GoodDAO goodDao = factory.createGoodDAO(connection)) {
             connection.setAutoCommit(false);
@@ -57,6 +55,7 @@ public class OrdersService {
     public boolean payOrder(int orderId) {
         boolean result = false;
 
+        Connection connection = ConnectionPool.getConnection();
         try(OrderDAO orderDAO = factory.createOrderDAO(connection)) {
             connection.setAutoCommit(false);
 
@@ -77,6 +76,7 @@ public class OrdersService {
 
     public void sendOrder(Order order) {
 
+        Connection connection = ConnectionPool.getConnection();
         try (OrderDAO orderDAO = factory.createOrderDAO(connection);
              GoodDAO goodDAO = factory.createGoodDAO(connection)) {
 
