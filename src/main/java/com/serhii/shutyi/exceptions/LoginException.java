@@ -5,7 +5,7 @@ package com.serhii.shutyi.exceptions;
  * @author S.Shutyi
  * Created on 25.09.2017
  */
-public class LoginException extends Exception {
+public class LoginException extends RuntimeException {
     /**
      * Contains inputted login
      */

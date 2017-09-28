@@ -6,7 +6,7 @@ package com.serhii.shutyi.exceptions;
  * @author S.Shutyi
  * Created on 29.07.2017
  */
-public class BusyEmailException extends Exception {
+public class BusyEmailException extends RuntimeException {
     /**
      * Contains inputted client name
      */
