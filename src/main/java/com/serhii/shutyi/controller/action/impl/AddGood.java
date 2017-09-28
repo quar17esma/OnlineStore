@@ -14,6 +14,7 @@ public class AddGood implements Action {
     public String execute(HttpServletRequest request) {
         String page = null;
 
+        String goodIdString =  request.getParameter("goodId");
         String name = request.getParameter("name").trim();
         String description = request.getParameter("description").trim();
         int price = Integer.parseInt(request.getParameter("price"));
@@ -31,7 +32,13 @@ public class AddGood implements Action {
                     .setQuantity(quantity)
                     .build();
 
-            GoodsService.getInstance().addGood(good);
+            if (goodIdString != null) {
+                int goodId = Integer.parseInt(goodIdString);
+                good.setId(goodId);
+                GoodsService.getInstance().updateGood(good);
+            } else {
+                GoodsService.getInstance().addGood(good);
+            }
 
             request.setAttribute("successAddGoodMessage", LabelManager.getProperty("message.success.add.good"));
 

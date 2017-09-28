@@ -17,6 +17,8 @@ public class GoodsService {
         this.connection = connection;
     }
 
+
+
     private static class Holder {
         private static GoodsService INSTANCE =
                 new GoodsService(DaoFactory.getInstance(), ConnectionPool.getConnection());
@@ -61,6 +63,14 @@ public class GoodsService {
     public void addGood(Good good) {
         try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goodDAO.insert(good);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateGood(Good good) {
+        try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+            goodDAO.update(good);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

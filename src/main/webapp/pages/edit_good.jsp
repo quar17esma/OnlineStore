@@ -21,6 +21,7 @@
 <div>
     <form name="addGoodForm" method="POST" action="controller">
         <input type="hidden" name="action" value="add_good"/>
+        <input type="hidden" name="goodId" value="${good.id}">
 
         <label><fmt:message key="label.name"/></label>
         <br/>
