@@ -16,33 +16,42 @@
 <body>
 <jsp:include page="header.jsp"/>
 
-<c:forEach items="${goods}" var="good">
-    <div class="field">
-        <label><fmt:message key="label.name"/></label>
-        <c:out value="${good.name}"/>
-    </div>
-    <div class="field">
-        <label><fmt:message key="label.description"/></label>
-        <br/>
-        <c:out value="${good.description}"/>
-    </div>
-    <div class="field">
-        <label><fmt:message key="label.price"/></label>
-        <c:out value="${good.price}"/>
-    </div>
-    <div class="field">
-        <label><fmt:message key="label.quantity"/></label>
-        <c:out value="${good.quantity}"/>
-    </div>
-    <hr/>
-</c:forEach>
-<div class="field">
-    <form name="sendOrderForm" method="POST" action="controller">
-        <input type="hidden" name="action" value="send_order"/>
-        <fmt:message var="buttonSendOrder" key="button.send.order"/>
-        <input type="submit" value="${buttonSendOrder}">
-    </form>
+<div>
+    <c:out value="${emptyOrderMessage}"/>
 </div>
+
+<c:if test="${not empty order.goods}">
+    <div>
+        <c:forEach items="${order.goods}" var="good">
+            <div class="field">
+                <label><fmt:message key="label.name"/></label>
+                <c:out value="${good.name}"/>
+            </div>
+            <div class="field">
+                <label><fmt:message key="label.description"/></label>
+                <br/>
+                <c:out value="${good.description}"/>
+            </div>
+            <div class="field">
+                <label><fmt:message key="label.price"/></label>
+                <c:out value="${good.price}"/>
+            </div>
+            <div class="field">
+                <label><fmt:message key="label.quantity"/></label>
+                <c:out value="${good.quantity}"/>
+            </div>
+            <hr/>
+        </c:forEach>
+    </div>
+
+    <div class="field">
+        <form name="sendOrderForm" method="POST" action="controller">
+            <input type="hidden" name="action" value="send_order"/>
+            <fmt:message var="buttonSendOrder" key="button.send.order"/>
+            <input type="submit" value="${buttonSendOrder}">
+        </form>
+    </div>
+</c:if>
 
 </body>
 </html>

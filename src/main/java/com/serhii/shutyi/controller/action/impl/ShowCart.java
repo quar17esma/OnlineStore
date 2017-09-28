@@ -12,7 +12,7 @@ public class ShowCart implements Action {
     public String execute(HttpServletRequest request) {
         Order order = (Order) request.getSession().getAttribute("order");
         if (order != null && !order.getGoods().isEmpty()) {
-            request.setAttribute("goods", order.getGoods());
+            request.setAttribute("order", order);
         } else {
             request.setAttribute("emptyOrderMessage",
                     LabelManager.getProperty("message.empty.order"));
