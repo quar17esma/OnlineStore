@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigDaoFactory {
-    final static Logger logger = Logger.getLogger(Config.class);
+    final static Logger logger = Logger.getLogger(ConfigDaoFactory.class);
 
     private String factoryClassName;
 
