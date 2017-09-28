@@ -13,11 +13,17 @@ public class SendOrder implements Action {
     public String execute(HttpServletRequest request) {
         Order order = (Order) request.getSession().getAttribute("order");
 
+
         if (order != null) {
             OrdersService.getInstance().sendOrder(order);
-        }
 
-        request.setAttribute("successSendOrderMessage", LabelManager.getProperty("message.success.send.order"));
+            Order emptyOrder = new Order.Builder()
+                    .setClient(order.getClient())
+                    .build();
+            request.getSession().setAttribute("order", emptyOrder);
+
+            request.setAttribute("successSendOrderMessage", LabelManager.getProperty("message.success.send.order"));
+        }
 
         return ConfigurationManager.getProperty("path.page.goods");
     }
