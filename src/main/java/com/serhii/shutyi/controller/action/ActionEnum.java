@@ -75,6 +75,16 @@ public enum ActionEnum {
         {
             this.command = new ChangeLocale();
         }
+    },
+    MANAGE_CLIENTS {
+        {
+            this.command = new ManageClients();
+        }
+    },
+    BLOCK_CLIENT {
+        {
+            this.command = new BlockClient();
+        }
     };
 
     Action command;

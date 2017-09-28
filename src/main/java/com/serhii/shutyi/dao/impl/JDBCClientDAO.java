@@ -3,6 +3,7 @@ package com.serhii.shutyi.dao.impl;
 import com.serhii.shutyi.dao.ClientDAO;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.User;
+import com.serhii.shutyi.enums.OrderStatus;
 import com.serhii.shutyi.enums.Role;
 import org.apache.log4j.Logger;
 
@@ -79,6 +80,33 @@ public class JDBCClientDAO implements ClientDAO {
                 .build();
 
         return client;
+    }
+
+    @Override
+    public List<Client> findWithUnpaidOrders() {
+        List<Client> clients = new ArrayList<>();
+
+        try (PreparedStatement query = connection.prepareStatement(
+                "SELECT DISTINCT client.id, name, is_in_black_list from orders " +
+                        "JOIN client ON orders.client_id = client.id " +
+                        "where orders.status = ? AND client.is_in_black_list = ?")) {
+            query.setString(1, OrderStatus.NEW.name());
+            query.setBoolean(2, false);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                Client client = new Client.Builder()
+                        .setId(rs.getInt("id"))
+                        .setName(rs.getString("name"))
+                        .setIsInBlackList(rs.getBoolean("is_in_black_list"))
+                        .build();
+                clients.add(client);
+            }
+        } catch (Exception ex) {
+            logger.error("Fail to find with unpaid orders", ex);
+            throw new RuntimeException(ex);
+        }
+        return clients;
     }
 
     @Override

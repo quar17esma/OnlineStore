@@ -9,6 +9,7 @@ import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.exceptions.BusyEmailException;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.Optional;
 
 public class ClientsService {
@@ -72,5 +73,32 @@ public class ClientsService {
         }
 
         return client;
+    }
+
+    public List<Client> getClientsWithUnpaidOrders() {
+        List<Client> clients = null;
+
+        try (ClientDAO clientDAO = factory.createClientDAO(connection)) {
+            clients = clientDAO.findWithUnpaidOrders();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return clients;
+    }
+
+    public void blockClientById(int clientId) {
+
+        try (ClientDAO clientDAO = factory.createClientDAO(connection)) {
+            connection.setAutoCommit(false);
+
+            Client client = clientDAO.findById(clientId).get();
+            client.setIsInBlackList(true);
+            clientDAO.update(client);
+
+            connection.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
