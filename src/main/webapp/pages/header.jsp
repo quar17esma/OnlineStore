@@ -32,10 +32,10 @@
         <fmt:message var="buttonLogout" key="button.logout"/>
         <input type="submit" value="${buttonLogout}"/>
     </form>
-    <form class="button" name="myOrderForm" method="POST" action="controller">
-        <input type="hidden" name="action" value="my_order"/>
-        <fmt:message var="buttonMyOrder" key="button.my.order"/>
-        <input type="submit" value="${buttonMyOrder}">
+    <form class="button" name="cartForm" method="POST" action="controller">
+        <input type="hidden" name="action" value="show_cart"/>
+        <fmt:message var="buttonCart" key="button.cart"/>
+        <input type="submit" value="${buttonCart}">
     </form>
     <form class="button" name="myOrdersForm" method="POST" action="controller">
         <input type="hidden" name="action" value="my_orders"/>

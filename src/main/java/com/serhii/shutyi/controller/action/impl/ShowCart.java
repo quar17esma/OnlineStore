@@ -7,7 +7,7 @@ import com.serhii.shutyi.entity.Order;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class MyOrder implements Action {
+public class ShowCart implements Action {
     @Override
     public String execute(HttpServletRequest request) {
         Order order = (Order) request.getSession().getAttribute("order");

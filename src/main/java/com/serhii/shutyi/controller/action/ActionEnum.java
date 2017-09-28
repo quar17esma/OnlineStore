@@ -31,9 +31,9 @@ public enum ActionEnum {
             this.command = new AddToOrder();
         }
     },
-    MY_ORDER {
+    SHOW_CART {
         {
-            this.command = new MyOrder();
+            this.command = new ShowCart();
         }
     },
     MY_ORDERS {

@@ -31,16 +31,16 @@
     <div>
         <c:forEach items="${goods}" var="good">
             <div class="field">
-                <label><fmt:message key="good.name"/></label>
+                <label><fmt:message key="label.name"/></label>
                 <c:out value="${good.name}"/>
             </div>
             <div class="field">
-                <label><fmt:message key="good.description"/></label>
+                <label><fmt:message key="label.description"/></label>
                 <br/>
                 <c:out value="${good.description}"/>
             </div>
             <div class="field">
-                <label><fmt:message key="good.price"/></label>
+                <label><fmt:message key="label.price"/></label>
                 <ctg:price price="${good.price}"/>
             </div>
             <div class="field">

@@ -18,17 +18,17 @@
     <jsp:include page="header.jsp"/>
 
     <div class="field">
-        <label><fmt:message key="good.name"/></label>
+        <label><fmt:message key="label.name"/></label>
         <p><c:out value="${good.name}"/></p>
     </div>
     <br/>
     <div class="field">
-        <label><fmt:message key="good.description"/></label>
+        <label><fmt:message key="label.description"/></label>
         <p><c:out value="${good.description}"/></p>
     </div>
     <br/>
     <div class="field">
-        <label><fmt:message key="good.price"/></label>
+        <label><fmt:message key="label.price"/></label>
         <p><c:out value="${good.price}"/></p>
     </div>
     <br/>
@@ -36,10 +36,10 @@
         <input type="hidden" name="action" value="add_to_order">
         <input type="hidden" name="goodId" value="${good.id}">
 
-        <label><fmt:message key="order.quantity"/></label>
+        <label><fmt:message key="label.quantity"/></label>
         <input type="number" name="ordered_quantity" min="1" max="10" step="1" value="1">
 
-        <fmt:message var="buttonAddToOrder" key="button.add.to.order"/>
+        <fmt:message var="buttonAddToOrder" key="button.add.to.cart"/>
         <input class="button" type="submit" value="${buttonAddToOrder}">
     </form>
     <br/>
