@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class MyOrders implements Action{
+    private OrdersService ordersService = OrdersService.getInstance();
+
     @Override
     public String execute(HttpServletRequest request) {
         Client client = (Client) request.getSession().getAttribute("client");
 
-        List<Order> orders = OrdersService.getInstance().getOrdersByClientId(client.getId());
+        List<Order> orders = ordersService.getOrdersByClientId(client.getId());
 
         request.setAttribute("orders", orders);
 

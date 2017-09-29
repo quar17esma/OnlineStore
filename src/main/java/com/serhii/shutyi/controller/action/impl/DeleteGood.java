@@ -8,11 +8,13 @@ import com.serhii.shutyi.service.GoodsService;
 import javax.servlet.http.HttpServletRequest;
 
 public class DeleteGood implements Action {
+    private GoodsService goodsService = GoodsService.getInstance();
+
     @Override
     public String execute(HttpServletRequest request) {
         int goodId = Integer.parseInt(request.getParameter("goodId"));
 
-        GoodsService.getInstance().deleteGoodById(goodId);
+        goodsService.deleteGoodById(goodId);
 
         request.setAttribute("successDeleteGoodMessage", LabelManager.getProperty("message.success.delete.good"));
 

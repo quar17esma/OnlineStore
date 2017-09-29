@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class AddToOrder implements Action {
+    private OrdersService ordersService = OrdersService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -18,7 +19,7 @@ public class AddToOrder implements Action {
         int goodId = Integer.parseInt(request.getParameter("goodId"));
         int orderedQuantity = Integer.parseInt(request.getParameter("ordered_quantity"));
 
-        OrdersService.getInstance().addGoodToOrder(order, goodId, orderedQuantity);
+        ordersService.addGoodToOrder(order, goodId, orderedQuantity);
         List<Good> goods = GoodsService.getInstance().getAllGoods();
 
         request.setAttribute("goods", goods);

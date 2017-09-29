@@ -8,11 +8,13 @@ import com.serhii.shutyi.service.GoodsService;
 import javax.servlet.http.HttpServletRequest;
 
 public class BuyNow implements Action {
+    private GoodsService goodsService = GoodsService.getInstance();
+
     @Override
     public String execute(HttpServletRequest request) {
         int goodId = Integer.parseInt(request.getParameter("goodId"));
 
-        Good good = GoodsService.getInstance().getGoodById(goodId);
+        Good good = goodsService.getGoodById(goodId);
 
         request.setAttribute("good", good);
 

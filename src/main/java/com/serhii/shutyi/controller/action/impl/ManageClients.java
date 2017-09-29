@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class ManageClients implements Action {
+    private ClientsService clientsService = ClientsService.getInstance();
+
     @Override
     public String execute(HttpServletRequest request) {
-        List<Client> clients = ClientsService.getInstance().getClientsWithUnpaidOrders();
+        List<Client> clients = clientsService.getClientsWithUnpaidOrders();
 
         request.setAttribute("clients", clients);
 

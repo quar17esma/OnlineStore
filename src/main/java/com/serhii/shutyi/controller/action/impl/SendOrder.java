@@ -9,13 +9,15 @@ import com.serhii.shutyi.service.OrdersService;
 import javax.servlet.http.HttpServletRequest;
 
 public class SendOrder implements Action {
+    private  OrdersService ordersService = OrdersService.getInstance();
+
     @Override
     public String execute(HttpServletRequest request) {
         Order order = (Order) request.getSession().getAttribute("order");
 
 
         if (order != null) {
-            OrdersService.getInstance().sendOrder(order);
+            ordersService.sendOrder(order);
 
             Order emptyOrder = new Order.Builder()
                     .setClient(order.getClient())

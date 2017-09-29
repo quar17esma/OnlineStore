@@ -12,6 +12,8 @@ import com.serhii.shutyi.service.ClientsService;
 import javax.servlet.http.HttpServletRequest;
 
 public class Registration implements Action {
+    private ClientsService clientsService = ClientsService.getInstance();
+
     @Override
     public String execute(HttpServletRequest request) {
         String page = null;
@@ -33,7 +35,7 @@ public class Registration implements Action {
                     .build();
 
             try {
-                ClientsService.getInstance().registerClient(client);
+                clientsService.registerClient(client);
                 request.setAttribute("successRegistrationMessage", LabelManager.getProperty("message.success.registration"));
                 page = ConfigurationManager.getProperty("path.page.login");
 

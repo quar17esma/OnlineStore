@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class Login implements Action {
+    private LoginService loginService = LoginService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -22,7 +23,7 @@ public class Login implements Action {
         String password = request.getParameter("password");
 
         try {
-            Client client = LoginService.getInstance().login(login, password);
+            Client client = loginService.login(login, password);
             Order order = new Order.Builder()
                     .setClient(client)
                     .build();

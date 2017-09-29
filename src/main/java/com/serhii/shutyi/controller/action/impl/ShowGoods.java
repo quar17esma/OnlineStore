@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class ShowGoods implements Action {
+    private GoodsService goodsService = GoodsService.getInstance();
+
     @Override
     public String execute(HttpServletRequest request) {
 
-        List<Good> goods = GoodsService.getInstance().getAllGoods();
+        List<Good> goods = goodsService.getAllGoods();
 
         request.setAttribute("goods", goods);
 

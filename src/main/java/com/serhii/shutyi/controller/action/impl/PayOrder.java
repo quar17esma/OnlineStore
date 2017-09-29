@@ -8,11 +8,13 @@ import com.serhii.shutyi.service.OrdersService;
 import javax.servlet.http.HttpServletRequest;
 
 public class PayOrder implements Action {
+    private OrdersService ordersService = OrdersService.getInstance();
+
     @Override
     public String execute(HttpServletRequest request) {
         int orderId = Integer.parseInt(request.getParameter("orderId"));
 
-        boolean isPaid = OrdersService.getInstance().payOrder(orderId);
+        boolean isPaid = ordersService.payOrder(orderId);
 
         if (isPaid) {
             request.setAttribute("successPayOrder", LabelManager.getProperty("message.success.pay.order"));
