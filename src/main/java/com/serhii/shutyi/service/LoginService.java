@@ -13,13 +13,15 @@ import java.util.Optional;
 
 public class LoginService {
     private DaoFactory factory;
+    private ClientsService clientsService;
 
-    public LoginService(DaoFactory factory) {
+    public LoginService(DaoFactory factory, ClientsService clientsService) {
         this.factory = factory;
+        this.clientsService = clientsService;
     }
 
     private static class Holder {
-        private static LoginService INSTANCE = new LoginService(DaoFactory.getInstance());
+        private static LoginService INSTANCE = new LoginService(DaoFactory.getInstance(), ClientsService.getInstance());
     }
 
     public static LoginService getInstance() {
@@ -28,7 +30,7 @@ public class LoginService {
 
     public Client login(String login, String password) throws LoginException {
         if (checkLogin(login, password)) {
-            return ClientsService.getInstance().getClientByEmail(login);
+            return clientsService.getClientByEmail(login);
         } else {
             throw new LoginException("Fail to login", login);
         }
@@ -42,8 +44,7 @@ public class LoginService {
                 !login.isEmpty() &&
                 !password.isEmpty()) {
 
-            Connection connection = ConnectionPool.getConnection();
-            try(UserDAO userDAO = factory.createUserDAO(connection)) {
+            try(UserDAO userDAO = factory.createUserDAO(ConnectionPool.getConnection())) {
                 Optional<User> user = userDAO.findByEmail(login);
                 if (user.isPresent()) {
                     result = user.get().getPassword().equals(password);
