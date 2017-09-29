@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionPool {
-    final static Logger logger = Logger.getLogger(ConnectionPool.class);
+    private static final Logger logger = Logger.getLogger(ConnectionPool.class);
 
     private static final String DATASOURCE_NAME = "jdbc/online_store";
     private static DataSource dataSource;
@@ -29,13 +29,11 @@ public class ConnectionPool {
     public ConnectionPool() {}
 
     public static Connection getConnection() {
-        Connection connection = null;
         try {
-            connection = dataSource.getConnection();
+            return dataSource.getConnection();
         } catch (SQLException e) {
             logger.error("Fail to get connection", e);
             throw new RuntimeException(e);
         }
-        return connection;
     }
 }
