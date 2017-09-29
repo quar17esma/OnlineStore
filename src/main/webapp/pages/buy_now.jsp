@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="/header"/>
 
     <div class="field">
         <label><fmt:message key="label.name"/></label>

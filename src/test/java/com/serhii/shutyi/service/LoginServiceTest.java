@@ -1,9 +1,17 @@
 package com.serhii.shutyi.service;
 
+import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.User;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.sql.Connection;
 import java.util.Optional;
@@ -12,7 +20,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
+@Ignore
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(ConnectionPool.class)
 public class LoginServiceTest {
+    @Mock
+    private DaoFactory factory;
+    @Mock
+    private ClientsService clientsService;
+
+    @InjectMocks
+    private LoginService loginService;
+
     @Test
     public void checkLoginCorrectDataUserExists() throws Exception {
         String login = "john@gmail.com";
@@ -24,13 +43,16 @@ public class LoginServiceTest {
 
         UserDAO userDAO = mock(UserDAO.class);
         when(userDAO.findByEmail(login)).thenReturn(user);
-        DaoFactory factory = mock(DaoFactory.class);
+
         when(factory.createUserDAO(any(Connection.class))).thenReturn(userDAO);
+//        when(clientsService.getClientByEmail(login)).thenReturn()
+
         Connection connection = mock(Connection.class);
+        PowerMockito.mockStatic(ConnectionPool.class);
+        when(ConnectionPool.getConnection()).thenReturn(connection);
 
 
-        LoginService checker = new LoginService(factory, connection);
-        boolean result = checker.checkLogin(login, password);
+        boolean result = loginService.checkLogin(login, password);
 
 
         assertTrue(result);
@@ -41,13 +63,7 @@ public class LoginServiceTest {
         String login = "john@gmail.com";
         String password = null;
 
-        DaoFactory factory = mock(DaoFactory.class);
-        Connection connection = mock(Connection.class);
-
-
-        LoginService checker = new LoginService(factory, connection);
-        boolean result = checker.checkLogin(login, password);
-
+        boolean result = loginService.checkLogin(login, password);
 
         assertFalse(result);
     }
@@ -57,13 +73,7 @@ public class LoginServiceTest {
         String login = null;
         String password = "john";
 
-        DaoFactory factory = mock(DaoFactory.class);
-        Connection connection = mock(Connection.class);
-
-
-        LoginService checker = new LoginService(factory, connection);
-        boolean result = checker.checkLogin(login, password);
-
+        boolean result = loginService.checkLogin(login, password);
 
         assertFalse(result);
     }

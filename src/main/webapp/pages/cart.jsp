@@ -12,7 +12,7 @@
     <title><fmt:message key="title.cart"/></title>
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<jsp:include page="/header"/>
 
 <div>
     <c:out value="${emptyOrderMessage}"/>

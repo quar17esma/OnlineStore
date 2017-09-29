@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="/header"/>
 
     <div>
         <c:out value="${successAddGoodMessage}"/>
