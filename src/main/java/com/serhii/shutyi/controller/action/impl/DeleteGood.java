@@ -12,11 +12,13 @@ public class DeleteGood implements Action {
 
     @Override
     public String execute(HttpServletRequest request) {
+        String locale = (String) request.getSession().getAttribute("locale");
         int goodId = Integer.parseInt(request.getParameter("goodId"));
 
         goodsService.deleteGoodById(goodId);
 
-        request.setAttribute("successDeleteGoodMessage", LabelManager.getProperty("message.success.delete.good"));
+        request.setAttribute("successDeleteGoodMessage",
+                LabelManager.getProperty("message.success.delete.good", locale));
 
         return ConfigurationManager.getProperty("path.page.goods");
     }

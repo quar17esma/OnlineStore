@@ -13,12 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class Login implements Action {
+    private static final String DEFAULT_LOCALE = "en_US";
+
     private LoginService loginService = LoginService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {
         String page = null;
 
+        String locale = (String) request.getSession().getAttribute("locale");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
@@ -30,11 +33,14 @@ public class Login implements Action {
 
             request.getSession().setAttribute("client", client);
             request.getSession().setAttribute("order", order);
+            if (locale == null) {
+                request.getSession().setAttribute("locale", DEFAULT_LOCALE);
+            }
 
             page = ConfigurationManager.getProperty("path.page.welcome");
         } catch (LoginException e) {
             request.setAttribute("errorLoginPassMessage",
-                    LabelManager.getProperty("message.login.error"));
+                    LabelManager.getProperty("message.login.error", request.getParameter("locale")));
 
             page = ConfigurationManager.getProperty("path.page.login");
         }

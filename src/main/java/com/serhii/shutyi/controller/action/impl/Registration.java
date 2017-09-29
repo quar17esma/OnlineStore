@@ -18,6 +18,10 @@ public class Registration implements Action {
     public String execute(HttpServletRequest request) {
         String page = null;
 
+        String locale = (String) request.getSession().getAttribute("locale");
+        if (locale == null) {
+            locale = "en_US";
+        }
         String name = request.getParameter("name").trim();
         String login = request.getParameter("login").trim();
         String pass = request.getParameter("password").trim();
@@ -36,17 +40,20 @@ public class Registration implements Action {
 
             try {
                 clientsService.registerClient(client);
-                request.setAttribute("successRegistrationMessage", LabelManager.getProperty("message.success.registration"));
+                request.setAttribute("successRegistrationMessage",
+                        LabelManager.getProperty("message.success.registration", locale));
                 page = ConfigurationManager.getProperty("path.page.login");
 
             } catch (BusyEmailException e) {
                 request.setAttribute("name", name);
                 request.setAttribute("login", login);
-                request.setAttribute("errorBusyEmailMessage", LabelManager.getProperty("message.error.busy.email"));
+                request.setAttribute("errorBusyEmailMessage",
+                        LabelManager.getProperty("message.error.busy.email", locale));
                 page = ConfigurationManager.getProperty("path.page.registration");
             }
         } else {
-            request.setAttribute("errorRegistrationMessage", LabelManager.getProperty("message.error.wrong.data"));
+            request.setAttribute("errorRegistrationMessage",
+                    LabelManager.getProperty("message.error.wrong.data", locale));
             page = ConfigurationManager.getProperty("path.page.registration");
         }
 

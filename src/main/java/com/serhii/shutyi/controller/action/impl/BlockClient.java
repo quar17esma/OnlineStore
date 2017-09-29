@@ -12,13 +12,15 @@ public class BlockClient implements Action {
 
     @Override
     public String execute(HttpServletRequest request) {
+        String locale = (String) request.getSession().getAttribute("locale");
         String clientIdString = request.getParameter("clientId");
         if (clientIdString != null && !clientIdString.isEmpty()) {
             int clientId = Integer.parseInt(clientIdString);
 
             clientsService.blockClientById(clientId);
 
-            request.setAttribute("successBlockClient", LabelManager.getProperty("message.success.block.client"));
+            request.setAttribute("successBlockClient",
+                    LabelManager.getProperty("message.success.block.client", locale));
         }
 
         return ConfigurationManager.getProperty("path.page.manage.clients");

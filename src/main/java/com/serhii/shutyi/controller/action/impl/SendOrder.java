@@ -13,6 +13,7 @@ public class SendOrder implements Action {
 
     @Override
     public String execute(HttpServletRequest request) {
+        String locale = (String) request.getSession().getAttribute("locale");
         Order order = (Order) request.getSession().getAttribute("order");
 
 
@@ -24,7 +25,8 @@ public class SendOrder implements Action {
                     .build();
             request.getSession().setAttribute("order", emptyOrder);
 
-            request.setAttribute("successSendOrderMessage", LabelManager.getProperty("message.success.send.order"));
+            request.setAttribute("successSendOrderMessage",
+                    LabelManager.getProperty("message.success.send.order", locale));
         }
 
         return ConfigurationManager.getProperty("path.page.goods");

@@ -12,14 +12,17 @@ public class PayOrder implements Action {
 
     @Override
     public String execute(HttpServletRequest request) {
+        String locale = (String) request.getSession().getAttribute("locale");
         int orderId = Integer.parseInt(request.getParameter("orderId"));
 
         boolean isPaid = ordersService.payOrder(orderId);
 
         if (isPaid) {
-            request.setAttribute("successPayOrder", LabelManager.getProperty("message.success.pay.order"));
+            request.setAttribute("successPayOrder",
+                    LabelManager.getProperty("message.success.pay.order", locale));
         } else {
-            request.setAttribute("errorPayOrder", LabelManager.getProperty("message.error.pay.order"));
+            request.setAttribute("errorPayOrder",
+                    LabelManager.getProperty("message.error.pay.order", locale));
         }
 
 

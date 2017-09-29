@@ -14,6 +14,7 @@ public class AddGood implements Action {
     public String execute(HttpServletRequest request) {
         String page = null;
 
+        String locale = (String) request.getSession().getAttribute("locale");
         String goodIdString =  request.getParameter("goodId");
         String name = request.getParameter("name").trim();
         String description = request.getParameter("description").trim();
@@ -40,11 +41,13 @@ public class AddGood implements Action {
                 GoodsService.getInstance().addGood(good);
             }
 
-            request.setAttribute("successAddGoodMessage", LabelManager.getProperty("message.success.add.good"));
+            request.setAttribute("successAddGoodMessage",
+                    LabelManager.getProperty("message.success.add.good", locale));
 
             page = ConfigurationManager.getProperty("path.page.goods");
         } else {
-            request.setAttribute("errorAddGoodMessage", LabelManager.getProperty("message.error.wrong.data"));
+            request.setAttribute("errorAddGoodMessage",
+                    LabelManager.getProperty("message.error.wrong.data", locale));
 
             page = ConfigurationManager.getProperty("path.page.edit.good");
         }
