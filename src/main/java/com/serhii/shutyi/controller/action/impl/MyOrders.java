@@ -10,7 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class MyOrders implements Action{
-    private OrdersService ordersService = OrdersService.getInstance();
+    private OrdersService ordersService;
+
+    public MyOrders() {
+        this.ordersService = OrdersService.getInstance();
+    }
+
+    public MyOrders(OrdersService ordersService) {
+        this.ordersService = ordersService;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

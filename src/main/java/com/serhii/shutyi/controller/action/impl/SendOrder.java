@@ -9,7 +9,15 @@ import com.serhii.shutyi.service.OrdersService;
 import javax.servlet.http.HttpServletRequest;
 
 public class SendOrder implements Action {
-    private  OrdersService ordersService = OrdersService.getInstance();
+    private  OrdersService ordersService;
+
+    public SendOrder() {
+        this.ordersService = OrdersService.getInstance();
+    }
+
+    public SendOrder(OrdersService ordersService) {
+        this.ordersService = ordersService;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

@@ -9,7 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class ManageClients implements Action {
-    private ClientsService clientsService = ClientsService.getInstance();
+    private ClientsService clientsService;
+
+    public ManageClients() {
+        this.clientsService = ClientsService.getInstance();
+    }
+
+    public ManageClients(ClientsService clientsService) {
+        this.clientsService = clientsService;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

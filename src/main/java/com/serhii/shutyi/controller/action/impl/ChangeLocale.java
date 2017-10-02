@@ -11,7 +11,6 @@ public class ChangeLocale implements Action {
     public String execute(HttpServletRequest request) {
         String locale = request.getParameter("locale");
 
-//        LabelManager.setLocale(locale);
         request.getSession().setAttribute("locale", locale);
 
         return ConfigurationManager.getProperty("path.page.login");

@@ -8,7 +8,15 @@ import com.serhii.shutyi.service.OrdersService;
 import javax.servlet.http.HttpServletRequest;
 
 public class PayOrder implements Action {
-    private OrdersService ordersService = OrdersService.getInstance();
+    private OrdersService ordersService;
+
+    public PayOrder() {
+        this.ordersService = OrdersService.getInstance();
+    }
+
+    public PayOrder(OrdersService ordersService) {
+        this.ordersService = ordersService;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

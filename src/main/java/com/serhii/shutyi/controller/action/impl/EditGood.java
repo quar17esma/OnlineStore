@@ -8,7 +8,15 @@ import com.serhii.shutyi.service.GoodsService;
 import javax.servlet.http.HttpServletRequest;
 
 public class EditGood implements Action {
-    private GoodsService goodsService = GoodsService.getInstance();
+    private GoodsService goodsService;
+
+    public EditGood() {
+        this.goodsService = GoodsService.getInstance();
+    }
+
+    public EditGood(GoodsService goodsService) {
+        this.goodsService = goodsService;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

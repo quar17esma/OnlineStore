@@ -15,7 +15,15 @@ import java.util.List;
 public class Login implements Action {
     private static final String DEFAULT_LOCALE = "en_US";
 
-    private LoginService loginService = LoginService.getInstance();
+    private LoginService loginService;
+
+    public Login() {
+        this.loginService = LoginService.getInstance();
+    }
+
+    public Login(LoginService loginService) {
+        this.loginService = loginService;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {
