@@ -7,13 +7,18 @@ import com.serhii.shutyi.dao.OrderDAO;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
 import com.serhii.shutyi.enums.OrderStatus;
+import com.serhii.shutyi.exceptions.NotEnoughGoodQuantity;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public class OrdersService {
+    final static Logger logger = Logger.getLogger(OrdersService.class);
+
     private DaoFactory factory;
     private ConnectionPool connectionPool;
 
@@ -46,7 +51,8 @@ public class OrdersService {
 
             connection.commit();
         } catch (Exception e) {
-
+            logger.error("Fail to get orders by client id", e);
+            throw new RuntimeException(e);
         }
 
         return orders;
@@ -68,7 +74,8 @@ public class OrdersService {
             connection.commit();
             result = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Fail to pay order", e);
+            throw new RuntimeException(e);
         }
 
         return result;
@@ -92,13 +99,16 @@ public class OrdersService {
                     storedGood.setQuantity(difference);
                     goodDAO.update(storedGood);
                 } else {
-                    // sorry not enough quantity
-                    throw new RuntimeException();
+                    throw new NotEnoughGoodQuantity("Not enough good quantity", orderedGood);
                 }
             }
 
             connection.commit();
+        } catch (NotEnoughGoodQuantity e){
+            logger.error("Fail to send order, not enough quantity", e);
+            throw new NotEnoughGoodQuantity(e);
         } catch (Exception e) {
+            logger.error("Fail to send order", e);
             throw new RuntimeException(e);
         }
     }

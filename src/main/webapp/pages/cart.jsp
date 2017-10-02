@@ -16,6 +16,8 @@
 
 <div>
     <c:out value="${emptyOrderMessage}"/>
+    <c:out value="${errorSendOrderMessage}"/>
+    <c:out value="${errorGood.name}"/>
 </div>
 
 <c:if test="${not empty order.goods}">
