@@ -20,6 +20,6 @@ public class ShowCart implements Action {
                     LabelManager.getProperty("message.empty.order", locale));
         }
 
-        return ConfigurationManager.getProperty("path.page.my.order");
+        return ConfigurationManager.getProperty("path.page.cart");
     }
 }

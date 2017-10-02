@@ -5,7 +5,6 @@ import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Order;
 import com.serhii.shutyi.exceptions.NotEnoughGoodQuantity;
-import com.serhii.shutyi.service.GoodsService;
 import com.serhii.shutyi.service.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +43,7 @@ public class SendOrder implements Action {
                 request.setAttribute("errorSendOrderMessage",
                         LabelManager.getProperty("message.error.send.order", locale));
                 request.setAttribute("errorGood", e.getGood());
-                page = ConfigurationManager.getProperty("path.page.my.order");
+                page = ConfigurationManager.getProperty("path.page.cart");
             }
         }
 
