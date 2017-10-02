@@ -4,11 +4,14 @@ import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.entity.Good;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.List;
 
 public class GoodsService {
+    final static Logger logger = Logger.getLogger(GoodsService.class);
+
     private DaoFactory factory;
     private ConnectionPool connectionPool;
 
@@ -45,7 +48,8 @@ public class GoodsService {
         try(GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             good = goodDAO.findById(goodId).get();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Fail to get good by id", e);
+            throw new RuntimeException(e);
         }
         return good;
     }
@@ -55,6 +59,7 @@ public class GoodsService {
         try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goodDAO.delete(goodId);
         } catch (Exception e) {
+            logger.error("Fail to delete good", e);
             throw new RuntimeException(e);
         }
     }
@@ -64,6 +69,7 @@ public class GoodsService {
         try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goodDAO.insert(good);
         } catch (Exception e) {
+            logger.error("Fail to add good", e);
             throw new RuntimeException(e);
         }
     }
@@ -73,6 +79,7 @@ public class GoodsService {
         try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goodDAO.update(good);
         } catch (Exception e) {
+            logger.error("Fail to update good", e);
             throw new RuntimeException(e);
         }
     }
