@@ -8,6 +8,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Hashtable;
 
 public class ConnectionPool {
     private static final Logger logger = Logger.getLogger(ConnectionPool.class);
@@ -15,7 +16,7 @@ public class ConnectionPool {
     private static final String DATASOURCE_NAME = "jdbc/online_store";
     private static DataSource dataSource;
 
-    static {
+    public ConnectionPool() {
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
@@ -26,9 +27,15 @@ public class ConnectionPool {
         }
     }
 
-    public ConnectionPool() {}
+    private static class Holder {
+        private static ConnectionPool INSTANCE = new ConnectionPool();
+    }
 
-    public static Connection getConnection() {
+    public static ConnectionPool getInstance() {
+        return ConnectionPool.Holder.INSTANCE;
+    }
+
+    public Connection getConnection() {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
