@@ -10,6 +10,16 @@ import com.serhii.shutyi.service.GoodsService;
 import javax.servlet.http.HttpServletRequest;
 
 public class AddGood implements Action {
+    private GoodsService goodsService;
+
+    public AddGood() {
+        this.goodsService = GoodsService.getInstance();
+    }
+
+    public AddGood(GoodsService goodsService) {
+        this.goodsService = goodsService;
+    }
+
     @Override
     public String execute(HttpServletRequest request) {
         String page = null;
@@ -21,36 +31,41 @@ public class AddGood implements Action {
         int price = Integer.parseInt(request.getParameter("price"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        InputGoodChecker checker = new InputGoodChecker();
-        boolean isDataCorrect = checker.isInputDataCorrect(name, description, price, quantity);
+        boolean isDataCorrect = checkInputData(name, description, price, quantity);
 
         if (isDataCorrect) {
-
-            Good good = new Good.Builder()
-                    .setName(name)
-                    .setDescription(description)
-                    .setPrice(price)
-                    .setQuantity(quantity)
-                    .build();
+            Good good = makeGood(name, description, price, quantity);
 
             if (goodIdString != null) {
                 int goodId = Integer.parseInt(goodIdString);
                 good.setId(goodId);
-                GoodsService.getInstance().updateGood(good);
+                goodsService.updateGood(good);
             } else {
-                GoodsService.getInstance().addGood(good);
+                goodsService.addGood(good);
             }
 
             request.setAttribute("successAddGoodMessage",
                     LabelManager.getProperty("message.success.add.good", locale));
-
             page = ConfigurationManager.getProperty("path.page.goods");
         } else {
             request.setAttribute("errorAddGoodMessage",
                     LabelManager.getProperty("message.error.wrong.data", locale));
-
             page = ConfigurationManager.getProperty("path.page.edit.good");
         }
+
         return page;
+    }
+
+    private boolean checkInputData(String name, String description, int price, int quantity) {
+        InputGoodChecker checker = new InputGoodChecker();
+        return checker.isInputDataCorrect(name, description, price, quantity);
+    }
+    private Good makeGood(String name, String description, int price, int quantity) {
+        return new Good.Builder()
+                .setName(name)
+                .setDescription(description)
+                .setPrice(price)
+                .setQuantity(quantity)
+                .build();
     }
 }
