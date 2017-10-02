@@ -27,9 +27,7 @@ public class OrdersService {
     }
 
     public static OrdersService getInstance() {
-        OrdersService ordersService = OrdersService.Holder.INSTANCE;
-
-        return ordersService;
+        return OrdersService.Holder.INSTANCE;
     }
 
     public List<Order> getOrdersByClientId(int clientId) {
