@@ -7,12 +7,15 @@ import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.exceptions.BusyEmailException;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
 public class ClientsService {
+    final static Logger logger = Logger.getLogger(ClientsService.class);
+
     private DaoFactory factory;
     private ConnectionPool connectionPool;
 
@@ -52,7 +55,8 @@ public class ClientsService {
         } catch (BusyEmailException e) {
             throw new BusyEmailException(e);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Fail to register client", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -69,7 +73,8 @@ public class ClientsService {
 
             connection.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Fail to get client by email", e);
+            throw new RuntimeException(e);
         }
 
         return client;
@@ -82,7 +87,8 @@ public class ClientsService {
         try (ClientDAO clientDAO = factory.createClientDAO(connection)) {
             clients = clientDAO.findWithUnpaidOrders();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Fail to get clients with unpaid orders", e);
+            throw new RuntimeException(e);
         }
 
         return clients;
@@ -100,7 +106,8 @@ public class ClientsService {
 
             connection.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Fail to block client", e);
+            throw new RuntimeException(e);
         }
     }
 }
