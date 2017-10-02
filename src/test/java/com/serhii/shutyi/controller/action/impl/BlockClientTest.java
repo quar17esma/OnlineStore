@@ -2,6 +2,7 @@ package com.serhii.shutyi.controller.action.impl;
 
 import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.service.ClientsService;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -9,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
@@ -19,15 +21,19 @@ public class BlockClientTest {
     private ClientsService clientsService;
     @Mock
     private HttpServletRequest request;
+    @Mock
+    private HttpSession session;
 
     @InjectMocks
     private BlockClient blockClient;
 
     @Test
     public void callClientsService() throws Exception {
-        String clientIdString = "1";
+        String clientIdString = "3";
         int clientId = Integer.parseInt(clientIdString);
+        when(request.getSession()).thenReturn(session);
         when(request.getParameter("clientId")).thenReturn(clientIdString);
+        when(session.getAttribute("locale")).thenReturn("en_US");
 
         blockClient.execute(request);
 
@@ -39,6 +45,7 @@ public class BlockClientTest {
         String clientIdString = null;
 
         when(request.getParameter("clientId")).thenReturn(clientIdString);
+        when(request.getSession()).thenReturn(session);
 
         blockClient.execute(request);
 
@@ -50,6 +57,7 @@ public class BlockClientTest {
         String clientIdString = "";
 
         when(request.getParameter("clientId")).thenReturn(clientIdString);
+        when(request.getSession()).thenReturn(session);
 
         blockClient.execute(request);
 
@@ -59,6 +67,8 @@ public class BlockClientTest {
     @Test
     public void setRequestAttributeSuccessBlockClient() throws Exception {
         when(request.getParameter("clientId")).thenReturn("1");
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("locale")).thenReturn("en_US");
 
         blockClient.execute(request);
 
