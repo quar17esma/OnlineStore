@@ -4,14 +4,11 @@ import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.User;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.Connection;
 import java.util.Optional;
@@ -20,14 +17,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
-@Ignore
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(ConnectionPool.class)
+
+@RunWith(MockitoJUnitRunner.class)
 public class LoginServiceTest {
     @Mock
     private DaoFactory factory;
     @Mock
     private ClientsService clientsService;
+    @Mock
+    private ConnectionPool connectionPool;
 
     @InjectMocks
     private LoginService loginService;
@@ -42,15 +40,10 @@ public class LoginServiceTest {
                 .build());
 
         UserDAO userDAO = mock(UserDAO.class);
-        when(userDAO.findByEmail(login)).thenReturn(user);
-
-        when(factory.createUserDAO(any(Connection.class))).thenReturn(userDAO);
-//        when(clientsService.getClientByEmail(login)).thenReturn()
-
         Connection connection = mock(Connection.class);
-        PowerMockito.mockStatic(ConnectionPool.class);
-        when(ConnectionPool.getConnection()).thenReturn(connection);
-
+        when(userDAO.findByEmail(login)).thenReturn(user);
+        when(connectionPool.getConnection()).thenReturn(connection);
+        when(factory.createUserDAO(any(Connection.class))).thenReturn(userDAO);
 
         boolean result = loginService.checkLogin(login, password);
 
