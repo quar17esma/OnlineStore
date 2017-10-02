@@ -26,6 +26,13 @@ public class SendOrder implements Action {
         String locale = (String) request.getSession().getAttribute("locale");
         Order order = (Order) request.getSession().getAttribute("order");
 
+        if (order.getClient().isInBlackList()) {
+            request.setAttribute("errorUserBlockedMessage",
+                    LabelManager.getProperty("message.error.user.blocked", locale));
+            page = ConfigurationManager.getProperty("path.page.cart");
+
+            return page;
+        }
 
         if (order != null) {
             try {
