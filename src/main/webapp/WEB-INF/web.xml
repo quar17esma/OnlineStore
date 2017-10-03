@@ -24,6 +24,17 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+
+    <servlet>
+        <servlet-name>controller</servlet-name>
+        <servlet-class>com.serhii.shutyi.controller.Controller</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>controller</servlet-name>
+        <url-pattern>/controller</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>buy_now</servlet-name>
         <jsp-file>/pages/buy_now.jsp</jsp-file>

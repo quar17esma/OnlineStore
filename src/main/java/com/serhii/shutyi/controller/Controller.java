@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-@WebServlet(name = "controller", urlPatterns = "/controller", loadOnStartup = 1)
 public class Controller extends HttpServlet {
 
     @Override
