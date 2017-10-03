@@ -16,7 +16,7 @@
 <jsp:include page="/header"/>
 
 <div>
-    Welcome
+    <fmt:message key="message.welcome"/>
 </div>
 
 </body>
