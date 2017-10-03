@@ -19,7 +19,7 @@
 
 <div>
     <form name="registrationForm" method="POST" action="controller">
-        <input type="hidden" name="action" value="registration"/>
+        <input type="hidden" name="action" value="register_client"/>
 
         <label><fmt:message key="label.name"/></label>
         <br/>

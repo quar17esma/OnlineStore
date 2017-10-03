@@ -49,7 +49,8 @@
         <input type="reset" value="${buttonReset}">
     </form>
     <hr/>
-    <form name="registrationForm" method="POST" action="register">
+    <form name="registrationForm" method="POST" action="controller">
+        <input type="hidden" name="action" value="edit_client">
         <fmt:message var="buttonRegistration" key="button.registration"/>
         <input type="submit" value="${buttonRegistration}">
     </form>

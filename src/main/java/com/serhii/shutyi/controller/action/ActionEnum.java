@@ -16,9 +16,14 @@ public enum ActionEnum {
             this.command = new Logout();
         }
     },
-    REGISTRATION {
+    REGISTER_CLIENT {
         {
-            this.command = new Registration();
+            this.command = new RegisterClient();
+        }
+    },
+    EDIT_CLIENT {
+        {
+            this.command = new EditClient();
         }
     },
     BUY_NOW {

@@ -11,14 +11,14 @@ import com.serhii.shutyi.service.ClientsService;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class Registration implements Action {
+public class RegisterClient implements Action {
     private ClientsService clientsService;
 
-    public Registration() {
+    public RegisterClient() {
         this.clientsService = ClientsService.getInstance();
     }
 
-    public Registration(ClientsService clientsService) {
+    public RegisterClient(ClientsService clientsService) {
         this.clientsService = clientsService;
     }
 
