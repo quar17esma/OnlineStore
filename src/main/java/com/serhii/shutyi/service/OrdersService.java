@@ -11,7 +11,6 @@ import com.serhii.shutyi.exceptions.NotEnoughGoodQuantity;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
