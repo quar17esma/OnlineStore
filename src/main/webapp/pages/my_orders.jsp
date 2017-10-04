@@ -15,7 +15,7 @@
 <body>
 
 <div>
-    <jsp:include page="/header"/>
+    <jsp:include page="/pages/header.jsp"/>
 </div>
 
 <div>
@@ -46,8 +46,7 @@
 
         <c:if test="${order.status != 'PAID'}">
             <div>
-                <form name="payOrderForm" method="POST" action="controller">
-                    <input type="hidden" name="action" value="pay_order"/>
+                <form name="payOrderForm" method="POST" action="./pay_order">
                     <input type="hidden" name="orderId" value="${order.id}"/>
 
                     <fmt:message var="buttonPayOrder" key="button.pay.order"/>

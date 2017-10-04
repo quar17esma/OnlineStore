@@ -14,14 +14,12 @@
 <body>
 
 <div>
-    <form name="engForm" method="POST" action="controller">
-        <input type="hidden" name="action" value="change_locale">
+    <form name="engForm" method="POST" action="${pageContext.request.contextPath}/rest/change_locale">
         <input type="hidden" name="locale" value="en_US">
         <fmt:message var="buttonEng" key="button.english"/>
         <input type="submit" value="${buttonEng}">
     </form>
-    <form name="rusForm" method="POST" action="controller">
-        <input type="hidden" name="action" value="change_locale">
+    <form name="rusForm" method="POST" action="${pageContext.request.contextPath}/rest/change_locale">
         <input type="hidden" name="locale" value="ru_RU">
         <fmt:message var="buttonRus" key="button.russian"/>
         <input type="submit" value="${buttonRus}">
@@ -33,8 +31,7 @@
     <c:out value="${errorLoginPassMessage}"/>
 </div>
 <div>
-    <form name="loginForm" method="POST" action="controller">
-        <input type="hidden" name="action" value="login"/>
+    <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/rest/login">
         <label><fmt:message key="label.login"/></label>
         <br/>
         <input type="text" name="login" value=""/>
@@ -49,8 +46,7 @@
         <input type="reset" value="${buttonReset}">
     </form>
     <hr/>
-    <form name="registrationForm" method="POST" action="controller">
-        <input type="hidden" name="action" value="edit_client">
+    <form name="registrationForm" method="POST" action="${pageContext.request.contextPath}/rest/edit_client">
         <fmt:message var="buttonRegistration" key="button.registration"/>
         <input type="submit" value="${buttonRegistration}">
     </form>

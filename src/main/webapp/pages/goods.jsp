@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <jsp:include page="/header"/>
+    <jsp:include page="/pages/header.jsp"/>
 
     <div>
         <c:out value="${successAddGoodMessage}"/>
@@ -42,8 +42,7 @@
                 <ctg:price price="${good.price}"/>
             </div>
             <div class="field">
-                <form class="button" name="buyNowForm" method="POST" action="controller">
-                    <input type="hidden" name="action" value="buy_now"/>
+                <form class="button" name="buyNowForm" method="POST" action="./buy_now">
                     <input type="hidden" name="goodId" value="${good.id}">
                     <fmt:message var="buyButton" key="button.buy.now"/>
                     <input type="submit" value="${buyButton}">
@@ -52,14 +51,12 @@
 
             <%--For ADMIN--%>
             <c:if test="${sessionScope.client.user.role == 'ADMIN'}">
-                <form class="button" name="goToEditGoodForm" method="POST" action="controller">
-                    <input type="hidden" name="action" value="edit_good"/>
+                <form class="button" name="goToEditGoodForm" method="POST" action="./edit_good">
                     <input type="hidden" name="goodId" value="${good.id}">
                     <fmt:message var="buttonEdit" key="button.edit"/>
                     <input type="submit" value="${buttonEdit}">
                 </form>
-                <form class="button" name="deleteGoodForm" method="POST" action="controller">
-                    <input type="hidden" name="action" value="delete_good"/>
+                <form class="button" name="deleteGoodForm" method="POST" action="./delete_good">
                     <input type="hidden" name="goodId" value="${good.id}">
                     <fmt:message var="buttonDelete" key="button.delete"/>
                     <input type="submit" value="${buttonDelete}">

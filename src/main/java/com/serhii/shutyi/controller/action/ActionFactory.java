@@ -14,7 +14,7 @@ public class ActionFactory {
     public Action defineAction(HttpServletRequest request) {
         Action currentAction = new Empty();
 
-        String action = request.getParameter("action");
+        String action = request.getRequestURI().replaceAll(".*/rest/", "");
         if (action == null || action.isEmpty()) {
             return currentAction;
         }

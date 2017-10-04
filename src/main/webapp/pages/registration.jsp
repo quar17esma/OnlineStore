@@ -18,7 +18,7 @@
 </div>
 
 <div>
-    <form name="registrationForm" method="POST" action="controller">
+    <form name="registrationForm" method="POST" action="./register_client">
         <input type="hidden" name="action" value="register_client"/>
 
         <label><fmt:message key="label.name"/></label>

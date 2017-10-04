@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<jsp:include page="/header"/>
+<jsp:include page="/pages/header.jsp"/>
 
 <div>
     <c:out value="${successBlockClient}"/>
@@ -31,8 +31,7 @@
         <c:out value="${client.name}"/>
     </div>
 
-    <form class="button" method="POST" action="controller">
-        <input type="hidden" name="action" value="block_client"/>
+    <form class="button" method="POST" action="./block_client">
         <input type="hidden" name="clientId" value="${client.id}">
         <fmt:message var="buttonBlockClient" key="button.block.client"/>
         <input type="submit" value="${buttonBlockClient}">

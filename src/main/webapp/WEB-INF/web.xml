@@ -24,7 +24,6 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
-
     <servlet>
         <servlet-name>controller</servlet-name>
         <servlet-class>com.serhii.shutyi.controller.Controller</servlet-class>
@@ -32,99 +31,8 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>controller</servlet-name>
-        <url-pattern>/controller</url-pattern>
+        <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <servlet-name>buy_now</servlet-name>
-        <jsp-file>/pages/buy_now.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>buy_now</servlet-name>
-        <url-pattern>/buy_now</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>cart</servlet-name>
-        <jsp-file>/pages/cart.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>cart</servlet-name>
-        <url-pattern>/cart</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>edit_good</servlet-name>
-        <jsp-file>/pages/edit_good.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>edit_good</servlet-name>
-        <url-pattern>/edit_good</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>goods</servlet-name>
-        <jsp-file>/pages/goods.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>goods</servlet-name>
-        <url-pattern>/goods</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>header</servlet-name>
-        <jsp-file>/pages/header.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>header</servlet-name>
-        <url-pattern>/header</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>login</servlet-name>
-        <jsp-file>/pages/login.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>login</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>manage_clients</servlet-name>
-        <jsp-file>/pages/manage_clients.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>manage_clients</servlet-name>
-        <url-pattern>/manage_clients</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>my_orders</servlet-name>
-        <jsp-file>/pages/my_orders.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>my_orders</servlet-name>
-        <url-pattern>/my_orders</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>registration</servlet-name>
-        <jsp-file>/pages/registration.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>registration</servlet-name>
-        <url-pattern>/registration</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>welcome</servlet-name>
-        <jsp-file>/pages/welcome.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>welcome</servlet-name>
-        <url-pattern>/welcome</url-pattern>
-    </servlet-mapping>
-
 
     <filter>
         <filter-name>encodingFilter</filter-name>

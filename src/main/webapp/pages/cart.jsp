@@ -12,7 +12,7 @@
     <title><fmt:message key="title.cart"/></title>
 </head>
 <body>
-<jsp:include page="/header"/>
+<jsp:include page="/pages/header.jsp"/>
 
 <div>
     <c:out value="${emptyOrderMessage}"/>
@@ -46,8 +46,7 @@
     </div>
 
     <div class="field">
-        <form name="sendOrderForm" method="POST" action="controller">
-            <input type="hidden" name="action" value="send_order"/>
+        <form name="sendOrderForm" method="POST" action="./send_order">
             <fmt:message var="buttonSendOrder" key="button.send.order"/>
             <input type="submit" value="${buttonSendOrder}">
         </form>

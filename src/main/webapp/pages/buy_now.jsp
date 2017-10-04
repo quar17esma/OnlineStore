@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <jsp:include page="/header"/>
+    <jsp:include page="/pages/header.jsp"/>
 
     <div>
         <c:out value="${successAddToCart}"/>
@@ -35,8 +35,7 @@
             <p><c:out value="${good.price}"/></p>
         </div>
         <br/>
-        <form name="addToOrderForm" action="controller" method="post">
-            <input type="hidden" name="action" value="add_to_order">
+        <form name="addToOrderForm" method="POST" action="./add_to_order">
             <input type="hidden" name="goodId" value="${good.id}">
 
             <label><fmt:message key="label.quantity"/></label>

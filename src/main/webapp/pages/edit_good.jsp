@@ -12,13 +12,12 @@
     <title><fmt:message key="title.edit.good"/></title>
 </head>
 <body>
-<jsp:include page="/header"/>
+<jsp:include page="/pages/header.jsp"/>
 <div>
     <c:out value="${errorAddGoodMessage}"/>
 </div>
 <div>
-    <form name="addGoodForm" method="POST" action="controller">
-        <input type="hidden" name="action" value="add_good"/>
+    <form name="addGoodForm" method="POST" action="./add_good">
         <input type="hidden" name="goodId" value="${good.id}">
 
         <label><fmt:message key="label.name"/></label>
