@@ -16,8 +16,6 @@ public class Price extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         try {
-//            int integerPart = price / 100;
-//            int fractionalPart = price % 100;
             String priceString = String.valueOf(price);
             String integerPart = priceString.substring(0, priceString.length()-2);
             String fractionalPart = priceString.substring(priceString.length()-2);
