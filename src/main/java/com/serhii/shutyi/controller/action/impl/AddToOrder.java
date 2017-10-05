@@ -3,23 +3,20 @@ package com.serhii.shutyi.controller.action.impl;
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
-import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
 import com.serhii.shutyi.service.GoodsService;
-import com.serhii.shutyi.service.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class AddToOrder implements Action {
-    private OrdersService ordersService;
+    private GoodsService goodsService;
 
     public AddToOrder() {
-        this.ordersService = OrdersService.getInstance();
+        this.goodsService = GoodsService.getInstance();
     }
 
-    public AddToOrder(OrdersService ordersService) {
-        this.ordersService = ordersService;
+    public AddToOrder(GoodsService goodsService) {
+        this.goodsService = goodsService;
     }
 
     @Override
@@ -29,7 +26,7 @@ public class AddToOrder implements Action {
         int goodId = Integer.parseInt(request.getParameter("goodId"));
         int orderedQuantity = Integer.parseInt(request.getParameter("ordered_quantity"));
 
-        ordersService.addGoodToOrder(order, goodId, orderedQuantity);
+        goodsService.addGoodToOrder(order, goodId, orderedQuantity);
 
         request.setAttribute("successAddToCart",
                 LabelManager.getProperty("message.success.add.to.cart", locale));

@@ -4,10 +4,12 @@ import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.entity.Good;
+import com.serhii.shutyi.entity.Order;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 public class GoodsService {
     final static Logger logger = Logger.getLogger(GoodsService.class);
@@ -35,23 +37,22 @@ public class GoodsService {
         try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goods = goodDAO.findAll();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Fail to get all goods", e);
+            throw new RuntimeException(e);
         }
 
         return goods;
     }
 
     public Good getGoodById(int goodId) {
-        Good good = null;
-
         Connection connection = connectionPool.getConnection();
         try(GoodDAO goodDAO = factory.createGoodDAO(connection)) {
-            good = goodDAO.findById(goodId).get();
+            Optional<Good> good = goodDAO.findById(goodId);
+            return good.get();
         } catch (Exception e) {
-            logger.error("Fail to get good by id", e);
+            logger.error("Fail to find good by id", e);
             throw new RuntimeException(e);
         }
-        return good;
     }
 
     public void deleteGoodById(int goodId) {
@@ -82,5 +83,12 @@ public class GoodsService {
             logger.error("Fail to update good", e);
             throw new RuntimeException(e);
         }
+    }
+
+    public void addGoodToOrder(Order order, int goodId, int orderedQuantity) {
+        Good good = getGoodById(goodId);
+        good.setQuantity(orderedQuantity);
+
+        order.getGoods().add(good);
     }
 }

@@ -42,7 +42,7 @@ public class LoginService {
         }
     }
 
-    public boolean checkLogin(String login, String password) {
+    private boolean checkLogin(String login, String password) {
         boolean result = false;
 
         if (login != null &&
