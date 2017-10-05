@@ -1,17 +1,16 @@
 package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.dao.GoodDAO;
-import com.serhii.shutyi.model.entity.Good;
+import com.serhii.shutyi.entity.Good;
+import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class JDBCGoodDAO implements GoodDAO {
+    final static Logger logger = Logger.getLogger(JDBCGoodDAO.class);
 
     private Connection connection;
 
@@ -28,13 +27,11 @@ public class JDBCGoodDAO implements GoodDAO {
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Good good = new Good(rs.getInt("goods.id"),
-                        rs.getString("goods.name"),
-                        rs.getString("goods.description"),
-                        rs.getInt("goods.price"));
+                Good good = createGood(rs);
                 goods.add(good);
             }
         } catch (Exception ex) {
+            logger.error("Fail to find goods", ex);
             throw new RuntimeException(ex);
         }
 
@@ -53,18 +50,52 @@ public class JDBCGoodDAO implements GoodDAO {
             query.setInt(1, id);
             ResultSet rs = query.executeQuery();
 
-            while (rs.next()) {
-                Good good = new Good(rs.getInt("goods.id"),
-                        rs.getString("goods.name"),
-                        rs.getString("goods.description"),
-                        rs.getInt("goods.price"));
+            if (rs.next()) {
+                Good good = createGood(rs);
                 result = Optional.of(good);
             }
         } catch (Exception ex) {
+            logger.error("Fail to find good by id", ex);
             throw new RuntimeException(ex);
         }
 
         return result;
+    }
+
+    private Good createGood(ResultSet rs) throws SQLException {
+
+        Good good = new Good.Builder()
+                .setId(rs.getInt("goods.id"))
+                .setName(rs.getString("goods.name"))
+                .setDescription(rs.getString("goods.description"))
+                .setPrice(rs.getInt("goods.price"))
+                .setQuantity(rs.getInt("goods.quantity"))
+                .build();
+
+        return good;
+    }
+
+    @Override
+    public List<Good> findByOrderId(int orderId) {
+        List<Good> goods = new ArrayList<>();
+
+        try (PreparedStatement query = connection.prepareStatement(
+                "SELECT * FROM goods " +
+                        "JOIN ordered_goods ON goods.id = ordered_goods.good_id " +
+                        "WHERE order_id = ?")) {
+            query.setInt(1, orderId);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                Good good = createGood(rs);
+                goods.add(good);
+            }
+        } catch (Exception ex) {
+            logger.error("Fail to find goods by order", ex);
+            throw new RuntimeException(ex);
+        }
+
+        return goods;
     }
 
     @Override
@@ -74,17 +105,18 @@ public class JDBCGoodDAO implements GoodDAO {
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "UPDATE goods " +
-                                     "SET goods.name = ?, goods.description, goods.price = ?" +
+                                     "SET name = ?, description = ?, price = ?, quantity = ? " +
                                      "WHERE id = ?")) {
             query.setString(1, good.getName());
             query.setString(2, good.getDescription());
             query.setInt(3, good.getPrice());
-            query.setInt(4, good.getId());
-
+            query.setInt(4, good.getQuantity());
+            query.setInt(5, good.getId());
             query.executeUpdate();
 
             result = true;
         } catch (Exception ex) {
+            logger.error("Fail to update good", ex);
             throw new RuntimeException(ex);
         }
 
@@ -104,6 +136,7 @@ public class JDBCGoodDAO implements GoodDAO {
 
             result = true;
         } catch (Exception ex) {
+            logger.error("Fail to delete good", ex);
             throw new RuntimeException(ex);
         }
 
@@ -116,13 +149,15 @@ public class JDBCGoodDAO implements GoodDAO {
 
         try (PreparedStatement query =
                      connection.prepareStatement(
-                             "INSERT INTO goods (goods.name, goods.description, goods.price) " +
-                                     "VALUES(?, ?, ?)",
+                             "INSERT INTO goods (" +
+                                     "name, description, price, quantity) " +
+                                     "VALUES(?, ?, ?, ?)",
                              Statement.RETURN_GENERATED_KEYS)) {
 
             query.setString(1, good.getName());
             query.setString(2, good.getDescription());
             query.setInt(3, good.getPrice());
+            query.setInt(4, good.getQuantity());
 
             query.executeUpdate();
             ResultSet rsId = query.getGeneratedKeys();
@@ -131,6 +166,7 @@ public class JDBCGoodDAO implements GoodDAO {
                 good.setId(result);
             }
         } catch (Exception ex) {
+            logger.error("Fail to insert good", ex);
             throw new RuntimeException(ex);
         }
 

@@ -1,19 +1,17 @@
 package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.dao.UserDAO;
-import com.serhii.shutyi.model.entity.Client;
-import com.serhii.shutyi.model.entity.Role;
-import com.serhii.shutyi.model.entity.User;
+import com.serhii.shutyi.entity.User;
+import com.serhii.shutyi.enums.Role;
+import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class JDBCUserDAO implements UserDAO {
+    final static Logger logger = Logger.getLogger(JDBCUserDAO.class);
 
     private Connection connection;
 
@@ -25,36 +23,14 @@ public class JDBCUserDAO implements UserDAO {
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
 
-        try (PreparedStatement query = connection.prepareStatement(
-                "SELECT * FROM user " +
-                        "JOIN user ON client.id = user.id " +
-                        "JOIN users_roles ON user.id = users_roles.user_id " +
-                        "JOIN role ON role.id = users_roles.role_id")) {
+        try (PreparedStatement query = connection.prepareStatement("SELECT * FROM user ")) {
             ResultSet rs = query.executeQuery();
-
             while (rs.next()) {
-                Client client = new Client(rs.getInt("client.id"),
-                        rs.getString("client.name"),
-                        rs.getInt("client.discount"),
-                        null);
-
-                User user = new User(rs.getInt("user.id"),
-                        rs.getString("user.email"),
-                        rs.getString("user.password"),
-                        rs.getBoolean("user.enabled"),
-                        null,
-                        null);
-
-                Role role = new Role(rs.getInt("role.id"),
-                        rs.getString("role.role"));
-
-                user.setClient(client);
-                user.setRole(role);
-                client.setUser(user);
-
+                User user = createUser(rs);
                 users.add(user);
             }
         } catch (Exception ex) {
+            logger.error("Fail to find users", ex);
             throw new RuntimeException(ex);
         }
         return users;
@@ -62,46 +38,63 @@ public class JDBCUserDAO implements UserDAO {
 
     @Override
     public Optional<User> findById(int id) {
-
         Optional<User> result = Optional.empty();
 
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "SELECT * FROM user " +
-                                     "JOIN client ON client.id = user.id " +
-                                     "JOIN users_roles ON user.id = users_roles.user_id " +
-                                     "JOIN role ON role.id = users_roles.role_id " +
-                                     "WHERE user.id = ?")) {
+                                     "WHERE id = ?")) {
             query.setInt(1, id);
             ResultSet rs = query.executeQuery();
 
             while (rs.next()) {
-                Client client = new Client(rs.getInt("client.id"),
-                        rs.getString("client.name"),
-                        rs.getInt("client.discount"),
-                        null);
-
-                User user = new User(rs.getInt("user.id"),
-                        rs.getString("user.email"),
-                        rs.getString("user.password"),
-                        rs.getBoolean("user.enabled"),
-                        null,
-                        null);
-
-                Role role = new Role(rs.getInt("role.id"),
-                        rs.getString("role.role"));
-
-                user.setClient(client);
-                user.setRole(role);
-                client.setUser(user);
+                User user = createUser(rs);
 
                 result = Optional.of(user);
             }
         } catch (Exception ex) {
+            logger.error("Fail to user by id", ex);
             throw new RuntimeException(ex);
         }
 
         return result;
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        Optional<User> result = Optional.empty();
+
+        try (PreparedStatement query =
+                     connection.prepareStatement(
+                             "SELECT * FROM user " +
+                                     "WHERE email = ?")) {
+            query.setString(1, email);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                User user = createUser(rs);
+
+                result = Optional.of(user);
+            }
+        } catch (Exception ex) {
+            logger.error("Fail to user by email", ex);
+            throw new RuntimeException(ex);
+        }
+
+        return result;
+    }
+
+    private User createUser(ResultSet rs) throws SQLException {
+
+        User user = new User.Builder()
+                .setId(rs.getInt("user.id"))
+                .setEmail(rs.getString("user.email"))
+                .setPassword(rs.getString("user.password"))
+                .setEnabled(rs.getBoolean("user.enabled"))
+                .setRole(Role.valueOf(rs.getString("user.role").toUpperCase()))
+                .build();
+        
+        return user;
     }
 
     @Override
@@ -111,17 +104,19 @@ public class JDBCUserDAO implements UserDAO {
         try (PreparedStatement query =
                      connection.prepareStatement(
                              "UPDATE user " +
-                                     "SET user.email = ?, user.password = ?, user.enabled  = ?" +
+                                     "SET email = ?, password = ?, enabled  = ?, role = ?" +
                                      "WHERE id = ?")) {
             query.setString(1, user.getEmail());
             query.setString(2, user.getPassword());
             query.setBoolean(3, user.isEnabled());
-            query.setInt(4, user.getId());
+            query.setString(4,user.getRole().name());
+            query.setInt(5, user.getId());
 
             query.executeUpdate();
 
             result = true;
         } catch (Exception ex) {
+            logger.error("Fail to update user", ex);
             throw new RuntimeException(ex);
         }
 
@@ -141,6 +136,7 @@ public class JDBCUserDAO implements UserDAO {
 
             result = true;
         } catch (Exception ex) {
+            logger.error("Fail to delete user", ex);
             throw new RuntimeException(ex);
         }
 
@@ -153,13 +149,12 @@ public class JDBCUserDAO implements UserDAO {
 
         try (PreparedStatement query =
                      connection.prepareStatement(
-                             "INSERT INTO user (user.email, user.password, user.enabled) " +
-                                     "VALUES(?, ?, ?)",
+                             "INSERT INTO user (email, password) " +
+                                     "VALUES(?, ?)",
                              Statement.RETURN_GENERATED_KEYS)) {
 
             query.setString(1, user.getEmail());
             query.setString(2, user.getPassword());
-            query.setBoolean(3, user.isEnabled());
 
             query.executeUpdate();
             ResultSet rsId = query.getGeneratedKeys();
@@ -168,6 +163,7 @@ public class JDBCUserDAO implements UserDAO {
                 user.setId(result);
             }
         } catch (Exception ex) {
+            logger.error("Fail to insert user", ex);
             throw new RuntimeException(ex);
         }
 
