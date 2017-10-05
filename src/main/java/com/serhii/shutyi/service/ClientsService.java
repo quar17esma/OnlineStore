@@ -61,15 +61,15 @@ public class ClientsService {
     }
 
     public Client getClientByEmail(String email) {
-        Client client = null;
+        Optional<Client> client;
 
         Connection connection = connectionPool.getConnection();
         try (UserDAO userDAO = factory.createUserDAO(connection);
              ClientDAO clientDAO = factory.createClientDAO(connection)) {
             connection.setAutoCommit(false);
 
-            User user = userDAO.findByEmail(email).get();
-            client = clientDAO.findById(user.getId()).get();
+            Optional<User> user = userDAO.findByEmail(email);
+            client = clientDAO.findById(user.get().getId());
 
             connection.commit();
         } catch (Exception e) {
@@ -77,21 +77,17 @@ public class ClientsService {
             throw new RuntimeException(e);
         }
 
-        return client;
+        return client.get();
     }
 
     public List<Client> getClientsWithUnpaidOrders() {
-        List<Client> clients = null;
-
         Connection connection = connectionPool.getConnection();
         try (ClientDAO clientDAO = factory.createClientDAO(connection)) {
-            clients = clientDAO.findWithUnpaidOrders();
+            return clientDAO.findWithUnpaidOrders();
         } catch (Exception e) {
             logger.error("Fail to get clients with unpaid orders", e);
             throw new RuntimeException(e);
         }
-
-        return clients;
     }
 
     public void blockClientById(int clientId) {
