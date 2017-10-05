@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 public class GoodsService {
     final static Logger logger = Logger.getLogger(GoodsService.class);
@@ -44,16 +45,18 @@ public class GoodsService {
     }
 
     public Good getGoodById(int goodId) {
-        Good good = null;
-
         Connection connection = connectionPool.getConnection();
         try(GoodDAO goodDAO = factory.createGoodDAO(connection)) {
-            good = goodDAO.findById(goodId).get();
+            Optional<Good> goodOptional = goodDAO.findById(goodId);
+            if (goodOptional.isPresent()) {
+                return goodOptional.get();
+            } else {
+                throw new RuntimeException("Fail to find good by id");
+            }
         } catch (Exception e) {
-            logger.error("Fail to get good by id", e);
+            logger.error("Fail to find good by id", e);
             throw new RuntimeException(e);
         }
-        return good;
     }
 
     public void deleteGoodById(int goodId) {
