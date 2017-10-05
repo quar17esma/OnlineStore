@@ -1,6 +1,7 @@
 package com.serhii.shutyi.controller.action.impl;
 
 import com.serhii.shutyi.entity.Order;
+import com.serhii.shutyi.service.GoodsService;
 import com.serhii.shutyi.service.OrdersService;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -19,7 +20,7 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class AddToOrderTest {
     @Mock
-    private OrdersService ordersService;
+    private GoodsService goodsService;
     @Mock
     private HttpServletRequest request;
 
@@ -40,7 +41,7 @@ public class AddToOrderTest {
         addToOrder.execute(request);
 
 
-        verify(ordersService).addGoodToOrder(any(Order.class), anyInt(), anyInt());
+        verify(goodsService).addGoodToOrder(any(Order.class), anyInt(), anyInt());
     }
 
 }

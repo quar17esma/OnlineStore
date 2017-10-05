@@ -119,11 +119,4 @@ public class OrdersService {
             throw new NotEnoughGoodQuantity("Not enough good quantity", orderedGood);
         }
     }
-
-    public void addGoodToOrder(Order order, int goodId, int orderedQuantity) {
-        Good good = GoodsService.getInstance().getGoodById(goodId);
-        good.setQuantity(orderedQuantity);
-
-        order.getGoods().add(good);
-    }
 }

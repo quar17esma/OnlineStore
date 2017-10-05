@@ -4,6 +4,7 @@ import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.entity.Good;
+import com.serhii.shutyi.entity.Order;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -82,5 +83,12 @@ public class GoodsService {
             logger.error("Fail to update good", e);
             throw new RuntimeException(e);
         }
+    }
+
+    public void addGoodToOrder(Order order, int goodId, int orderedQuantity) {
+        Good good = getGoodById(goodId);
+        good.setQuantity(orderedQuantity);
+
+        order.getGoods().add(good);
     }
 }
