@@ -4,6 +4,8 @@ import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.User;
+import com.serhii.shutyi.exceptions.LoginException;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -26,48 +28,114 @@ public class LoginServiceTest {
     private ClientsService clientsService;
     @Mock
     private ConnectionPool connectionPool;
+    @Mock
+    private Connection connection;
+    @Mock
+    private UserDAO userDAO;
+    @Mock
+    private User user;
 
     @InjectMocks
     private LoginService loginService;
 
+    private String login;
+    private String password;
+
+    @Before
+    public void setUp() {
+        when(user.getPassword()).thenReturn(password);
+        when(userDAO.findByEmail(login)).thenReturn(Optional.of(user));
+        when(connectionPool.getConnection()).thenReturn(connection);
+        when(factory.createUserDAO(any(Connection.class))).thenReturn(userDAO);
+    }
+
     @Test
-    public void checkLoginCorrectDataUserExists() throws Exception {
-        String login = "john@gmail.com";
-        String password = "john";
+    public void loginCorrectDataUserExists() throws Exception {
+        login = "john@gmail.com";
+        password = "john";
 
-        Optional<User> user = Optional.of(new User.Builder()
-                .setPassword("john")
-                .build());
-
-        UserDAO userDAO = mock(UserDAO.class);
-        Connection connection = mock(Connection.class);
-        when(userDAO.findByEmail(login)).thenReturn(user);
+        when(user.getPassword()).thenReturn(password);
+        when(userDAO.findByEmail(login)).thenReturn(Optional.of(user));
         when(connectionPool.getConnection()).thenReturn(connection);
         when(factory.createUserDAO(any(Connection.class))).thenReturn(userDAO);
 
-        boolean result = loginService.checkLogin(login, password);
+        loginService.login(login, password);
 
-
-        assertTrue(result);
+        verify(connectionPool).getConnection();
+        verify(factory).createUserDAO(connection);
+        verify(userDAO).findByEmail(login);
+        verify(clientsService).getClientByEmail(login);
     }
 
-    @Test
-    public void checkLoginReturnFalsePasswordNull() throws Exception {
-        String login = "john@gmail.com";
-        String password = null;
+    @Test(expected = LoginException.class)
+    public void loginPasswordNull() throws Exception {
+        login = "john@gmail.com";
+        password = null;
 
-        boolean result = loginService.checkLogin(login, password);
+        when(user.getPassword()).thenReturn(password);
+        when(userDAO.findByEmail(login)).thenReturn(Optional.of(user));
+        when(connectionPool.getConnection()).thenReturn(connection);
+        when(factory.createUserDAO(any(Connection.class))).thenReturn(userDAO);
 
-        assertFalse(result);
+        loginService.login(login, password);
+
+        verify(connectionPool, never()).getConnection();
+        verify(factory, never()).createUserDAO(connection);
+        verify(userDAO, never()).findByEmail(login);
+        verify(clientsService, never()).getClientByEmail(login);
     }
 
-    @Test
-    public void checkLoginReturnFalseLoginNull() throws Exception {
-        String login = null;
-        String password = "john";
+    @Test(expected = LoginException.class)
+    public void loginLoginNull() throws Exception {
+        login = null;
+        password = "john";
 
-        boolean result = loginService.checkLogin(login, password);
+        when(user.getPassword()).thenReturn(password);
+        when(userDAO.findByEmail(login)).thenReturn(Optional.of(user));
+        when(connectionPool.getConnection()).thenReturn(connection);
+        when(factory.createUserDAO(any(Connection.class))).thenReturn(userDAO);
 
-        assertFalse(result);
+        loginService.login(login, password);
+
+        verify(connectionPool, never()).getConnection();
+        verify(factory, never()).createUserDAO(connection);
+        verify(userDAO, never()).findByEmail(login);
+        verify(clientsService, never()).getClientByEmail(login);
+    }
+
+    @Test(expected = LoginException.class)
+    public void loginPasswordEmpty() throws Exception {
+        login = "john@gmail.com";
+        password = "";
+
+        when(user.getPassword()).thenReturn(password);
+        when(userDAO.findByEmail(login)).thenReturn(Optional.of(user));
+        when(connectionPool.getConnection()).thenReturn(connection);
+        when(factory.createUserDAO(any(Connection.class))).thenReturn(userDAO);
+
+        loginService.login(login, password);
+
+        verify(connectionPool, never()).getConnection();
+        verify(factory, never()).createUserDAO(connection);
+        verify(userDAO, never()).findByEmail(login);
+        verify(clientsService, never()).getClientByEmail(login);
+    }
+
+    @Test(expected = LoginException.class)
+    public void loginLoginEmpty() throws Exception {
+        login = "";
+        password = "john";
+
+        when(user.getPassword()).thenReturn(password);
+        when(userDAO.findByEmail(login)).thenReturn(Optional.of(user));
+        when(connectionPool.getConnection()).thenReturn(connection);
+        when(factory.createUserDAO(any(Connection.class))).thenReturn(userDAO);
+
+        loginService.login(login, password);
+
+        verify(connectionPool, never()).getConnection();
+        verify(factory, never()).createUserDAO(connection);
+        verify(userDAO, never()).findByEmail(login);
+        verify(clientsService, never()).getClientByEmail(login);
     }
 }
