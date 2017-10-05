@@ -36,7 +36,8 @@ public class GoodsService {
         try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goods = goodDAO.findAll();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Fail to get all goods", e);
+            throw new RuntimeException(e);
         }
 
         return goods;
