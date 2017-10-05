@@ -4,7 +4,6 @@ import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.dao.OrderDAO;
-import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
 import com.serhii.shutyi.enums.OrderStatus;
@@ -16,13 +15,13 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.Connection;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -83,22 +82,60 @@ public class OrdersServiceTest {
         verify(connection).setAutoCommit(false);
         verify(orderDAO).findAllByClientId(1);
         verify(goodDAO, never()).findByOrderId(anyInt());
-//        verify(any(Order.class), never()).setGoods(anyListOf(Good.class));
         verify(connection).commit();
 
         assertTrue(resultOrders.isEmpty());
     }
 
     @Test
-    public void payOrder() throws Exception {
+    public void payOrderCorrect() throws Exception {
+        int orderId = 3;
+        Order order = mock(Order.class);
+        when(orderDAO.findById(anyInt())).thenReturn(Optional.of(order));
+
+        boolean result = ordersService.payOrder(orderId);
+
+        verify(connectionPool).getConnection();
+        verify(factory).createOrderDAO(connection);
+        verify(connection).setAutoCommit(false);
+        verify(orderDAO).findById(orderId);
+        verify(order).setStatus(OrderStatus.PAID);
+        verify(orderDAO).update(order);
+        verify(connection).commit();
+
+        assertTrue(result);
     }
 
     @Test
-    public void sendOrder() throws Exception {
+    public void payOrderNoOrderById() throws Exception {
+        int orderId = 3;
+        Optional<Order> order = Optional.empty();
+        when(orderDAO.findById(anyInt())).thenReturn(order);
+
+        boolean result = ordersService.payOrder(orderId);
+
+        verify(connectionPool).getConnection();
+        verify(factory).createOrderDAO(connection);
+        verify(connection).setAutoCommit(false);
+        verify(orderDAO).findById(orderId);
+        verify(orderDAO, never()).update(any());
+        verify(connection, never()).commit();
+
+        assertFalse(result);
     }
 
     @Test
-    public void addGoodToOrder() throws Exception {
-    }
+    public void sendOrderCorrect() throws Exception {
+        Order order = mock(Order.class);
 
+        ordersService.sendOrder(order);
+
+        verify(connectionPool).getConnection();
+        verify(factory).createOrderDAO(connection);
+        verify(factory).createGoodDAO(connection);
+        verify(connection).setAutoCommit(false);
+        verify(order).setOrderedAt(any(LocalDateTime.class));
+        verify(orderDAO).insert(order);
+        verify(connection).commit();
+    }
 }
