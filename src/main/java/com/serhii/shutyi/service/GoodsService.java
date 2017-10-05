@@ -47,12 +47,8 @@ public class GoodsService {
     public Good getGoodById(int goodId) {
         Connection connection = connectionPool.getConnection();
         try(GoodDAO goodDAO = factory.createGoodDAO(connection)) {
-            Optional<Good> goodOptional = goodDAO.findById(goodId);
-            if (goodOptional.isPresent()) {
-                return goodOptional.get();
-            } else {
-                throw new RuntimeException("Fail to find good by id");
-            }
+            Optional<Good> good = goodDAO.findById(goodId);
+            return good.get();
         } catch (Exception e) {
             logger.error("Fail to find good by id", e);
             throw new RuntimeException(e);
