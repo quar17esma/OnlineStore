@@ -67,11 +67,10 @@ public class OrdersService {
             Optional<Order> order = orderDAO.findById(orderId);
             if (order.isPresent()) {
                 order.get().setStatus(OrderStatus.PAID);
+                orderDAO.update(order.get());
+                connection.commit();
+                result = true;
             }
-            orderDAO.update(order.get());
-
-            connection.commit();
-            result = true;
         } catch (Exception e) {
             logger.error("Fail to pay order", e);
             throw new RuntimeException(e);
@@ -81,26 +80,14 @@ public class OrdersService {
     }
 
     public void sendOrder(Order order) {
-
         Connection connection = connectionPool.getConnection();
         try (OrderDAO orderDAO = factory.createOrderDAO(connection);
              GoodDAO goodDAO = factory.createGoodDAO(connection)) {
-
             connection.setAutoCommit(false);
 
             order.setOrderedAt(LocalDateTime.now());
             orderDAO.insert(order);
-
-            for (Good orderedGood:order.getGoods()) {
-                Good storedGood = goodDAO.findById(orderedGood.getId()).get();
-                int difference = storedGood.getQuantity() - orderedGood.getQuantity();
-                if (difference >= 0) {
-                    storedGood.setQuantity(difference);
-                    goodDAO.update(storedGood);
-                } else {
-                    throw new NotEnoughGoodQuantity("Not enough good quantity", orderedGood);
-                }
-            }
+            writeDownGoodsByOrder(order, goodDAO);
 
             connection.commit();
         } catch (NotEnoughGoodQuantity e){
@@ -109,6 +96,27 @@ public class OrdersService {
         } catch (Exception e) {
             logger.error("Fail to send order", e);
             throw new RuntimeException(e);
+        }
+    }
+
+    private void writeDownGoodsByOrder(Order order, GoodDAO goodDAO) throws NotEnoughGoodQuantity {
+        for (Good orderedGood:order.getGoods()) {
+
+            int orderedGoodId = orderedGood.getId();
+            Optional<Good> storedGood = goodDAO.findById(orderedGoodId);
+            if (storedGood.isPresent()) {
+                writeDownGood(storedGood.get(), orderedGood, goodDAO);
+            }
+        }
+    }
+
+    private void writeDownGood(Good storedGood, Good orderedGood, GoodDAO goodDAO) throws NotEnoughGoodQuantity {
+        int difference = storedGood.getQuantity() - orderedGood.getQuantity();
+        if (difference >= 0) {
+            storedGood.setQuantity(difference);
+            goodDAO.update(storedGood);
+        } else {
+            throw new NotEnoughGoodQuantity("Not enough good quantity", orderedGood);
         }
     }
 
