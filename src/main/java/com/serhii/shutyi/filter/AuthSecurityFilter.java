@@ -1,5 +1,6 @@
 package com.serhii.shutyi.filter;
 
+import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.entity.Client;
 
 import javax.servlet.*;
@@ -36,7 +37,8 @@ public class AuthSecurityFilter implements Filter {
             String url = request.getRequestURI().replaceAll(request.getContextPath(), "");
 
             if (!ignoredUrls.contains(url)) {
-                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/index.jsp");
+                String page = ConfigurationManager.getProperty("path.page.index");
+                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(page);
                 dispatcher.forward(request, response);
                 return;
             }
