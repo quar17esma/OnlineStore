@@ -77,4 +77,17 @@
         <filter-name>AuthSecurityFilter</filter-name>
         <url-pattern>/rest/*</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>AdminSecurityFilter</filter-name>
+        <filter-class>com.serhii.shutyi.filter.AdminSecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminSecurityFilter</filter-name>
+        <url-pattern>/rest/add_good</url-pattern>
+        <url-pattern>/rest/edit_good</url-pattern>
+        <url-pattern>/rest/delete_good</url-pattern>
+        <url-pattern>/rest/block_client</url-pattern>
+        <url-pattern>/rest/manage_clients</url-pattern>
+    </filter-mapping>
 </web-app>
