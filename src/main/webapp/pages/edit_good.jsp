@@ -18,7 +18,9 @@
 </div>
 <div>
     <form name="addGoodForm" method="POST" action="./add_good">
-        <input type="hidden" name="goodId" value="${good.id}">
+        <c:if test="${good != null}">
+            <input type="hidden" name="goodId" value="${good.id}">
+        </c:if>
 
         <label><fmt:message key="label.name"/></label>
         <br/>

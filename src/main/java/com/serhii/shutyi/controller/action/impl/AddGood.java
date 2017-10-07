@@ -36,7 +36,7 @@ public class AddGood implements Action {
         if (isDataCorrect) {
             Good good = makeGood(name, description, price, quantity);
 
-            if (goodIdString != null) {
+            if (goodIdString != null && !goodIdString.isEmpty()) {
                 int goodId = Integer.parseInt(goodIdString);
                 good.setId(goodId);
                 goodsService.updateGood(good);

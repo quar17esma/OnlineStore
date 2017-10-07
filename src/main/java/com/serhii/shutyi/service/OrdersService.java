@@ -37,8 +37,8 @@ public class OrdersService {
     public List<Order> getOrdersByClientId(int clientId) {
         List<Order> orders = null;
 
-        Connection connection = connectionPool.getConnection();
-        try (OrderDAO orderDAO = factory.createOrderDAO(connection);
+        try (Connection connection = connectionPool.getConnection();
+             OrderDAO orderDAO = factory.createOrderDAO(connection);
              GoodDAO goodDao = factory.createGoodDAO(connection)) {
             connection.setAutoCommit(false);
 
@@ -49,6 +49,7 @@ public class OrdersService {
             }
 
             connection.commit();
+            connection.setAutoCommit(true);
         } catch (Exception e) {
             logger.error("Fail to get orders by client id", e);
             throw new RuntimeException(e);
@@ -60,8 +61,8 @@ public class OrdersService {
     public boolean payOrder(int orderId) {
         boolean result = false;
 
-        Connection connection = connectionPool.getConnection();
-        try(OrderDAO orderDAO = factory.createOrderDAO(connection)) {
+        try(Connection connection = connectionPool.getConnection();
+            OrderDAO orderDAO = factory.createOrderDAO(connection)) {
             connection.setAutoCommit(false);
 
             Optional<Order> order = orderDAO.findById(orderId);
@@ -69,6 +70,7 @@ public class OrdersService {
                 order.get().setStatus(OrderStatus.PAID);
                 orderDAO.update(order.get());
                 connection.commit();
+                connection.setAutoCommit(true);
                 result = true;
             }
         } catch (Exception e) {
@@ -80,8 +82,8 @@ public class OrdersService {
     }
 
     public void sendOrder(Order order) {
-        Connection connection = connectionPool.getConnection();
-        try (OrderDAO orderDAO = factory.createOrderDAO(connection);
+        try (Connection connection = connectionPool.getConnection();
+             OrderDAO orderDAO = factory.createOrderDAO(connection);
              GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             connection.setAutoCommit(false);
 
@@ -90,6 +92,7 @@ public class OrdersService {
             writeDownGoodsByOrder(order, goodDAO);
 
             connection.commit();
+            connection.setAutoCommit(true);
         } catch (NotEnoughGoodQuantity e){
             logger.error("Fail to send order, not enough quantity", e);
             throw new NotEnoughGoodQuantity(e);

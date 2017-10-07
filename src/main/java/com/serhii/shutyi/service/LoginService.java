@@ -50,8 +50,8 @@ public class LoginService {
                 !login.isEmpty() &&
                 !password.isEmpty()) {
 
-            Connection connection = connectionPool.getConnection();
-            try(UserDAO userDAO = factory.createUserDAO(connection)) {
+            try(Connection connection = connectionPool.getConnection();
+                UserDAO userDAO = factory.createUserDAO(connection)) {
                 Optional<User> user = userDAO.findByEmail(login);
                 if (user.isPresent()) {
                     result = user.get().getPassword().equals(password);
