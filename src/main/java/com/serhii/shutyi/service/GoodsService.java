@@ -33,8 +33,8 @@ public class GoodsService {
     public List<Good> getAllGoods() {
         List<Good> goods = null;
 
-        Connection connection = connectionPool.getConnection();
-        try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+        try (Connection connection = connectionPool.getConnection();
+             GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goods = goodDAO.findAll();
         } catch (Exception e) {
             logger.error("Fail to get all goods", e);
@@ -45,8 +45,8 @@ public class GoodsService {
     }
 
     public Good getGoodById(int goodId) {
-        Connection connection = connectionPool.getConnection();
-        try(GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+        try(Connection connection = connectionPool.getConnection();
+            GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             Optional<Good> good = goodDAO.findById(goodId);
             return good.get();
         } catch (Exception e) {
@@ -56,8 +56,8 @@ public class GoodsService {
     }
 
     public void deleteGoodById(int goodId) {
-        Connection connection = connectionPool.getConnection();
-        try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+        try (Connection connection = connectionPool.getConnection();
+             GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goodDAO.delete(goodId);
         } catch (Exception e) {
             logger.error("Fail to delete good", e);
@@ -66,8 +66,8 @@ public class GoodsService {
     }
 
     public void addGood(Good good) {
-        Connection connection = connectionPool.getConnection();
-        try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+        try (Connection connection = connectionPool.getConnection();
+             GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goodDAO.insert(good);
         } catch (Exception e) {
             logger.error("Fail to add good", e);
@@ -76,8 +76,8 @@ public class GoodsService {
     }
 
     public void updateGood(Good good) {
-        Connection connection = connectionPool.getConnection();
-        try (GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+        try (Connection connection = connectionPool.getConnection();
+             GoodDAO goodDAO = factory.createGoodDAO(connection)) {
             goodDAO.update(good);
         } catch (Exception e) {
             logger.error("Fail to update good", e);

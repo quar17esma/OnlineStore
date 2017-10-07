@@ -52,6 +52,7 @@ public class ClientsService {
             clientDAO.insert(client);
 
             connection.commit();
+            connection.setAutoCommit(true);
         } catch (BusyEmailException e) {
             throw new BusyEmailException(e);
         } catch (Exception e) {
@@ -63,8 +64,8 @@ public class ClientsService {
     public Client getClientByEmail(String email) {
         Optional<Client> client;
 
-        Connection connection = connectionPool.getConnection();
-        try (UserDAO userDAO = factory.createUserDAO(connection);
+        try (Connection connection = connectionPool.getConnection();
+             UserDAO userDAO = factory.createUserDAO(connection);
              ClientDAO clientDAO = factory.createClientDAO(connection)) {
             connection.setAutoCommit(false);
 
@@ -72,6 +73,7 @@ public class ClientsService {
             client = clientDAO.findById(user.get().getId());
 
             connection.commit();
+            connection.setAutoCommit(true);
         } catch (Exception e) {
             logger.error("Fail to get client by email", e);
             throw new RuntimeException(e);
@@ -81,8 +83,8 @@ public class ClientsService {
     }
 
     public List<Client> getClientsWithUnpaidOrders() {
-        Connection connection = connectionPool.getConnection();
-        try (ClientDAO clientDAO = factory.createClientDAO(connection)) {
+        try (Connection connection = connectionPool.getConnection();
+             ClientDAO clientDAO = factory.createClientDAO(connection)) {
             return clientDAO.findWithUnpaidOrders();
         } catch (Exception e) {
             logger.error("Fail to get clients with unpaid orders", e);
@@ -92,8 +94,8 @@ public class ClientsService {
 
     public void blockClientById(int clientId) {
 
-        Connection connection = connectionPool.getConnection();
-        try (ClientDAO clientDAO = factory.createClientDAO(connection)) {
+        try (Connection connection = connectionPool.getConnection();
+             ClientDAO clientDAO = factory.createClientDAO(connection)) {
             connection.setAutoCommit(false);
 
             Client client = clientDAO.findById(clientId).get();
@@ -101,6 +103,7 @@ public class ClientsService {
             clientDAO.update(client);
 
             connection.commit();
+            connection.setAutoCommit(true);
         } catch (Exception e) {
             logger.error("Fail to block client", e);
             throw new RuntimeException(e);

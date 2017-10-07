@@ -20,7 +20,9 @@ public class InputGoodChecker extends InputDataChecker {
             return false;
         }
 
-        return name.length() <= NAME_LENGTH_MAX &&
+        return isMatches(CheckPatterns.CHAR_DIGIT_PUNCT, name) &&
+                isMatches(CheckPatterns.CHAR_DIGIT_PUNCT, description) &&
+                name.length() <= NAME_LENGTH_MAX &&
                 description.length() <= DESCRIPTION_LENGTH_MAX &&
                 price >= PRICE_MIN &&
                 quantity >= QUANTITY_MIN;
