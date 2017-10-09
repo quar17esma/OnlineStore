@@ -13,13 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 
 public class RegisterClient implements Action {
     private ClientsService clientsService;
+    private InputClientChecker checker;
 
     public RegisterClient() {
         this.clientsService = ClientsService.getInstance();
+        this.checker = new InputClientChecker();
     }
 
-    public RegisterClient(ClientsService clientsService) {
+    public RegisterClient(ClientsService clientsService, InputClientChecker checker) {
         this.clientsService = clientsService;
+        this.checker = checker;
     }
 
     @Override
@@ -69,7 +72,6 @@ public class RegisterClient implements Action {
     }
 
     private boolean checkInputData(String name, String login) {
-        InputClientChecker checker = new InputClientChecker();
         return checker.isInputDataCorrect(name, login);
     }
 
