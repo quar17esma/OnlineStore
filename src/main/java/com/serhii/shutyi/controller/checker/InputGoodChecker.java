@@ -1,11 +1,5 @@
 package com.serhii.shutyi.controller.checker;
 
-/**
- * Class for checking inputted data of good.
- *
- * @author S.Shutyi
- * Created on 25.09.2017.
- */
 public class InputGoodChecker extends InputDataChecker {
     private static final int DESCRIPTION_LENGTH_MAX = 1000;
     private static final int NAME_LENGTH_MAX = 100;

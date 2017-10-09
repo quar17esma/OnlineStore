@@ -11,13 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 
 public class AddGood implements Action {
     private GoodsService goodsService;
+    private InputGoodChecker checker;
 
     public AddGood() {
         this.goodsService = GoodsService.getInstance();
+        this.checker = new InputGoodChecker();
     }
 
-    public AddGood(GoodsService goodsService) {
+    public AddGood(GoodsService goodsService, InputGoodChecker checker) {
         this.goodsService = goodsService;
+        this.checker = checker;
     }
 
     @Override
@@ -57,9 +60,9 @@ public class AddGood implements Action {
     }
 
     private boolean checkInputData(String name, String description, int price, int quantity) {
-        InputGoodChecker checker = new InputGoodChecker();
         return checker.isInputDataCorrect(name, description, price, quantity);
     }
+
     private Good makeGood(String name, String description, int price, int quantity) {
         return new Good.Builder()
                 .setName(name)
