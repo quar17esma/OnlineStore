@@ -30,6 +30,11 @@ public class Login implements Action {
         String page = null;
 
         String locale = (String) request.getSession().getAttribute("locale");
+        if (locale == null) {
+            locale = DEFAULT_LOCALE;
+            request.getSession().setAttribute("locale", locale);
+        }
+
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
@@ -41,14 +46,11 @@ public class Login implements Action {
 
             request.getSession().setAttribute("client", client);
             request.getSession().setAttribute("order", order);
-            if (locale == null) {
-                request.getSession().setAttribute("locale", DEFAULT_LOCALE);
-            }
 
             page = ConfigurationManager.getProperty("path.page.welcome");
         } catch (LoginException e) {
             request.setAttribute("errorLoginPassMessage",
-                    LabelManager.getProperty("message.login.error", request.getParameter("locale")));
+                    LabelManager.getProperty("message.login.error", locale));
 
             page = ConfigurationManager.getProperty("path.page.login");
         }

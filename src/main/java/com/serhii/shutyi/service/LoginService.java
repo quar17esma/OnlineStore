@@ -52,6 +52,7 @@ public class LoginService {
 
             try(Connection connection = connectionPool.getConnection();
                 UserDAO userDAO = factory.createUserDAO(connection)) {
+                connection.setAutoCommit(true);
                 Optional<User> user = userDAO.findByEmail(login);
                 if (user.isPresent()) {
                     result = user.get().getPassword().equals(password);

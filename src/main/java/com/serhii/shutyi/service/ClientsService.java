@@ -35,8 +35,8 @@ public class ClientsService {
 
     public void registerClient(Client client) throws BusyEmailException {
 
-        Connection connection = connectionPool.getConnection();
-        try (UserDAO userDAO = factory.createUserDAO(connection);
+        try (Connection connection = connectionPool.getConnection();
+             UserDAO userDAO = factory.createUserDAO(connection);
              ClientDAO clientDAO = factory.createClientDAO(connection)) {
 
             connection.setAutoCommit(false);

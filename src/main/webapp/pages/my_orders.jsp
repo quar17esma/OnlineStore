@@ -38,10 +38,6 @@
                 <label><fmt:message key="label.price"/></label>
                 <ctg:price price="${good.price}"/>
             </div>
-            <div class="field">
-                <label><fmt:message key="label.quantity"/></label>
-                <c:out value="${good.quantity}"/>
-            </div>
         </c:forEach>
 
         <c:if test="${order.status != 'PAID'}">
