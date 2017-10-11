@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <fmt:setLocale value="en_US"/>
 <c:if test="${pageContext.session.getAttribute('locale') == 'ru_RU'}">
     <fmt:setLocale value="ru_RU"/>
@@ -22,7 +23,7 @@
     <c:if test="${good != null}">
         <div class="field">
             <label><fmt:message key="label.name"/></label>
-            <p><c:out value="${good.name}"/></p>
+            <c:out value="${good.name}"/>
         </div>
         <br/>
         <div class="field">
@@ -32,14 +33,12 @@
         <br/>
         <div class="field">
             <label><fmt:message key="label.price"/></label>
-            <p><c:out value="${good.price}"/></p>
+            <ctg:price price="${good.price}"/>
         </div>
         <br/>
         <form name="addToOrderForm" method="POST" action="./add_to_order">
             <input type="hidden" name="goodId" value="${good.id}">
-
-            <label><fmt:message key="label.quantity"/></label>
-            <input type="number" name="ordered_quantity" min="1" max="10" step="1" value="1">
+            <input type="hidden" name="ordered_quantity" value="1">
 
             <fmt:message var="buttonAddToOrder" key="button.add.to.cart"/>
             <input class="button" type="submit" value="${buttonAddToOrder}">

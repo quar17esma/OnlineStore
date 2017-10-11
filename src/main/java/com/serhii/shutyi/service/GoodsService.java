@@ -35,6 +35,7 @@ public class GoodsService {
 
         try (Connection connection = connectionPool.getConnection();
              GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+            connection.setAutoCommit(true);
             goods = goodDAO.findAll();
         } catch (Exception e) {
             logger.error("Fail to get all goods", e);
@@ -47,6 +48,7 @@ public class GoodsService {
     public Good getGoodById(int goodId) {
         try(Connection connection = connectionPool.getConnection();
             GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+            connection.setAutoCommit(true);
             Optional<Good> good = goodDAO.findById(goodId);
             return good.get();
         } catch (Exception e) {
@@ -58,6 +60,7 @@ public class GoodsService {
     public void deleteGoodById(int goodId) {
         try (Connection connection = connectionPool.getConnection();
              GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+            connection.setAutoCommit(true);
             goodDAO.delete(goodId);
         } catch (Exception e) {
             logger.error("Fail to delete good", e);
@@ -68,6 +71,7 @@ public class GoodsService {
     public void addGood(Good good) {
         try (Connection connection = connectionPool.getConnection();
              GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+            connection.setAutoCommit(true);
             goodDAO.insert(good);
         } catch (Exception e) {
             logger.error("Fail to add good", e);
@@ -78,6 +82,7 @@ public class GoodsService {
     public void updateGood(Good good) {
         try (Connection connection = connectionPool.getConnection();
              GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+            connection.setAutoCommit(true);
             goodDAO.update(good);
         } catch (Exception e) {
             logger.error("Fail to update good", e);
