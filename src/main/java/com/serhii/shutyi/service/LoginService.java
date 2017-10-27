@@ -9,17 +9,14 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.util.Optional;
 
-public class LoginService {
+public class LoginService extends Service {
     private static final Logger LOGGER = Logger.getLogger(LoginService.class);
 
-    private DaoFactory factory;
     private ClientsService clientsService;
-    private ConnectionPool connectionPool;
 
-    public LoginService(DaoFactory factory, ClientsService clientsService, ConnectionPool connectionPool) {
-        this.factory = factory;
+    private LoginService(DaoFactory factory, ClientsService clientsService, ConnectionPool connectionPool) {
+        super(factory, connectionPool);
         this.clientsService = clientsService;
-        this.connectionPool = connectionPool;
     }
 
     private static class Holder {

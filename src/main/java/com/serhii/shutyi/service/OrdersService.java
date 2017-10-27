@@ -15,15 +15,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public class OrdersService {
+public class OrdersService extends Service {
     private static final Logger LOGGER = Logger.getLogger(OrdersService.class);
 
-    private DaoFactory factory;
-    private ConnectionPool connectionPool;
-
-    public OrdersService(DaoFactory factory, ConnectionPool connectionPool) {
-        this.factory = factory;
-        this.connectionPool = connectionPool;
+    private OrdersService(DaoFactory factory, ConnectionPool connectionPool) {
+        super(factory, connectionPool);
     }
 
     private static class Holder {
