@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrdersService {
-    final static Logger logger = Logger.getLogger(OrdersService.class);
+    private static final Logger LOGGER = Logger.getLogger(OrdersService.class);
 
     private DaoFactory factory;
     private ConnectionPool connectionPool;
@@ -51,7 +51,7 @@ public class OrdersService {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (Exception e) {
-            logger.error("Fail to get orders by client id", e);
+            LOGGER.error("Fail to get orders by client id", e);
             throw new RuntimeException(e);
         }
 
@@ -74,7 +74,7 @@ public class OrdersService {
                 result = true;
             }
         } catch (Exception e) {
-            logger.error("Fail to pay order", e);
+            LOGGER.error("Fail to pay order", e);
             throw new RuntimeException(e);
         }
 
@@ -94,10 +94,10 @@ public class OrdersService {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (NotEnoughGoodQuantity e){
-            logger.error("Fail to send order, not enough quantity", e);
+            LOGGER.error("Fail to send order, not enough quantity", e);
             throw new NotEnoughGoodQuantity(e);
         } catch (Exception e) {
-            logger.error("Fail to send order", e);
+            LOGGER.error("Fail to send order", e);
             throw new RuntimeException(e);
         }
     }

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class GoodsService {
-    final static Logger logger = Logger.getLogger(GoodsService.class);
+    private static final Logger LOGGER = Logger.getLogger(GoodsService.class);
 
     private DaoFactory factory;
     private ConnectionPool connectionPool;
@@ -38,11 +38,39 @@ public class GoodsService {
             connection.setAutoCommit(true);
             goods = goodDAO.findAll();
         } catch (Exception e) {
-            logger.error("Fail to get all goods", e);
+            LOGGER.error("Fail to get all goods", e);
             throw new RuntimeException(e);
         }
 
         return goods;
+    }
+
+    public List<Good> getGoodsByPage(int page, int goodsOnPage) {
+        List<Good> goods = null;
+
+        try (Connection connection = connectionPool.getConnection();
+             GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+            connection.setAutoCommit(true);
+            goods = goodDAO.findByPage(page, goodsOnPage);
+        } catch (Exception e) {
+            LOGGER.error("Fail to get all goods", e);
+            throw new RuntimeException(e);
+        }
+
+        return goods;
+    }
+
+    public int getAllGoodsQuantity() {
+        int goodsCounter;
+        try (Connection connection = connectionPool.getConnection();
+             GoodDAO goodDAO = factory.createGoodDAO(connection)) {
+            connection.setAutoCommit(true);
+            goodsCounter = goodDAO.countAllGoods();
+        } catch (Exception e) {
+            LOGGER.error("Fail to get all goods", e);
+            throw new RuntimeException(e);
+        }
+        return goodsCounter;
     }
 
     public Good getGoodById(int goodId) {
@@ -52,7 +80,7 @@ public class GoodsService {
             Optional<Good> good = goodDAO.findById(goodId);
             return good.get();
         } catch (Exception e) {
-            logger.error("Fail to find good by id", e);
+            LOGGER.error("Fail to find good by id", e);
             throw new RuntimeException(e);
         }
     }
@@ -63,7 +91,7 @@ public class GoodsService {
             connection.setAutoCommit(true);
             goodDAO.delete(goodId);
         } catch (Exception e) {
-            logger.error("Fail to delete good", e);
+            LOGGER.error("Fail to delete good", e);
             throw new RuntimeException(e);
         }
     }
@@ -74,7 +102,7 @@ public class GoodsService {
             connection.setAutoCommit(true);
             goodDAO.insert(good);
         } catch (Exception e) {
-            logger.error("Fail to add good", e);
+            LOGGER.error("Fail to add good", e);
             throw new RuntimeException(e);
         }
     }
@@ -85,7 +113,7 @@ public class GoodsService {
             connection.setAutoCommit(true);
             goodDAO.update(good);
         } catch (Exception e) {
-            logger.error("Fail to update good", e);
+            LOGGER.error("Fail to update good", e);
             throw new RuntimeException(e);
         }
     }
