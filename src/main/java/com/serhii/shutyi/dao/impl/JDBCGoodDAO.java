@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCGoodDAO implements GoodDAO {
-    final static Logger logger = Logger.getLogger(JDBCGoodDAO.class);
+    private static final Logger LOGGER = Logger.getLogger(JDBCGoodDAO.class);
 
     private Connection connection;
 
@@ -31,12 +31,52 @@ public class JDBCGoodDAO implements GoodDAO {
                 goods.add(good);
             }
         } catch (Exception ex) {
-            logger.error("Fail to find goods", ex);
+            LOGGER.error("Fail to find goods", ex);
             throw new RuntimeException(ex);
         }
 
         return goods;
     }
+
+    public List<Good> findByPage(int page, int goodsOnPage) {
+        List<Good> goods = new ArrayList<>();
+
+        int offset = (page - 1) * goodsOnPage;
+
+        try (PreparedStatement query = connection.prepareStatement(
+                "SELECT * FROM goods LIMIT ?,?")) {
+            query.setInt(1, offset);
+            query.setInt(2, goodsOnPage);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                Good good = createGood(rs);
+                goods.add(good);
+            }
+        } catch (Exception ex) {
+            LOGGER.error("Fail to find goods", ex);
+            throw new RuntimeException(ex);
+        }
+
+        return goods;
+    }
+
+    @Override
+    public int countAllGoods() {
+        int goodsCounter = 0;
+        try (PreparedStatement query = connection.prepareStatement(
+                "SELECT COUNT(id) FROM goods")) {
+            ResultSet rs = query.executeQuery();
+            if (rs.next()) {
+                goodsCounter = rs.getInt("COUNT(id)");
+            }
+        } catch (Exception ex) {
+            LOGGER.error("Fail to find goods", ex);
+            throw new RuntimeException(ex);
+        }
+        return goodsCounter;
+    }
+
 
     @Override
     public Optional<Good> findById(int id) {
@@ -55,7 +95,7 @@ public class JDBCGoodDAO implements GoodDAO {
                 result = Optional.of(good);
             }
         } catch (Exception ex) {
-            logger.error("Fail to find good by id", ex);
+            LOGGER.error("Fail to find good by id", ex);
             throw new RuntimeException(ex);
         }
 
@@ -91,7 +131,7 @@ public class JDBCGoodDAO implements GoodDAO {
                 goods.add(good);
             }
         } catch (Exception ex) {
-            logger.error("Fail to find goods by order", ex);
+            LOGGER.error("Fail to find goods by order", ex);
             throw new RuntimeException(ex);
         }
 
@@ -116,7 +156,7 @@ public class JDBCGoodDAO implements GoodDAO {
 
             result = true;
         } catch (Exception ex) {
-            logger.error("Fail to update good", ex);
+            LOGGER.error("Fail to update good", ex);
             throw new RuntimeException(ex);
         }
 
@@ -136,7 +176,7 @@ public class JDBCGoodDAO implements GoodDAO {
 
             result = true;
         } catch (Exception ex) {
-            logger.error("Fail to delete good", ex);
+            LOGGER.error("Fail to delete good", ex);
             throw new RuntimeException(ex);
         }
 
@@ -166,7 +206,7 @@ public class JDBCGoodDAO implements GoodDAO {
                 good.setId(result);
             }
         } catch (Exception ex) {
-            logger.error("Fail to insert good", ex);
+            LOGGER.error("Fail to insert good", ex);
             throw new RuntimeException(ex);
         }
 

@@ -68,5 +68,14 @@
         <br/>
     </div>
 
+    <div>
+        <c:forEach begin="1" end="${pagesQuantity}" varStatus="loop">
+            <form class="button" name="goodsPagesForm" method="POST" action="./show_goods">
+                <input type="hidden" name="page" value="${loop.count}">
+                <input type="submit" value="${loop.count}">
+            </form>
+        </c:forEach>
+    </div>
+
 </body>
 </html>
