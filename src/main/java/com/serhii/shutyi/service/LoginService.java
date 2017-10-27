@@ -2,18 +2,15 @@ package com.serhii.shutyi.service;
 
 import com.serhii.shutyi.dao.*;
 import com.serhii.shutyi.entity.Client;
-import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.exceptions.LoginException;
-import javafx.fxml.LoadException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
-import java.util.List;
 import java.util.Optional;
 
 public class LoginService {
-    final static Logger logger = Logger.getLogger(LoginService.class);
+    private static final Logger LOGGER = Logger.getLogger(LoginService.class);
 
     private DaoFactory factory;
     private ClientsService clientsService;
@@ -58,7 +55,7 @@ public class LoginService {
                     result = user.get().getPassword().equals(password);
                 }
             } catch (Exception e) {
-                logger.error("Fail to find user by email", e);
+                LOGGER.error("Fail to find user by email", e);
                 throw new RuntimeException(e);
             }
         }

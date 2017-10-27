@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ClientsService {
-    final static Logger logger = Logger.getLogger(ClientsService.class);
+    private static final Logger LOGGER = Logger.getLogger(ClientsService.class);
 
     private DaoFactory factory;
     private ConnectionPool connectionPool;
@@ -56,7 +56,7 @@ public class ClientsService {
         } catch (BusyEmailException e) {
             throw new BusyEmailException(e);
         } catch (Exception e) {
-            logger.error("Fail to register client", e);
+            LOGGER.error("Fail to register client", e);
             throw new RuntimeException(e);
         }
     }
@@ -75,7 +75,7 @@ public class ClientsService {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (Exception e) {
-            logger.error("Fail to get client by email", e);
+            LOGGER.error("Fail to get client by email", e);
             throw new RuntimeException(e);
         }
 
@@ -87,7 +87,7 @@ public class ClientsService {
              ClientDAO clientDAO = factory.createClientDAO(connection)) {
             return clientDAO.findWithUnpaidOrders();
         } catch (Exception e) {
-            logger.error("Fail to get clients with unpaid orders", e);
+            LOGGER.error("Fail to get clients with unpaid orders", e);
             throw new RuntimeException(e);
         }
     }
@@ -105,7 +105,7 @@ public class ClientsService {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (Exception e) {
-            logger.error("Fail to block client", e);
+            LOGGER.error("Fail to block client", e);
             throw new RuntimeException(e);
         }
     }

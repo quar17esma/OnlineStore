@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigDaoFactory {
-    final static Logger logger = Logger.getLogger(ConfigDaoFactory.class);
+    private static final Logger LOGGER = Logger.getLogger(ConfigDaoFactory.class);
 
     private String factoryClassName;
 
@@ -30,7 +30,7 @@ public class ConfigDaoFactory {
 
             factoryClassName = dbProperties.getProperty("db.factory.class");
         } catch (IOException e) {
-            logger.error("Fail to load DB config dao factory", e);
+            LOGGER.error("Fail to load DB config dao factory", e);
             throw new RuntimeException(e);
         }
     }

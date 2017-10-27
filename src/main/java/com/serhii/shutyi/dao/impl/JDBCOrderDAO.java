@@ -1,12 +1,9 @@
 package com.serhii.shutyi.dao.impl;
 
 import com.serhii.shutyi.dao.OrderDAO;
-import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
-import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.enums.OrderStatus;
-import com.serhii.shutyi.enums.Role;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -15,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCOrderDAO implements OrderDAO {
-    final static Logger logger = Logger.getLogger(JDBCOrderDAO.class);
+    private static final Logger LOGGER = Logger.getLogger(JDBCOrderDAO.class);
 
     private Connection connection;
 
@@ -36,7 +33,7 @@ public class JDBCOrderDAO implements OrderDAO {
                 orders.add(order);
             }
         } catch (Exception ex) {
-            logger.error("Fail to find orders", ex);
+            LOGGER.error("Fail to find orders", ex);
             throw new RuntimeException(ex);
         }
 
@@ -61,7 +58,7 @@ public class JDBCOrderDAO implements OrderDAO {
                 orders.add(order);
             }
         } catch (Exception ex) {
-            logger.error("Fail to find orders", ex);
+            LOGGER.error("Fail to find orders", ex);
             throw new RuntimeException(ex);
         }
 
@@ -85,7 +82,7 @@ public class JDBCOrderDAO implements OrderDAO {
                 result = Optional.of(order);
             }
         } catch (Exception ex) {
-            logger.error("Fail to find order by id", ex);
+            LOGGER.error("Fail to find order by id", ex);
             throw new RuntimeException(ex);
         }
 
@@ -119,7 +116,7 @@ public class JDBCOrderDAO implements OrderDAO {
 
             result = true;
         } catch (Exception ex) {
-            logger.error("Fail to update order", ex);
+            LOGGER.error("Fail to update order", ex);
             throw new RuntimeException(ex);
         }
 
@@ -139,7 +136,7 @@ public class JDBCOrderDAO implements OrderDAO {
 
             result = true;
         } catch (Exception ex) {
-            logger.error("Fail to delete order", ex);
+            LOGGER.error("Fail to delete order", ex);
             throw new RuntimeException(ex);
         }
 
@@ -166,7 +163,7 @@ public class JDBCOrderDAO implements OrderDAO {
                 order.setId(result);
             }
         } catch (Exception ex) {
-            logger.error("Fail to insert order", ex);
+            LOGGER.error("Fail to insert order", ex);
             throw new RuntimeException(ex);
         }
 
@@ -182,7 +179,7 @@ public class JDBCOrderDAO implements OrderDAO {
 
                 query.executeUpdate();
             } catch (Exception ex) {
-                logger.error("Fail to insert ordered goods", ex);
+                LOGGER.error("Fail to insert ordered goods", ex);
                 throw new RuntimeException(ex);
             }
         }
