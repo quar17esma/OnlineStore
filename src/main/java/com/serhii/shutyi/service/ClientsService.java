@@ -13,15 +13,11 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
-public class ClientsService {
+public class ClientsService extends Service {
     private static final Logger LOGGER = Logger.getLogger(ClientsService.class);
 
-    private DaoFactory factory;
-    private ConnectionPool connectionPool;
-
-    public ClientsService(DaoFactory factory, ConnectionPool connectionPool) {
-        this.factory = factory;
-        this.connectionPool = connectionPool;
+    private ClientsService(DaoFactory factory, ConnectionPool connectionPool) {
+        super(factory, connectionPool);
     }
 
     private static class Holder {
