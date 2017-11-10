@@ -4,24 +4,23 @@ import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Client;
-import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
 import com.serhii.shutyi.exceptions.LoginException;
-import com.serhii.shutyi.service.LoginService;
+import com.serhii.shutyi.service.ILoginService;
+import com.serhii.shutyi.service.impl.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class Login implements Action {
     private static final String DEFAULT_LOCALE = "en_US";
 
-    private LoginService loginService;
+    private ILoginService loginService;
 
     public Login() {
         this.loginService = LoginService.getInstance();
     }
 
-    public Login(LoginService loginService) {
+    public Login(ILoginService loginService) {
         this.loginService = loginService;
     }
 

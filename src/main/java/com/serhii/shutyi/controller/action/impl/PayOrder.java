@@ -3,18 +3,19 @@ package com.serhii.shutyi.controller.action.impl;
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
-import com.serhii.shutyi.service.OrdersService;
+import com.serhii.shutyi.service.IOrdersService;
+import com.serhii.shutyi.service.impl.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class PayOrder implements Action {
-    private OrdersService ordersService;
+    private IOrdersService ordersService;
 
     public PayOrder() {
         this.ordersService = OrdersService.getInstance();
     }
 
-    public PayOrder(OrdersService ordersService) {
+    public PayOrder(IOrdersService ordersService) {
         this.ordersService = ordersService;
     }
 

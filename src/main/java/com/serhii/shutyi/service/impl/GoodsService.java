@@ -1,17 +1,18 @@
-package com.serhii.shutyi.service;
+package com.serhii.shutyi.service.impl;
 
 import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
+import com.serhii.shutyi.service.IGoodsService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
-public class GoodsService extends Service {
+public class GoodsService extends Service implements IGoodsService {
     private static final Logger LOGGER = Logger.getLogger(GoodsService.class);
 
     private GoodsService(DaoFactory factory, ConnectionPool connectionPool) {

@@ -3,18 +3,19 @@ package com.serhii.shutyi.controller.action.impl;
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
-import com.serhii.shutyi.service.GoodsService;
+import com.serhii.shutyi.service.impl.GoodsService;
+import com.serhii.shutyi.service.IGoodsService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class DeleteGood implements Action {
-    private GoodsService goodsService;
+    private IGoodsService goodsService;
 
     public DeleteGood() {
         this.goodsService = GoodsService.getInstance();
     }
 
-    public DeleteGood(GoodsService goodsService) {
+    public DeleteGood(IGoodsService goodsService) {
         this.goodsService = goodsService;
     }
 

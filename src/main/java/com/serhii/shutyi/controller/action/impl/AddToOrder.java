@@ -4,18 +4,19 @@ import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Order;
-import com.serhii.shutyi.service.GoodsService;
+import com.serhii.shutyi.service.impl.GoodsService;
+import com.serhii.shutyi.service.IGoodsService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class AddToOrder implements Action {
-    private GoodsService goodsService;
+    private IGoodsService goodsService;
 
     public AddToOrder() {
         this.goodsService = GoodsService.getInstance();
     }
 
-    public AddToOrder(GoodsService goodsService) {
+    public AddToOrder(IGoodsService goodsService) {
         this.goodsService = goodsService;
     }
 

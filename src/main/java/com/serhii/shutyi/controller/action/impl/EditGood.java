@@ -3,18 +3,19 @@ package com.serhii.shutyi.controller.action.impl;
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.entity.Good;
-import com.serhii.shutyi.service.GoodsService;
+import com.serhii.shutyi.service.impl.GoodsService;
+import com.serhii.shutyi.service.IGoodsService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class EditGood implements Action {
-    private GoodsService goodsService;
+    private IGoodsService goodsService;
 
     public EditGood() {
         this.goodsService = GoodsService.getInstance();
     }
 
-    public EditGood(GoodsService goodsService) {
+    public EditGood(IGoodsService goodsService) {
         this.goodsService = goodsService;
     }
 

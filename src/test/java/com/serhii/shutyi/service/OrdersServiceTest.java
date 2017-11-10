@@ -7,6 +7,7 @@ import com.serhii.shutyi.dao.OrderDAO;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
 import com.serhii.shutyi.enums.OrderStatus;
+import com.serhii.shutyi.service.impl.OrdersService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

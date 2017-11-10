@@ -1,20 +1,22 @@
-package com.serhii.shutyi.service;
+package com.serhii.shutyi.service.impl;
 
 import com.serhii.shutyi.dao.*;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.exceptions.LoginException;
+import com.serhii.shutyi.service.IClientsService;
+import com.serhii.shutyi.service.ILoginService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.Optional;
 
-public class LoginService extends Service {
+public class LoginService extends Service implements ILoginService {
     private static final Logger LOGGER = Logger.getLogger(LoginService.class);
 
-    private ClientsService clientsService;
+    private IClientsService clientsService;
 
-    private LoginService(DaoFactory factory, ClientsService clientsService, ConnectionPool connectionPool) {
+    private LoginService(DaoFactory factory, IClientsService clientsService, ConnectionPool connectionPool) {
         super(factory, connectionPool);
         this.clientsService = clientsService;
     }

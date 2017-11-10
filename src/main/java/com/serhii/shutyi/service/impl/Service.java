@@ -1,4 +1,4 @@
-package com.serhii.shutyi.service;
+package com.serhii.shutyi.service.impl;
 
 import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;

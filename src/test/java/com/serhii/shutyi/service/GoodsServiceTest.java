@@ -5,6 +5,7 @@ import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.GoodDAO;
 import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
+import com.serhii.shutyi.service.impl.GoodsService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

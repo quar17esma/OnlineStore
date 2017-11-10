@@ -3,18 +3,19 @@ package com.serhii.shutyi.controller.action.impl;
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
-import com.serhii.shutyi.service.ClientsService;
+import com.serhii.shutyi.service.impl.ClientsService;
+import com.serhii.shutyi.service.IClientsService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class BlockClient implements Action {
-    private ClientsService clientsService;
+    private IClientsService clientsService;
 
     public BlockClient() {
         this.clientsService = ClientsService.getInstance();
     }
 
-    public BlockClient(ClientsService clientsService) {
+    public BlockClient(IClientsService clientsService) {
         this.clientsService = clientsService;
     }
 

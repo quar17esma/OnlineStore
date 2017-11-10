@@ -1,4 +1,4 @@
-package com.serhii.shutyi.service;
+package com.serhii.shutyi.service.impl;
 
 import com.serhii.shutyi.dao.ClientDAO;
 import com.serhii.shutyi.dao.ConnectionPool;
@@ -7,13 +7,14 @@ import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.exceptions.BusyEmailException;
+import com.serhii.shutyi.service.IClientsService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
-public class ClientsService extends Service {
+public class ClientsService extends Service implements IClientsService {
     private static final Logger LOGGER = Logger.getLogger(ClientsService.class);
 
     private ClientsService(DaoFactory factory, ConnectionPool connectionPool) {

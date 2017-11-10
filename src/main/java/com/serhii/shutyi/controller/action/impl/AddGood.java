@@ -5,12 +5,13 @@ import com.serhii.shutyi.controller.checker.InputGoodChecker;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Good;
-import com.serhii.shutyi.service.GoodsService;
+import com.serhii.shutyi.service.impl.GoodsService;
+import com.serhii.shutyi.service.IGoodsService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class AddGood implements Action {
-    private GoodsService goodsService;
+    private IGoodsService goodsService;
     private InputGoodChecker checker;
 
     public AddGood() {
@@ -18,7 +19,7 @@ public class AddGood implements Action {
         this.checker = new InputGoodChecker();
     }
 
-    public AddGood(GoodsService goodsService, InputGoodChecker checker) {
+    public AddGood(IGoodsService goodsService, InputGoodChecker checker) {
         this.goodsService = goodsService;
         this.checker = checker;
     }

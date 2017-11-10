@@ -1,9 +1,7 @@
 package com.serhii.shutyi.controller.action.impl;
 
 import com.serhii.shutyi.entity.Order;
-import com.serhii.shutyi.service.GoodsService;
-import com.serhii.shutyi.service.OrdersService;
-import org.junit.Ignore;
+import com.serhii.shutyi.service.impl.GoodsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
