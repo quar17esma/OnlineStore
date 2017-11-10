@@ -5,18 +5,19 @@ import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Order;
 import com.serhii.shutyi.exceptions.NotEnoughGoodQuantity;
-import com.serhii.shutyi.service.OrdersService;
+import com.serhii.shutyi.service.IOrdersService;
+import com.serhii.shutyi.service.impl.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class SendOrder implements Action {
-    private  OrdersService ordersService;
+    private IOrdersService ordersService;
 
     public SendOrder() {
         this.ordersService = OrdersService.getInstance();
     }
 
-    public SendOrder(OrdersService ordersService) {
+    public SendOrder(IOrdersService ordersService) {
         this.ordersService = ordersService;
     }
 

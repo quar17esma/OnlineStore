@@ -4,19 +4,20 @@ import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.Order;
-import com.serhii.shutyi.service.OrdersService;
+import com.serhii.shutyi.service.IOrdersService;
+import com.serhii.shutyi.service.impl.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class MyOrders implements Action{
-    private OrdersService ordersService;
+    private IOrdersService ordersService;
 
     public MyOrders() {
         this.ordersService = OrdersService.getInstance();
     }
 
-    public MyOrders(OrdersService ordersService) {
+    public MyOrders(IOrdersService ordersService) {
         this.ordersService = ordersService;
     }
 

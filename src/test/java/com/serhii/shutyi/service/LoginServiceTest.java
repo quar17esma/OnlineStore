@@ -5,6 +5,8 @@ import com.serhii.shutyi.dao.DaoFactory;
 import com.serhii.shutyi.dao.UserDAO;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.exceptions.LoginException;
+import com.serhii.shutyi.service.impl.ClientsService;
+import com.serhii.shutyi.service.impl.LoginService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

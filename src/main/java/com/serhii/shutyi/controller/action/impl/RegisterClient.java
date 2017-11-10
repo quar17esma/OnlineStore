@@ -7,12 +7,13 @@ import com.serhii.shutyi.controller.manager.LabelManager;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.exceptions.BusyEmailException;
-import com.serhii.shutyi.service.ClientsService;
+import com.serhii.shutyi.service.impl.ClientsService;
+import com.serhii.shutyi.service.IClientsService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class RegisterClient implements Action {
-    private ClientsService clientsService;
+    private IClientsService clientsService;
     private InputClientChecker checker;
 
     public RegisterClient() {
@@ -20,7 +21,7 @@ public class RegisterClient implements Action {
         this.checker = new InputClientChecker();
     }
 
-    public RegisterClient(ClientsService clientsService, InputClientChecker checker) {
+    public RegisterClient(IClientsService clientsService, InputClientChecker checker) {
         this.clientsService = clientsService;
         this.checker = checker;
     }

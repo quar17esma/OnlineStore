@@ -1,8 +1,6 @@
 package com.serhii.shutyi.controller.action.impl;
 
-import com.serhii.shutyi.controller.manager.LabelManager;
-import com.serhii.shutyi.service.ClientsService;
-import org.junit.Ignore;
+import com.serhii.shutyi.service.impl.ClientsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BlockClientTest {

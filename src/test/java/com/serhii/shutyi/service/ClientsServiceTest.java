@@ -4,6 +4,7 @@ import com.serhii.shutyi.dao.*;
 import com.serhii.shutyi.entity.Client;
 import com.serhii.shutyi.entity.User;
 import com.serhii.shutyi.exceptions.BusyEmailException;
+import com.serhii.shutyi.service.impl.ClientsService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

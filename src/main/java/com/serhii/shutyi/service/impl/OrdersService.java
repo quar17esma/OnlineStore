@@ -1,4 +1,4 @@
-package com.serhii.shutyi.service;
+package com.serhii.shutyi.service.impl;
 
 import com.serhii.shutyi.dao.ConnectionPool;
 import com.serhii.shutyi.dao.DaoFactory;
@@ -8,6 +8,7 @@ import com.serhii.shutyi.entity.Good;
 import com.serhii.shutyi.entity.Order;
 import com.serhii.shutyi.enums.OrderStatus;
 import com.serhii.shutyi.exceptions.NotEnoughGoodQuantity;
+import com.serhii.shutyi.service.IOrdersService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public class OrdersService extends Service {
+public class OrdersService extends Service implements IOrdersService {
     private static final Logger LOGGER = Logger.getLogger(OrdersService.class);
 
     private OrdersService(DaoFactory factory, ConnectionPool connectionPool) {

@@ -3,18 +3,19 @@ package com.serhii.shutyi.controller.action.impl;
 import com.serhii.shutyi.controller.action.Action;
 import com.serhii.shutyi.controller.manager.ConfigurationManager;
 import com.serhii.shutyi.entity.Good;
-import com.serhii.shutyi.service.GoodsService;
+import com.serhii.shutyi.service.impl.GoodsService;
+import com.serhii.shutyi.service.IGoodsService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class BuyNow implements Action {
-    private GoodsService goodsService;
+    private IGoodsService goodsService;
 
     public BuyNow() {
         this.goodsService = GoodsService.getInstance();
     }
 
-    public BuyNow(GoodsService goodsService) {
+    public BuyNow(IGoodsService goodsService) {
         this.goodsService = goodsService;
     }
 
